@@ -1,6 +1,0 @@
-@cva_back_HostAddress = http://localhost:5114
-
-GET {{cva_back_HostAddress}}/weatherforecast/
-Accept: application/json
-
-###

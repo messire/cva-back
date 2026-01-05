@@ -4,7 +4,7 @@ ARG VERSION=1.0.0
 WORKDIR /app
 
 # Copy solution and restore dependencies
-COPY CV.App.slnx ./
+COPY cva-back.slnx ./
 COPY Directory.Build.props ./
 COPY Directory.Packages.props ./
 COPY src/CVA.Application.Contracts/CVA.Application.Contracts.csproj src/CVA.Application.Contracts/

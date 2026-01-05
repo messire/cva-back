@@ -5,6 +5,7 @@
     <File Path="Directory.Build.props" />
   </Folder>
   <Folder Name="/build/docker/">
+    <File Path="docker/docker-compose.back.yml" />
     <File Path="docker/docker-compose.mongo.yml" />
     <File Path="docker/docker-compose.postgres.yml" />
   </Folder>

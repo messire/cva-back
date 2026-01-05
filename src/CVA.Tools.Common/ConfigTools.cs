@@ -65,7 +65,10 @@ public static class ConfigTools
 
     private static string GetRootPath(IHostEnvironment environment)
     {
-        if (environment.ContentRootPath == "/app/") return environment.ContentRootPath;
+        if (environment.ContentRootPath == "/app/")
+        {
+            return environment.ContentRootPath;
+        }
 
         var directoryInfo = new DirectoryInfo(environment.ContentRootPath);
         var configPath = GetParent(directoryInfo)?.FullName;
