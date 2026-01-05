@@ -1,0 +1,29 @@
+{
+  "AllowedHosts": "*",
+  "Database": {
+    "Mongo": {
+      "Connection": "$Database__Mongo__Connection",
+      "DatabaseName": "$Database__Mongo__DatabaseName"
+    },
+    "Postgres": {
+      "Connection": {
+        "Host": "$Database__Postgres__Connection__Host",
+        "Port": "$Database__Postgres__Connection__Port",
+        "Database": "$Database__Postgres__Connection__Database",
+        "User": "$Database__Postgres__Connection__User",
+        "Password": "$Database__Postgres__Connection__Password"
+      },
+      "Pooling": {
+        "Lifetime": "$Database__Postgres__Pooling__Lifetime",
+        "MinSize": "$Database__Postgres__Pooling__MinSize",
+        "MaxSize": "$Database__Postgres__Pooling__MaxSize"
+      },
+      "Security": {
+        "SslMode": "$Database__Postgres__Security__SslMode",
+        "TrustServerCertificate": "$Database__Postgres__Security__TrustServerCertificate",
+        "RootCertificate": "$Database__Postgres__Security__RootCertificate"
+      }
+    },
+    "Type": "$Database__Type"
+  }
+}

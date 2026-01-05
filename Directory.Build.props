@@ -1,0 +1,32 @@
+<Project>
+    <PropertyGroup>
+        <TargetFramework>net10.0</TargetFramework>
+        <Nullable>enable</Nullable>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <InvariantGlobalization>false</InvariantGlobalization>
+        <IsTestProject>false</IsTestProject>
+        <IncludeConfig>false</IncludeConfig>
+        <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    </PropertyGroup>
+
+    <!-- Configs -->
+    <ItemGroup Condition="'$(IncludeConfig)'=='true'">
+        <Content Include="..\..\config\cva.app.appsettings.json">
+            <Link>config\cva.app.appsettings.json</Link>
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </Content>
+    </ItemGroup>
+
+    <PropertyGroup Condition="$(IsTestProject)">
+        <GenerateDocumentationFile>false</GenerateDocumentationFile>
+    </PropertyGroup>
+
+    <!-- Visibility -->
+    <ItemGroup>
+        <InternalsVisibleTo Include="DynamicProxyGenAssembly2"/>
+        <InternalsVisibleTo Include="CVA.Tests.Common"/>
+        <InternalsVisibleTo Include="CVA.Tests.Integration"/>
+        <InternalsVisibleTo Include="CVA.Tests.Unit"/>
+    </ItemGroup>
+
+</Project>

@@ -1,0 +1,29 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <IsTestProject>true</IsTestProject>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="AutoFixture" />
+        <PackageReference Include="coverlet.collector" />
+        <PackageReference Include="Microsoft.NET.Test.Sdk" />
+        <PackageReference Include="MongoDB.Driver" />
+        <PackageReference Include="Testcontainers" />
+        <PackageReference Include="Testcontainers.MongoDb" />
+        <PackageReference Include="Testcontainers.PostgreSql" />
+        <PackageReference Include="xunit" />
+        <PackageReference Include="xunit.runner.visualstudio" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <Using Include="Xunit"/>
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\..\src\CVA.Infrastructure.Mongo\CVA.Infrastructure.Mongo.csproj" />
+      <ProjectReference Include="..\..\src\CVA.Infrastructure.Postgres\CVA.Infrastructure.Postgres.csproj" />
+      <ProjectReference Include="..\CVA.Tests.Common\CVA.Tests.Common.csproj" />
+    </ItemGroup>
+
+</Project>

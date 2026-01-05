@@ -1,0 +1,5 @@
+@host=https://localhost:9145
+@userId = 05c69a2e-1199-4c33-a08a-34898722f05b
+
+GET {{host}}/api/users/{{userId}}
+Accept: application/json

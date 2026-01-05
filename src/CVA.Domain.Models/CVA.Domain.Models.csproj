@@ -1,0 +1,10 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+    <ItemGroup>
+        <Compile Update="Models\WorkMethods.cs">
+            <DependentUpon>Work.cs</DependentUpon>
+        </Compile>
+        <Compile Update="Models\UserMethods.cs">
+            <DependentUpon>User.cs</DependentUpon>
+        </Compile>
+    </ItemGroup>
+</Project>

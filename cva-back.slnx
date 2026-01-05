@@ -1,3 +1,50 @@
 <Solution>
-  <Project Path="cva-back.csproj" />
+  <Folder Name="/build/" />
+  <Folder Name="/build/props/">
+    <File Path="Directory.Packages.props" />
+    <File Path="Directory.Build.props" />
+  </Folder>
+  <Folder Name="/build/docker/">
+    <File Path="docker/docker-compose.mongo.yml" />
+    <File Path="docker/docker-compose.postgres.yml" />
+  </Folder>
+
+  <Folder Name="/build/config/">
+    <File Path="config/cva.app.appsettings.json" />
+    <File Path="config/cva.app.env.development.json" />
+  </Folder>
+  <Folder Name="/src/" />
+  <Folder Name="/src/application/">
+    <Project Path="src/CVA.Application.Contracts/CVA.Application.Contracts.csproj" />
+    <Project Path="src/CVA.Application.Services/CVA.Application.Services.csproj" />
+    <Project Path="src/CVA.Application.Validators/CVA.Application.Validators.csproj" />
+  </Folder>
+  <Folder Name="/src/domain/">
+    <Project Path="src/CVA.Domain.Interfaces/CVA.Domain.Interfaces.csproj" />
+    <Project Path="src/CVA.Domain.Models/CVA.Domain.Models.csproj" />
+  </Folder>
+  <Folder Name="/src/infrastructure/">
+    <Project Path="src/CVA.Infrastructure.Common/CVA.Infrastructure.Common.csproj" />
+    <Project Path="src/CVA.Infrastructure.Mongo/CVA.Infrastructure.Mongo.csproj" />
+    <Project Path="src/CVA.Infrastructure.Postgres/CVA.Infrastructure.Postgres.csproj" />
+  </Folder>
+  <Folder Name="/src/presentation/">
+    <Project Path="src/CVA.Presentation.Web/CVA.Presentation.Web.csproj" />
+  </Folder>
+  <Folder Name="/src/utility/">
+    <Project Path="src/CVA.Tools.Common/CVA.Tools.Common.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/CVA.Tests.Common/CVA.Tests.Common.csproj" />
+    <Project Path="tests/CVA.Tests.Integration/CVA.Tests.Integration.csproj" />
+    <Project Path="tests/CVA.Tests.Unit/CVA.Tests.Unit.csproj" />
+
+  </Folder>
+  <Folder Name="/tests/.scratches/">
+    <File Path="scratches/DELETE.user.byId.http" />
+    <File Path="scratches/GET.user.all.http" />
+    <File Path="scratches/GET.user.byId.http" />
+    <File Path="scratches/POST.user.http" />
+    <File Path="scratches/PUT.user.http" />
+  </Folder>
 </Solution>

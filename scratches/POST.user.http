@@ -1,0 +1,29 @@
+@host=https://localhost:9145
+
+POST {{host}}/api/users/
+Content-Type: application/json
+
+{
+  "name": "John",
+  "surname": "Doe",
+  "email": "john_doe@example.com",
+  "phone": "+1 (555) 123-45-67",
+  "birthdate": "1990-01-01",
+  "summaryInfo": ".net developer",
+  "skills": ["C#", "ASP.NET Core", "MongoDB"],
+  "workExperience": [
+    {
+      "companyName": "Tech Solutions",
+      "role": "Senior Developer",
+      "description": "Developing high-load systems",
+      "location": "Tokio, Japan (Remote)",
+      "startDate": "2020-05-15",
+      "endDate": null,
+      "achievements": [
+        "Optimize DB performance",
+        "Rework CI/CD process"
+      ],
+      "techStack": [".NET 8", "PostgreSQL", "Docker"]
+    }
+  ]
+}

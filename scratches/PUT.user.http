@@ -1,0 +1,11 @@
+@host=https://localhost:9145
+
+PUT {{host}}/api/users/
+Content-Type: application/json
+
+{
+  "id": "05c69a2e-1199-4c33-a08a-34898722f05b",
+  "name": "John",
+  "surname": "Doe",
+  "email": "john_doe@example.com"
+}
