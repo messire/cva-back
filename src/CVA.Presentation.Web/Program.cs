@@ -5,6 +5,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.RegisterConfig(appName);
 builder.RegisterApiServices();
+builder.RegisterCors();
 builder.RegisterInnerServices();
 builder.RegisterDatabase();
 builder.RegisterValidation();

@@ -4,6 +4,8 @@ using CVA.Infrastructure.Common;
 using CVA.Infrastructure.Mongo;
 using CVA.Infrastructure.Postgres;
 using CVA.Tools.Common;
+using Microsoft.AspNetCore.Cors.Infrastructure;
+using static System.StringSplitOptions;
 
 namespace CVA.Presentation.Web;
 
@@ -24,14 +26,26 @@ internal static class DiExtensions
         }
 
         /// <summary>
+        /// Configures and registers Cross-Origin Resource Sharing (CORS) policies for the application.
+        /// </summary>
+        public void RegisterCors()
+        {
+            var origins = builder.Configuration["CORS_ORIGINS"]?.Split(',', RemoveEmptyEntries | TrimEntries);
+            if (!builder.Environment.IsDevelopment() && (origins == null || origins.Length == 0))
+            {
+                throw new InvalidOperationException("CORS_ORIGINS configuration is required for non-development environments.");
+            }
+
+            builder.Services.AddCors(options =>
+                ConfigureCors(options, builder.Environment, origins));
+        }
+
+        /// <summary>
         /// Registers the necessary services for the API layer, including controllers and OpenAPI support.
         /// </summary>
         public void RegisterApiServices()
         {
-            builder.Services.AddControllers(options =>
-            {
-                options.SuppressAsyncSuffixInActionNames = false;
-            });
+            builder.Services.AddControllers(options => { options.SuppressAsyncSuffixInActionNames = false; });
             builder.Services.AddOpenApi();
         }
 
@@ -69,7 +83,27 @@ internal static class DiExtensions
         public void RegisterValidation()
         {
             builder.Services.AddFluentValidationAutoValidation();
-            builder.Services.AddValidatorsFromAssemblyContaining<IValidatorMarker>(); 
+            builder.Services.AddValidatorsFromAssemblyContaining<IValidatorMarker>();
         }
+    }
+
+    private static void ConfigureCors(CorsOptions options, IWebHostEnvironment env, string[]? origins)
+    {
+        options.AddPolicy("Frontend", policy =>
+        {
+            policy.ApplyEnvironmentOrigins(env.IsDevelopment(), origins)
+                .AllowAnyHeader()
+                .AllowAnyMethod();
+        });
+    }
+
+
+    private static CorsPolicyBuilder ApplyEnvironmentOrigins(this CorsPolicyBuilder policy, bool isDevelopment, string[]? origins)
+    {
+        if (isDevelopment) return policy.AllowAnyOrigin();
+            
+        return origins is { Length: > 0 } 
+            ? policy.WithOrigins(origins).AllowCredentials() 
+            : throw new InvalidOperationException("Production origins missing");
     }
 }
