@@ -15,5 +15,8 @@ public sealed class DomainMappingCustomization : ICustomization
         fixture.Customizations.Add(UserDtoBuilder.Instance);
         fixture.Customizations.Add(UserBuilder.Instance);
         fixture.Customizations.Add(WorkBuilder.Instance);
+        fixture.Customizations.Add(DeveloperProfileBuilder.Instance);
+        fixture.Customizations.Add(ProjectItemBuilder.Instance);
+        fixture.Customizations.Add(WorkExperienceItemBuilder.Instance);
     }
 }
