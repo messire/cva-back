@@ -1,6 +1,4 @@
-﻿using CVA.Domain.Models;
-
-namespace CVA.Domain.Interfaces;
+﻿namespace CVA.Domain.Interfaces;
 
 /// <summary>
 /// Represents a repository interface for managing user data in the database.
