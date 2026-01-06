@@ -152,7 +152,115 @@ public class UserTests
 
         // Assert
         Assert.Equal(1, removedCount);
-        Assert.Single(user.WorkExperience);
+        Assert.Equal(1, user.WorkExperience.Count);
         Assert.DoesNotContain(work1, user.WorkExperience);
+    }
+
+    /// <summary>
+    /// Purpose: Verify profile update logic.
+    /// Should: Update phone, birthday and summary.
+    /// When: Valid optional data is provided.
+    /// </summary>
+    [Fact]
+    public void UpdateProfile_Should_Update_Fields()
+    {
+        // Arrange
+        var user = User.Create("N", "S", "e@e.com");
+        var birthday = new DateOnly(1990, 1, 1);
+
+        // Act
+        user.UpdateProfile(" 12345 ", birthday, " Summary ");
+
+        // Assert
+        Assert.Equal("12345", user.Phone);
+        Assert.Equal(birthday, user.Birthday);
+        Assert.Equal("Summary", user.SummaryInfo);
+    }
+
+    /// <summary>
+    /// Purpose: Verify photo update logic.
+    /// Should: Update photo URL and trim it.
+    /// When: Valid photo URL is provided.
+    /// </summary>
+    [Fact]
+    public void UpdatePhoto_Should_Update_And_Trim()
+    {
+        // Arrange
+        var user = User.Create("N", "S", "e@e.com");
+
+        // Act
+        user.UpdatePhoto(" http://photo.com ");
+
+        // Assert
+        Assert.Equal("http://photo.com", user.Photo);
+    }
+
+    /// <summary>
+    /// Purpose: Verify email change logic.
+    /// Should: Update email property.
+    /// When: Valid email string is provided.
+    /// </summary>
+    [Fact]
+    public void ChangeEmail_Should_Update_Email()
+    {
+        // Arrange
+        var user = User.Create("N", "S", "old@e.com");
+
+        // Act
+        user.ChangeEmail("new@e.com");
+
+        // Assert
+        Assert.Equal("new@e.com", user.Email.Value);
+    }
+
+    /// <summary>
+    /// Purpose: Verify work experience replacement.
+    /// Should: Clear old and add new work items.
+    /// When: New collection of work items is provided.
+    /// </summary>
+    [Fact]
+    public void ReplaceWorkExperience_Should_Replace_All()
+    {
+        // Arrange
+        var user = User.Create("N", "S", "e@e.com");
+        user.AddWork(Work.Create("Old"));
+        var newWorks = new[] { Work.Create("New") };
+
+        // Act
+        user.ReplaceWorkExperience(newWorks);
+
+        // Assert
+        Assert.Single(user.WorkExperience);
+        Assert.Equal("New", user.WorkExperience.First().CompanyName);
+    }
+
+    /// <summary>
+    /// Purpose: Verify error handling in AddWork.
+    /// Should: Throw ArgumentNullException.
+    /// When: null is passed to AddWork.
+    /// </summary>
+    [Fact]
+    public void AddWork_Should_Throw_On_Null()
+    {
+        // Arrange
+        var user = User.Create("N", "S", "e@e.com");
+
+        // Act & Assert
+        Assert.Throws<ArgumentNullException>(() => user.AddWork(null!));
+    }
+
+    /// <summary>
+    /// Purpose: Verify error handling in RemoveWork.
+    /// Should: Throw ArgumentNullException.
+    /// When: null predicate is passed to RemoveWork.
+    /// </summary>
+    [Fact]
+    public void RemoveWork_Should_Throw_On_Null_Predicate()
+    {
+        // Arrange
+        var user = User.Create("N", "S", "e@e.com");
+
+        // Act & Assert
+        Assert.Throws<ArgumentNullException>(() => user.RemoveWork(null!));
     }
 }

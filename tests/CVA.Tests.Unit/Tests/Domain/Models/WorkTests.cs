@@ -94,4 +94,25 @@ public class WorkTests
         // Assert
         Assert.Empty(work.Achievements);
     }
+
+    /// <summary>
+    /// Purpose: Verify that Update method correctly modifies work experience properties.
+    /// Should: Update all fields and trim string values.
+    /// When: Valid new data is provided.
+    /// </summary>
+    [Fact]
+    public void Update_Should_Modify_Properties()
+    {
+        // Arrange
+        var work = Work.Create("Old", "OldRole");
+        var newCompany = "  NewCompany  ";
+        var newRole = "  NewRole  ";
+
+        // Act
+        work.Update(companyName: newCompany, role: newRole);
+
+        // Assert
+        Assert.Equal("NewCompany", work.CompanyName);
+        Assert.Equal("NewRole", work.Role);
+    }
 }

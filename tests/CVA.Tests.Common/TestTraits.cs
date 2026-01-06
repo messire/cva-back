@@ -49,6 +49,16 @@ public static class Category
     /// Represents the test category for ValueObjects-related tests.
     /// </summary>
     public const string ValueObjects = nameof(ValueObjects);
+
+    /// <summary>
+    /// Represents the test category for Entities-related tests.
+    /// </summary>
+    public const string Entities = nameof(Entities);
+
+    /// <summary>
+    /// Represents the test category for Guards-related tests.
+    /// </summary>
+    public const string Guards = nameof(Guards);
 }
 
 /// <summary>
