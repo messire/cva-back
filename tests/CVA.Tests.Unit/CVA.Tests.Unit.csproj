@@ -24,6 +24,9 @@
       <ProjectReference Include="..\..\src\CVA.Domain.Interfaces\CVA.Domain.Interfaces.csproj" />
       <ProjectReference Include="..\..\src\CVA.Domain.Models\CVA.Domain.Models.csproj" />
       <ProjectReference Include="..\..\src\CVA.Tools.Common\CVA.Tools.Common.csproj" />
+      <ProjectReference Include="..\..\src\CVA.Infrastructure.Common\CVA.Infrastructure.Common.csproj" />
+      <ProjectReference Include="..\..\src\CVA.Infrastructure.Mongo\CVA.Infrastructure.Mongo.csproj" />
+      <ProjectReference Include="..\..\src\CVA.Infrastructure.Postgres\CVA.Infrastructure.Postgres.csproj" />
       <ProjectReference Include="..\CVA.Tests.Common\CVA.Tests.Common.csproj" />
     </ItemGroup>
 

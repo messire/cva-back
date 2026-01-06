@@ -59,6 +59,11 @@ public static class Category
     /// Represents the test category for Guards-related tests.
     /// </summary>
     public const string Guards = nameof(Guards);
+
+    /// <summary>
+    /// Represents the test category for mapping-related tests.
+    /// </summary>
+    public const string Mapping = nameof(Mapping);
 }
 
 /// <summary>

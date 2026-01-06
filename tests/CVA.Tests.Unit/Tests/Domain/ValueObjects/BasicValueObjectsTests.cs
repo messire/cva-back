@@ -150,7 +150,7 @@ public class BasicValueObjectsTests
 
         // Assert
         Assert.NotNull(avatar);
-        Assert.Equal(url, avatar!.ImageUrl.Value);
+        Assert.Equal(url, avatar.ImageUrl.Value);
     }
 
     /// <summary>
@@ -252,6 +252,11 @@ public class BasicValueObjectsTests
         Assert.Equal(expected, icon.ImageUrl.Value);
     }
 
+    /// <summary>
+    /// Purpose: Verify ProjectIcon.From behavior for invalid input.
+    /// Should: Throw ArgumentException for invalid input.
+    /// When: Invalid URL or empty string is provided.
+    /// </summary>
     [Theory]
     [InlineData("not-a-url")]
     [InlineData("   ")]
