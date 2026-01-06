@@ -59,14 +59,14 @@ public sealed partial class DeveloperProfile
     public void RemoveProject(ProjectId projectId, DateTimeOffset now)
     {
         Ensure.NotEmpty(projectId.Value, nameof(projectId));
-        _projects.RemoveAll(x => x.Id.Equals(projectId));
+        _projects.RemoveAll(item => item.Id.Equals(projectId));
         Touch(now);
     }
 
     private ProjectItem FindProject(ProjectId id)
     {
         Ensure.NotEmpty(id.Value, nameof(id));
-        var project = _projects.Find(x => x.Id.Equals(id));
+        var project = _projects.Find(item => item.Id.Equals(id));
         if (project is null) throw new InvalidOperationException("Project not found.");
         return project;
     }

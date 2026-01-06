@@ -171,7 +171,7 @@ internal static class UserMongoMappingExtensions
             Description = project.Description?.Value,
             IconUrl = project.Icon?.ImageUrl.Value,
             LinkUrl = project.Link.Value?.Value,
-            TechStack = project.TechStack.Select(x => x.Value).ToList()
+            TechStack = project.TechStack.Select(tag => tag.Value).ToList()
         };
 
     private static WorkExperienceDocument ToDocument(this WorkExperienceItem work)
@@ -184,6 +184,6 @@ internal static class UserMongoMappingExtensions
             Description = work.Description?.Value,
             StartDate = work.Period.Start,
             EndDate = work.Period.End,
-            TechStack = work.TechStack.Select(x => x.Value).ToList()
+            TechStack = work.TechStack.Select(tag => tag.Value).ToList()
         };
 }
