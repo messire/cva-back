@@ -24,9 +24,9 @@ public sealed partial class DeveloperProfile
     public static DeveloperProfile FromPersistence(
         DeveloperId id,
         PersonName name,
-        RoleTitle role,
-        ProfileSummary summary,
-        Avatar avatar,
+        RoleTitle? role,
+        ProfileSummary? summary,
+        Avatar? avatar,
         ContactInfo contact,
         SocialLinks social,
         VerificationStatus verification,
