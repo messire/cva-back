@@ -1,4 +1,6 @@
-﻿namespace CVA.Application.Contracts;
+﻿using CVA.Application.Abstractions;
+
+namespace CVA.Application.Services;
 
 /// <summary>
 /// Interface for operations related to user management.

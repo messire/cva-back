@@ -1,6 +1,5 @@
 ﻿using CVA.Domain.Interfaces;
 using CVA.Infrastructure.Mongo;
-using CVA.Tests.Integration.Fixtures;
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization;
 using MongoDB.Bson.Serialization.Serializers;
@@ -65,8 +64,15 @@ public abstract class MongoTestBase : IAsyncLifetime
     /// Creates and initializes a new instance of the <see cref="UserMongoRepository"/> class.
     /// </summary>
     /// <returns></returns>
-    protected IUserRepository CreateRepository()
+    protected IUserRepository CreateUserRepository()
         => new UserMongoRepository(MongoClient, MongoOptions);
+
+    /// <summary>
+    /// Creates and initializes a new instance of the <see cref="DeveloperProfileMongoRepository"/> class.
+    /// </summary>
+    /// <returns></returns>
+    protected IDeveloperProfileRepository CreateDevProfileRepository()
+        => new DeveloperProfileMongoRepository(MongoClient, MongoOptions);
 
     /// <inheritdoc />
     public virtual async Task InitializeAsync()

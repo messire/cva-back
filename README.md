@@ -21,6 +21,24 @@ Designed to manage user data, professional experience, and CV generation.
 - **API Documentation:** Swagger / Scalar (OpenAPI)
 - **Validation:** FluentValidation
 - **Testing:** xUnit, Moq, Testcontainers (integration tests)
+- **Architecture:** Clean Architecture, CQRS
+
+---
+
+## 📊 Current Status & Readiness
+
+The project is currently in the active development stage (MVP).
+
+### ✅ Implemented:
+- **Profile Management:** Full CRUD for developer data, skills, work experience, and projects.
+- **Flexible Infrastructure:** Support for both PostgreSQL (EF Core) and MongoDB with configuration-based switching.
+- **Quality Assurance:** High integration test coverage for core business scenarios.
+- **Documentation:** Automatic API Docs generation (Scalar/OpenAPI) available at `/docs`.
+
+### ⚠️ Limitations (Work in Progress):
+- **Security:** Authentication (JWT) is partially implemented but not yet fully configured in the DI container. Endpoints are marked with `[Authorize]`, but validation is temporarily inactive.
+- **Resilience:** Global error handling and Problem Details (RFC 7807) standard are not yet implemented.
+- **Observability:** Health Checks and structured logging are missing.
 
 ---
 

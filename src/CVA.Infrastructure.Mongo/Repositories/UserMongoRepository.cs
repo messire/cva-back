@@ -1,10 +1,8 @@
-﻿using CVA.Infrastructure.Mongo.Documents;
-using CVA.Infrastructure.Mongo.Mapping;
-
-namespace CVA.Infrastructure.Mongo;
+﻿namespace CVA.Infrastructure.Mongo;
 
 /// <summary>
-/// Provides an implementation of the <see cref="IUserRepository"/> interface for interacting with user data in a PostgreSQL database.
+/// Represents a repository for managing users stored in a MongoDB database.
+/// Implements the <see cref="IUserRepository"/> interface to provide methods for CRUD operations on user data.
 /// </summary>
 internal class UserMongoRepository(IMongoClient client, MongoOptions options) : IUserRepository
 {

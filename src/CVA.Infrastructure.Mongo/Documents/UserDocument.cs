@@ -1,4 +1,4 @@
-﻿namespace CVA.Infrastructure.Mongo.Documents;
+﻿namespace CVA.Infrastructure.Mongo;
 
 /// <summary>
 /// Represents a MongoDB document for a user entity.

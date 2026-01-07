@@ -1,4 +1,6 @@
-﻿namespace CVA.Application.Services;
+﻿using CVA.Application.Abstractions;
+
+namespace CVA.Application.Services;
 
 /// <summary>
 /// Implements the <see cref="IUserService"/> interface.

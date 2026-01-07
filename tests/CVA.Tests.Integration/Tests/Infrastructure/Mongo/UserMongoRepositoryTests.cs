@@ -1,10 +1,5 @@
-﻿using CVA.Domain.Models;
-using CVA.Infrastructure.Mongo;
-using CVA.Infrastructure.Mongo.Documents;
-using CVA.Infrastructure.Mongo.Mapping;
-using CVA.Tests.Common;
+﻿using CVA.Infrastructure.Mongo;
 using CVA.Tests.Common.Comparers;
-using CVA.Tests.Integration.Fixtures;
 using MongoDB.Driver;
 
 namespace CVA.Tests.Integration.Tests.Infrastructure.Mongo;
@@ -27,7 +22,7 @@ public sealed class UserMongoRepositoryTests(MongoFixture fixture) : MongoTestBa
     {
         // Arrange
         var user = DataGenerator.CreateUser();
-        var repository = CreateRepository();
+        var repository = CreateUserRepository();
 
         // Act
         var result = await repository.CreateAsync(user, Cts.Token);
@@ -51,7 +46,7 @@ public sealed class UserMongoRepositoryTests(MongoFixture fixture) : MongoTestBa
         var seedUser = DataGenerator.CreateUser();
         await GetCollection().InsertOneAsync(seedUser.ToDocument(), cancellationToken: Cts.Token);
 
-        var repository = CreateRepository();
+        var repository = CreateUserRepository();
 
         // Act
         var result = await repository.GetByIdAsync(seedUser.Id, Cts.Token);
@@ -73,7 +68,7 @@ public sealed class UserMongoRepositoryTests(MongoFixture fixture) : MongoTestBa
         var initialUser = DataGenerator.CreateUser();
         await GetCollection().InsertOneAsync(initialUser.ToDocument(), cancellationToken: Cts.Token);
 
-        var repository = CreateRepository();
+        var repository = CreateUserRepository();
         var newName = DataGenerator.CreateString();
         var newSurname = DataGenerator.CreateString();
 
@@ -103,7 +98,7 @@ public sealed class UserMongoRepositoryTests(MongoFixture fixture) : MongoTestBa
         var user = DataGenerator.CreateUser();
         await GetCollection().InsertOneAsync(user.ToDocument(), cancellationToken: Cts.Token);
 
-        var repository = CreateRepository();
+        var repository = CreateUserRepository();
 
         // Act
         await repository.DeleteAsync(user.Id, Cts.Token);
@@ -123,9 +118,9 @@ public sealed class UserMongoRepositoryTests(MongoFixture fixture) : MongoTestBa
     {
         // Arrange
         var users = DataGenerator.CreateUsers(2).ToList();
-        await GetCollection().InsertManyAsync(users.Select(x => x.ToDocument()), cancellationToken: Cts.Token);
+        await GetCollection().InsertManyAsync(users.Select(user => user.ToDocument()), cancellationToken: Cts.Token);
 
-        var repository = CreateRepository();
+        var repository = CreateUserRepository();
 
         // Act
         var result = await repository.GetAllAsync(Cts.Token);
@@ -143,7 +138,7 @@ public sealed class UserMongoRepositoryTests(MongoFixture fixture) : MongoTestBa
     public async Task GetByIdAsync_ShouldReturnNull_WhenUserDoesNotExist()
     {
         // Arrange
-        var repository = CreateRepository();
+        var repository = CreateUserRepository();
 
         // Act
         var result = await repository.GetByIdAsync(Guid.NewGuid(), Cts.Token);
@@ -161,7 +156,7 @@ public sealed class UserMongoRepositoryTests(MongoFixture fixture) : MongoTestBa
     public async Task DeleteAsync_ShouldNotThrow_WhenUserDoesNotExist()
     {
         // Arrange
-        var repository = CreateRepository();
+        var repository = CreateUserRepository();
 
         // Act & Assert
         var exception = await Record.ExceptionAsync(() => repository.DeleteAsync(Guid.NewGuid(), Cts.Token));

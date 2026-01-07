@@ -1,0 +1,25 @@
+<wpf:ResourceDictionary xml:space="preserve" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                        xmlns:s="clr-namespace:System;assembly=mscorlib"
+                        xmlns:ss="urn:shemas-jetbrains-com:settings-storage-xaml"
+                        xmlns:wpf="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
+  <s:Boolean x:Key="/Default/CodeInspection/NamespaceProvider/NamespaceFoldersToSkip/=Commands/@EntryIndexedValue">True</s:Boolean>
+  <s:Boolean x:Key="/Default/CodeInspection/NamespaceProvider/NamespaceFoldersToSkip/=Commands_005CProjects/@EntryIndexedValue">True</s:Boolean>
+  <s:Boolean x:Key="/Default/CodeInspection/NamespaceProvider/NamespaceFoldersToSkip/=Commands_005CProjects_005CCreate/@EntryIndexedValue">True</s:Boolean>
+  <s:Boolean x:Key="/Default/CodeInspection/NamespaceProvider/NamespaceFoldersToSkip/=Commands_005CProjects_005CDelete/@EntryIndexedValue">True</s:Boolean>
+  <s:Boolean x:Key="/Default/CodeInspection/NamespaceProvider/NamespaceFoldersToSkip/=Commands_005CProjects_005CUpdate/@EntryIndexedValue">True</s:Boolean>
+  <s:Boolean x:Key="/Default/CodeInspection/NamespaceProvider/NamespaceFoldersToSkip/=Commands_005CReplaceProfile/@EntryIndexedValue">True</s:Boolean>
+  <s:Boolean x:Key="/Default/CodeInspection/NamespaceProvider/NamespaceFoldersToSkip/=Commands_005CReplaceProfileSkills/@EntryIndexedValue">True</s:Boolean>
+  <s:Boolean x:Key="/Default/CodeInspection/NamespaceProvider/NamespaceFoldersToSkip/=Commands_005CUpdateProfileContacts/@EntryIndexedValue">True</s:Boolean>
+  <s:Boolean x:Key="/Default/CodeInspection/NamespaceProvider/NamespaceFoldersToSkip/=Commands_005CUpdateProfileHeader/@EntryIndexedValue">True</s:Boolean>
+  <s:Boolean x:Key="/Default/CodeInspection/NamespaceProvider/NamespaceFoldersToSkip/=Commands_005CUpdateProfileSummary/@EntryIndexedValue">True</s:Boolean>
+  <s:Boolean x:Key="/Default/CodeInspection/NamespaceProvider/NamespaceFoldersToSkip/=Commands_005CWorkExperience/@EntryIndexedValue">True</s:Boolean>
+  <s:Boolean x:Key="/Default/CodeInspection/NamespaceProvider/NamespaceFoldersToSkip/=Commands_005CWorkExperience_005CCreate/@EntryIndexedValue">True</s:Boolean>
+  <s:Boolean x:Key="/Default/CodeInspection/NamespaceProvider/NamespaceFoldersToSkip/=Commands_005CWorkExperience_005CDelete/@EntryIndexedValue">True</s:Boolean>
+  <s:Boolean x:Key="/Default/CodeInspection/NamespaceProvider/NamespaceFoldersToSkip/=Commands_005CWorkExperience_005CUpdate/@EntryIndexedValue">True</s:Boolean>
+  <s:Boolean x:Key="/Default/CodeInspection/NamespaceProvider/NamespaceFoldersToSkip/=Mapping/@EntryIndexedValue">True</s:Boolean>
+  <s:Boolean x:Key="/Default/CodeInspection/NamespaceProvider/NamespaceFoldersToSkip/=Queries/@EntryIndexedValue">True</s:Boolean>
+  <s:Boolean x:Key="/Default/CodeInspection/NamespaceProvider/NamespaceFoldersToSkip/=Queries_005CGetDeveloperProfileById/@EntryIndexedValue">True</s:Boolean>
+  <s:Boolean x:Key="/Default/CodeInspection/NamespaceProvider/NamespaceFoldersToSkip/=Queries_005CGetDeveloperProfilesCatalog/@EntryIndexedValue">True</s:Boolean>
+  <s:Boolean x:Key="/Default/CodeInspection/NamespaceProvider/NamespaceFoldersToSkip/=Queries_005CGetMyDeveloperProfile/@EntryIndexedValue">True</s:Boolean>
+  <s:Boolean x:Key="/Default/CodeInspection/NamespaceProvider/NamespaceFoldersToSkip/=Services/@EntryIndexedValue">True</s:Boolean>
+</wpf:ResourceDictionary>

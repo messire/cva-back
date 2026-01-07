@@ -55,6 +55,10 @@ internal static class DiExtensions
         public void RegisterInnerServices()
         {
             builder.Services.RegisterUserService();
+            builder.Services.RegisterDeveloperProfileService();
+            builder.Services.AddScoped<CommandExecutor>();
+            builder.Services.AddScoped<QueryExecutor>();
+            builder.Services.RegisterHandlers();
         }
 
         /// <summary>
@@ -87,6 +91,27 @@ internal static class DiExtensions
         }
     }
 
+    private static void RegisterHandlers(this IServiceCollection services)
+    {
+        var assemblies = AppDomain.CurrentDomain.GetAssemblies()
+            .Where(assembly => assembly.FullName?.StartsWith("CVA.Application") == true);
+
+        foreach (var assembly in assemblies)
+        {
+            var handlers = assembly.GetTypes()
+                .Where(type => type is { IsClass: true, IsAbstract: false })
+                .SelectMany(type => type.GetInterfaces(), (t, i) => new { Implementation = t, Interface = i })
+                .Where(arg => arg.Interface.IsGenericType &&
+                            (arg.Interface.GetGenericTypeDefinition() == typeof(ICommandHandler<,>) ||
+                             arg.Interface.GetGenericTypeDefinition() == typeof(IQueryHandler<,>)));
+
+            foreach (var handler in handlers)
+            {
+                services.AddScoped(handler.Interface, handler.Implementation);
+            }
+        }
+    }
+
     private static void ConfigureCors(CorsOptions options, IWebHostEnvironment env, string[]? origins)
     {
         options.AddPolicy("Frontend", policy =>
@@ -96,7 +121,6 @@ internal static class DiExtensions
                 .AllowAnyMethod();
         });
     }
-
 
     private static CorsPolicyBuilder ApplyEnvironmentOrigins(this CorsPolicyBuilder policy, bool isDevelopment, string[]? origins)
     {

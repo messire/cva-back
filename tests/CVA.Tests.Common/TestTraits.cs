@@ -46,9 +46,29 @@ public static class Category
     public const string Validators = nameof(Validators);
 
     /// <summary>
+    /// Represents the test category for handler-related tests.
+    /// </summary>
+    public const string Handlers = nameof(Handlers);
+
+    /// <summary>
     /// Represents the test category for ValueObjects-related tests.
     /// </summary>
     public const string ValueObjects = nameof(ValueObjects);
+
+    /// <summary>
+    /// Represents the test category for Entities-related tests.
+    /// </summary>
+    public const string Entities = nameof(Entities);
+
+    /// <summary>
+    /// Represents the test category for Guards-related tests.
+    /// </summary>
+    public const string Guards = nameof(Guards);
+
+    /// <summary>
+    /// Represents the test category for mapping-related tests.
+    /// </summary>
+    public const string Mapping = nameof(Mapping);
 }
 
 /// <summary>

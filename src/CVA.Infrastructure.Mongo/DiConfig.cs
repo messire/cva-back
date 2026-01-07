@@ -43,5 +43,6 @@ public static class DiConfig
         services.AddSingleton<IMongoClient>(_ => new MongoClient(mongoOptions.Connection));
         services.AddSingleton(mongoOptions);
         services.AddScoped<IUserRepository, UserMongoRepository>();
+        services.AddScoped<IDeveloperProfileRepository, DeveloperProfileMongoRepository>();
     }
 }
