@@ -1,0 +1,34 @@
+﻿namespace CVA.Application.DeveloperProfiles;
+
+/// <summary>
+/// Validator for the <see cref="UpdateProjectCommand"/>.
+/// </summary>
+public class UpdateProjectValidator : AbstractValidator<UpdateProjectCommand>
+{
+    /// <summary>
+    /// Initializes a new instance of the <see cref="UpdateProjectValidator"/> class.
+    /// </summary>
+    public UpdateProjectValidator()
+    {
+        RuleFor(command => command.ProjectId)
+            .NotEmpty();
+
+        RuleFor(command => command.Request.Name)
+            .NotEmpty()
+            .MaximumLength(200);
+
+        RuleFor(command => command.Request.Description)
+            .MaximumLength(2000);
+
+        RuleFor(command => command.Request.IconUrl)
+            .Must(value => string.IsNullOrEmpty(value) || Uri.IsWellFormedUriString(value, UriKind.Absolute))
+            .WithMessage("Invalid Icon URL");
+
+        RuleFor(command => command.Request.LinkUrl).NotEmpty()
+            .Must(uriString => Uri.IsWellFormedUriString(uriString, UriKind.Absolute))
+            .WithMessage("Invalid Link URL");
+
+        RuleFor(command => command.Request.TechStack)
+            .NotNull();
+    }
+}
