@@ -21,8 +21,15 @@ public sealed class UpdateWorkExperienceHandler(
 
         var request = command.Request;
         var now = DateTimeOffset.UtcNow;
+        var workId = new WorkExperienceId(command.WorkExperienceId);
+
+        if (profile.WorkExperience.All(item => item.Id != workId))
+        {
+            return Result<DeveloperProfileDto>.Fail("Work experience not found.");
+        }
+
         var (company, location, role, description, period, techStack) = request.ToDomain();
-        profile.UpdateWorkExperience(new WorkExperienceId(command.WorkExperienceId), company, location, role, description, period, techStack, now);
+        profile.UpdateWorkExperience(workId, company, location, role, description, period, techStack, now);
         var updatedProfile = await repository.UpdateAsync(profile, ct);
         return updatedProfile?.ToDto() ?? Result<DeveloperProfileDto>.Fail("Failed to update profile.");
     }

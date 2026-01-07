@@ -17,7 +17,13 @@ public sealed class DeleteWorkExperienceHandler(IDeveloperProfileRepository repo
             return Result<DeveloperProfileDto>.Fail("Profile not found.");
         }
 
-        profile.RemoveWorkExperience(new WorkExperienceId(command.WorkExperienceId), DateTimeOffset.UtcNow);
+        var workId = new WorkExperienceId(command.WorkExperienceId);
+        if (profile.WorkExperience.All(item => item.Id != workId))
+        {
+            return Result<DeveloperProfileDto>.Fail("Work experience not found.");
+        }
+
+        profile.RemoveWorkExperience(workId, DateTimeOffset.UtcNow);
         var updatedProfile = await repository.UpdateAsync(profile, ct);
         return updatedProfile?.ToDto() ?? Result<DeveloperProfileDto>.Fail("Failed to update profile.");
     }

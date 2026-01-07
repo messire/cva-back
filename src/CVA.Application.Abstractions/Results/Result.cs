@@ -1,6 +1,4 @@
-﻿using CVA.Application.Abstractions.Errors;
-
-namespace CVA.Application.Abstractions;
+﻿namespace CVA.Application.Abstractions;
 
 /// <summary>
 /// The result of an operation, encapsulating success status, value, and error information.

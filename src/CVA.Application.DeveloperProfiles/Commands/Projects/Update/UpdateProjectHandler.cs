@@ -19,17 +19,15 @@ public sealed class UpdateProjectHandler(IDeveloperProfileRepository repository,
 
         var request = command.Request;
         var now = DateTimeOffset.UtcNow;
+        var projectId = new ProjectId(command.ProjectId);
+
+        if (profile.Projects.All(item => item.Id != projectId))
+        {
+            return Result<DeveloperProfileDto>.Fail("Project not found.");
+        }
 
         var (name, description, link, icon, techStack) = request.ToDomain();
-        profile.UpdateProject(
-            new ProjectId(command.ProjectId),
-            name,
-            description,
-            icon,
-            link,
-            techStack,
-            now);
-
+        profile.UpdateProject(projectId, name, description, icon, link, techStack, now);
         var updatedProfile = await repository.UpdateAsync(profile, ct);
         return updatedProfile?.ToDto() ?? Result<DeveloperProfileDto>.Fail("Failed to update profile.");
     }

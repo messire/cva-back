@@ -73,9 +73,10 @@ public static class DeveloperProfileMapping
     private static WorkExperienceDto ToDto(this WorkExperienceItem work)
         => new()
         {
+            Id = work.Id.Value,
             Company = work.Company.Value,
             Location = work.Location?.ToDto(),
-            Role = work.Role.Value,
+            Role = work.Role?.Value ?? string.Empty,
             Description = work.Description?.Value,
             StartDate = work.Period.Start,
             EndDate = work.Period.End,

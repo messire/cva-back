@@ -17,7 +17,13 @@ public sealed class DeleteProjectHandler(IDeveloperProfileRepository repository,
             return Result<DeveloperProfileDto>.Fail("Profile not found.");
         }
 
-        profile.RemoveProject(new ProjectId(command.ProjectId), DateTimeOffset.UtcNow);
+        var projectId = new ProjectId(command.ProjectId);
+        if (profile.Projects.All(item => item.Id != projectId))
+        {
+            return Result<DeveloperProfileDto>.Fail("Project not found.");
+        }
+
+        profile.RemoveProject(projectId, DateTimeOffset.UtcNow);
         var updatedProfile = await repository.UpdateAsync(profile, ct);
         return updatedProfile?.ToDto() ?? Result<DeveloperProfileDto>.Fail("Failed to update profile.");
     }

@@ -54,11 +54,35 @@ internal static class DeveloperProfileMappingExtensions
             entity.Skills.Clear();
             entity.Skills.AddRange(profile.Skills.Select(tag => tag.Value));
 
-            entity.Projects.Clear();
-            entity.Projects.AddRange(profile.Projects.Select(item => item.ToEntity(entity.Id)));
+            var projectIds = profile.Projects.Select(item => item.Id.Value).ToHashSet();
+            entity.Projects.RemoveAll(projectEntity => !projectIds.Contains(projectEntity.Id));
+            foreach (var project in profile.Projects)
+            {
+                var existing = entity.Projects.FirstOrDefault(projectEntity => projectEntity.Id == project.Id.Value);
+                if (existing is not null)
+                {
+                    existing.UpdateFromDomain(project);
+                }
+                else
+                {
+                    entity.Projects.Add(project.ToEntity(entity.Id));
+                }
+            }
 
-            entity.WorkExperience.Clear();
-            entity.WorkExperience.AddRange(profile.WorkExperience.Select(item => item.ToEntity(entity.Id)));
+            var workExperienceIds = profile.WorkExperience.Select(w => w.Id.Value).ToHashSet();
+            entity.WorkExperience.RemoveAll(experienceEntity => !workExperienceIds.Contains(experienceEntity.Id));
+            foreach (var work in profile.WorkExperience)
+            {
+                var existing = entity.WorkExperience.FirstOrDefault(experienceEntity => experienceEntity.Id == work.Id.Value);
+                if (existing is not null)
+                {
+                    existing.UpdateFromDomain(work);
+                }
+                else
+                {
+                    entity.WorkExperience.Add(work.ToEntity(entity.Id));
+                }
+            }
 
             entity.UpdatedAt = profile.UpdatedAt;
         }
@@ -77,25 +101,25 @@ internal static class DeveloperProfileMappingExtensions
 
             var skills = entity.Skills.Select(SkillTag.From).ToArray();
 
-            var projects = entity.Projects.Select(p =>
+            var projects = entity.Projects.Select(projectEntity =>
                     ProjectItem.FromPersistence(
-                        new ProjectId(p.Id),
-                        ProjectName.From(p.Name),
-                        ProjectDescription.TryFrom(p.Description),
-                        ProjectIcon.TryFrom(p.IconUrl),
-                        ProjectLink.From(p.LinkUrl),
-                        p.TechStack.Select(TechTag.From)))
+                        new ProjectId(projectEntity.Id),
+                        ProjectName.From(projectEntity.Name),
+                        ProjectDescription.TryFrom(projectEntity.Description),
+                        ProjectIcon.TryFrom(projectEntity.IconUrl),
+                        ProjectLink.From(projectEntity.LinkUrl),
+                        projectEntity.TechStack.Select(TechTag.From)))
                 .ToArray();
 
-            var work = entity.WorkExperience.Select(w =>
+            var work = entity.WorkExperience.Select(experienceEntity =>
                     WorkExperienceItem.FromPersistence(
-                        new WorkExperienceId(w.Id),
-                        CompanyName.From(w.Company),
-                        Location.TryFrom(w.Location?.City, w.Location?.Country),
-                        RoleTitle.From(w.Role),
-                        WorkDescription.TryFrom(w.Description),
-                        DateRange.From(w.StartDate, w.EndDate),
-                        w.TechStack.Select(TechTag.From)))
+                        new WorkExperienceId(experienceEntity.Id),
+                        CompanyName.From(experienceEntity.Company),
+                        Location.TryFrom(experienceEntity.Location?.City, experienceEntity.Location?.Country),
+                        RoleTitle.From(experienceEntity.Role),
+                        WorkDescription.TryFrom(experienceEntity.Description),
+                        DateRange.From(experienceEntity.StartDate, experienceEntity.EndDate),
+                        experienceEntity.TechStack.Select(TechTag.From)))
                 .ToArray();
 
             return DeveloperProfile.FromPersistence(
@@ -115,6 +139,28 @@ internal static class DeveloperProfileMappingExtensions
                 createdAt: entity.CreatedAt,
                 updatedAt: entity.UpdatedAt);
         }
+    }
+
+    private static void UpdateFromDomain(this ProjectEntity entity, ProjectItem project)
+    {
+        entity.Name = project.Name.Value;
+        entity.Description = project.Description?.Value;
+        entity.IconUrl = project.Icon?.ImageUrl.Value;
+        entity.LinkUrl = project.Link.Value?.Value;
+        entity.TechStack.Clear();
+        entity.TechStack.AddRange(project.TechStack.Select(tag => tag.Value));
+    }
+
+    private static void UpdateFromDomain(this WorkExperienceEntity entity, WorkExperienceItem work)
+    {
+        entity.Company = work.Company.Value;
+        entity.Location = work.Location.ToEntity();
+        entity.Role = work.Role?.Value ?? string.Empty;
+        entity.Description = work.Description?.Value;
+        entity.StartDate = work.Period.Start;
+        entity.EndDate = work.Period.End;
+        entity.TechStack.Clear();
+        entity.TechStack.AddRange(work.TechStack.Select(tag => tag.Value));
     }
 
     private static LocationEntity? ToEntity(this Location? location)
@@ -148,7 +194,7 @@ internal static class DeveloperProfileMappingExtensions
             DeveloperProfileId = developerProfileId,
             Company = work.Company.Value,
             Location = work.Location.ToEntity(),
-            Role = work.Role.Value,
+            Role = work.Role?.Value ?? string.Empty,
             Description = work.Description?.Value,
             StartDate = work.Period.Start,
             EndDate = work.Period.End,

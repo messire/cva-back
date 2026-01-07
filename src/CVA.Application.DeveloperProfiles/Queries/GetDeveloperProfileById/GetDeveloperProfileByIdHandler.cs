@@ -1,6 +1,4 @@
-﻿using CVA.Application.Abstractions.Errors;
-
-namespace CVA.Application.DeveloperProfiles;
+﻿namespace CVA.Application.DeveloperProfiles;
 
 /// <summary>
 /// Handles the query to get a developer profile by its identifier.
