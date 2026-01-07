@@ -16,7 +16,7 @@ public sealed partial class DeveloperProfile
     public WorkExperienceId AddWorkExperience(
         CompanyName company,
         Location? location,
-        RoleTitle role,
+        RoleTitle? role,
         WorkDescription? description,
         DateRange period,
         IEnumerable<TechTag> techStack,
@@ -44,7 +44,7 @@ public sealed partial class DeveloperProfile
         WorkExperienceId id,
         CompanyName company,
         Location? location,
-        RoleTitle role,
+        RoleTitle? role,
         WorkDescription? description,
         DateRange period,
         IEnumerable<TechTag> techStack,

@@ -25,7 +25,7 @@ public sealed class WorkExperienceItem
     /// <summary>
     /// The title of the role held during the work experience.
     /// </summary>
-    public RoleTitle Role { get; private set; }
+    public RoleTitle? Role { get; private set; }
 
     /// <summary>
     /// The description of the work experience.
@@ -46,7 +46,7 @@ public sealed class WorkExperienceItem
         WorkExperienceId id,
         CompanyName company,
         Location? location,
-        RoleTitle role,
+        RoleTitle? role,
         WorkDescription? description,
         DateRange period,
         IEnumerable<TechTag> techStack)
@@ -79,7 +79,7 @@ public sealed class WorkExperienceItem
         WorkExperienceId id,
         CompanyName company,
         Location? location,
-        RoleTitle role,
+        RoleTitle? role,
         WorkDescription? description,
         DateRange period,
         IEnumerable<TechTag> techStack)
@@ -108,7 +108,7 @@ public sealed class WorkExperienceItem
         WorkExperienceId id,
         CompanyName company,
         Location? location,
-        RoleTitle role,
+        RoleTitle? role,
         WorkDescription? description,
         DateRange period,
         IEnumerable<TechTag> techStack)
@@ -135,7 +135,7 @@ public sealed class WorkExperienceItem
     public void Update(
         CompanyName company,
         Location? location,
-        RoleTitle role,
+        RoleTitle? role,
         WorkDescription? description,
         DateRange period,
         IEnumerable<TechTag> techStack)

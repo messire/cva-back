@@ -17,4 +17,14 @@ public sealed record VerificationStatus(VerificationLevel Value)
     /// </summary>
     public static VerificationStatus Default =>
         new(VerificationLevel.NotVerified);
+
+    /// <summary>
+    /// Tries to create a new <see cref="VerificationStatus"/> instance from the specified string value.
+    /// </summary>
+    /// <param name="value">The verification status value as a string.</param>
+    /// <returns>The created verification status or the default status if the value is invalid.</returns>
+    public static VerificationStatus TryFrom(string? value)
+        => Enum.TryParse<VerificationLevel>(value, true, out var level)
+            ? new VerificationStatus(level)
+            : Default;
 }

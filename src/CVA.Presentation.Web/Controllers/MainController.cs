@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using CVA.Application.Services;
+using Microsoft.AspNetCore.Authorization;
 
 namespace CVA.Presentation.Web;
 
