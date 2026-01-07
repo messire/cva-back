@@ -21,7 +21,7 @@ public sealed class EmailAddressBuilder : ISpecimenBuilder
         var isEmailRequest = request switch
         {
             PropertyInfo pi => pi.PropertyType == typeof(EmailAddress) && pi.Name.Equals("email", OrdinalIgnoreCase),
-            ParameterInfo pai => pai.ParameterType == typeof(EmailAddress) && pai.Name.Equals("email", OrdinalIgnoreCase),
+            ParameterInfo pai => pai.ParameterType == typeof(EmailAddress) && pai.Name!.Equals("email", OrdinalIgnoreCase),
             Type t => t == typeof(EmailAddress),
             _ => false
         };

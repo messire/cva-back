@@ -149,7 +149,7 @@ public class UpdateWorkExperienceValidatorTests
     /// <summary>
     /// Purpose: Validate EndDate is greater than or equal to StartDate.
     /// Should: Return error if EndDate is earlier than StartDate.
-    /// When: EndDate < StartDate.
+    /// When: EndDate &lt; StartDate.
     /// </summary>
     [Theory, CvaAutoData]
     public void EndDate_Range_Validation(UpdateWorkExperienceCommand baseCommand)

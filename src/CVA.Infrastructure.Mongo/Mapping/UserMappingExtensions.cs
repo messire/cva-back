@@ -180,7 +180,7 @@ internal static class UserMongoMappingExtensions
             Id = work.Id.Value,
             Company = work.Company.Value,
             Location = work.Location.ToDocument(),
-            Role = work.Role.Value,
+            Role = work.Role?.Value ?? string.Empty,
             Description = work.Description?.Value,
             StartDate = work.Period.Start,
             EndDate = work.Period.End,

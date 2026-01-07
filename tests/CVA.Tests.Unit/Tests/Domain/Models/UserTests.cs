@@ -152,7 +152,7 @@ public class UserTests
 
         // Assert
         Assert.Equal(1, removedCount);
-        Assert.Equal(1, user.WorkExperience.Count);
+        Assert.Single(user.WorkExperience);
         Assert.DoesNotContain(work1, user.WorkExperience);
     }
 

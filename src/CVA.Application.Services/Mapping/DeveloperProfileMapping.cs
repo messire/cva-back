@@ -95,7 +95,7 @@ internal static class DeveloperProfileMapping
         Id = model.Id.Value,
         Company = model.Company.Value,
         Location = model.Location?.ToDto(),
-        Role = model.Role.Value,
+        Role = model.Role?.Value ?? string.Empty,
         Description = model.Description?.Value,
         StartDate = model.Period.Start,
         EndDate = model.Period.End,

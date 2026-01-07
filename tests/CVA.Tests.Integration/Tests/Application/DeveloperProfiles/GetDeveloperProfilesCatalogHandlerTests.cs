@@ -54,7 +54,7 @@ public sealed class GetDeveloperProfilesCatalogHandlerTests(PostgresFixture fixt
         var profile = DataGenerator.CreateDeveloperProfile();
         await SeedProfileAsync(profile, Cts.Token);
 
-        var query = new GetDeveloperProfilesCatalogQuery("NonExistingName", null, null, null);
+        var query = new GetDeveloperProfilesCatalogQuery("NonExistingName", null!, null, null);
         var handler = new GetDeveloperProfilesCatalogHandler(CreateRepository());
 
         // Act
