@@ -246,7 +246,7 @@ public class UserServiceTests
 
         // Assert
         Assert.False(result.IsSuccess);
-        Assert.Equal(errorMessage, result.Error);
+        Assert.Equal(errorMessage, result.Error?.Message);
     }
 
     /// <summary>
@@ -274,7 +274,7 @@ public class UserServiceTests
 
         // Assert
         Assert.False(result.IsSuccess);
-        Assert.Contains("name", result.Error);
+        Assert.Contains("name", result.Error?.Message);
     }
 
     /// <summary>
@@ -324,7 +324,7 @@ public class UserServiceTests
 
         // Assert
         Assert.False(result.IsSuccess);
-        Assert.Equal($"User with id '{userId}' not found.", result.Error);
+        Assert.Equal($"User with id '{userId}' not found.", result.Error?.Message);
     }
 
     /// <summary>
@@ -347,7 +347,7 @@ public class UserServiceTests
 
         // Assert
         Assert.False(result.IsSuccess);
-        Assert.Equal($"Invalid route id '{id}' value.", result.Error);
+        Assert.Equal($"Invalid route id '{updateDto.Id}' value.", result.Error?.Message);
     }
 
     /// <summary>
@@ -371,7 +371,7 @@ public class UserServiceTests
 
         // Assert
         Assert.False(result.IsSuccess);
-        Assert.Equal(errorMessage, result.Error);
+        Assert.Equal(errorMessage, result.Error?.Message);
     }
 
     /// <summary>
@@ -436,7 +436,7 @@ public class UserServiceTests
 
         // Assert
         Assert.False(result.IsSuccess);
-        Assert.Equal(errorMessage, result.Error);
+        Assert.Equal(errorMessage, result.Error?.Message);
     }
 
     /// <summary>
@@ -481,6 +481,6 @@ public class UserServiceTests
 
         // Assert
         Assert.False(result.IsSuccess);
-        Assert.Equal(errorMessage, result.Error);
+        Assert.Equal(errorMessage, result.Error?.Message);
     }
 }
