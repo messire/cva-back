@@ -1,8 +1,5 @@
-﻿using CVA.Domain.Models;
-using CVA.Infrastructure.Mongo;
-using CVA.Tests.Common;
+﻿using CVA.Infrastructure.Mongo;
 using CVA.Tests.Common.Comparers;
-using CVA.Tests.Integration.Fixtures;
 using MongoDB.Driver;
 
 namespace CVA.Tests.Integration.Tests.Infrastructure.Mongo;

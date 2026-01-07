@@ -1,6 +1,4 @@
 ﻿using AutoFixture;
-using CVA.Domain.Models;
-using CVA.Tests.Common;
 
 namespace CVA.Tests.Integration.Fixtures;
 
@@ -29,6 +27,33 @@ internal static class DataGenerator
     /// </summary>
     /// <returns>A populated developer profile object.</returns>
     public static DeveloperProfile CreateDeveloperProfile() => Fixture.Create<DeveloperProfile>();
+
+    /// <summary>
+    /// Creates a new <see cref="DeveloperProfile"/> instance with random data for a specific user.
+    /// </summary>
+    /// <param name="userId">The user ID.</param>
+    /// <returns>A populated developer profile object.</returns>
+    public static DeveloperProfile CreateDeveloperProfile(Guid userId)
+    {
+        var profile = CreateDeveloperProfile();
+        return DeveloperProfile.FromPersistence(
+            new DeveloperId(userId),
+            profile.Name,
+            profile.Role,
+            profile.Summary,
+            profile.Avatar,
+            profile.Contact,
+            profile.Social,
+            profile.Verification,
+            profile.OpenToWork,
+            profile.YearsOfExperience,
+            [], // Empty skills
+            [], // Empty projects
+            [], // Empty work experience
+            profile.CreatedAt,
+            profile.UpdatedAt
+        );
+    }
 
     /// <summary>
     /// Creates a list of <see cref="DeveloperProfile"/> instances.

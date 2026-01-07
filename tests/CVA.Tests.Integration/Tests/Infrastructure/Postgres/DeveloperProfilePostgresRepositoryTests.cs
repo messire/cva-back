@@ -1,8 +1,5 @@
-﻿using CVA.Domain.Models;
-using CVA.Infrastructure.Postgres;
-using CVA.Tests.Common;
+﻿using CVA.Infrastructure.Postgres;
 using CVA.Tests.Common.Comparers;
-using CVA.Tests.Integration.Fixtures;
 
 namespace CVA.Tests.Integration.Tests.Infrastructure.Postgres;
 
@@ -174,5 +171,80 @@ public sealed class DeveloperProfilePostgresRepositoryTests(PostgresFixture fixt
 
         // Assert
         Assert.Null(result);
+    }
+
+    /// <summary>
+    /// Purpose: Verify repository correctly synchronizes nested collections (Projects, WorkExperience).
+    /// When: UpdateAsync is called with modified collections.
+    /// Should: Update existing items, add new ones, and remove missing ones without EF tracking issues.
+    /// </summary>
+    [Fact]
+    public async Task UpdateAsync_ShouldSyncCollectionsCorrectly()
+    {
+        // Arrange
+        var initialProfile = DataGenerator.CreateDeveloperProfile();
+        var created = await SeedProfileAsync(initialProfile, Cts.Token);
+        Assert.NotNull(created);
+        Assert.NotEmpty(created.Projects);
+        Assert.NotEmpty(created.WorkExperience);
+
+        var projectToUpdate = created.Projects[0];
+        var workToUpdate = created.WorkExperience[0];
+
+        var updatedProjects = new List<ProjectItem>
+        {
+            ProjectItem.FromPersistence(
+                projectToUpdate.Id,
+                ProjectName.From("Updated Project"),
+                projectToUpdate.Description,
+                projectToUpdate.Icon,
+                projectToUpdate.Link,
+                projectToUpdate.TechStack),
+            ProjectItem.FromPersistence(
+                new ProjectId(Guid.NewGuid()),
+                ProjectName.From("New Project"),
+                null, null, ProjectLink.From(Url.TryFrom("https://new.com")?.Value), [])
+        };
+
+        var updatedWork = new List<WorkExperienceItem>
+        {
+            WorkExperienceItem.FromPersistence(
+                workToUpdate.Id,
+                CompanyName.From("Updated Company"),
+                workToUpdate.Location,
+                workToUpdate.Role,
+                workToUpdate.Description,
+                workToUpdate.Period,
+                workToUpdate.TechStack),
+            WorkExperienceItem.FromPersistence(
+                new WorkExperienceId(Guid.NewGuid()),
+                CompanyName.From("New Company"),
+                null, RoleTitle.From("New Role"), null,
+                DateRange.From(DateOnly.FromDateTime(DateTime.UtcNow.AddYears(-1)), null), [])
+        };
+
+        var updatedProfile = DeveloperProfile.FromPersistence(
+            created.Id, created.Name, created.Role, created.Summary, created.Avatar,
+            created.Contact, created.Social, created.Verification, created.OpenToWork,
+            created.YearsOfExperience, created.Skills, updatedProjects, updatedWork,
+            created.CreatedAt, DateTimeOffset.UtcNow);
+
+        await using var context = CreateContext();
+        var repository = CreateProfileRepository(context);
+
+        // Act
+        await repository.UpdateAsync(updatedProfile, Cts.Token);
+
+        // Assert
+        var dbProfile = await GetFreshProfileAsync(created.Id.Value, Cts.Token);
+        Assert.NotNull(dbProfile);
+        
+        Assert.Equal(2, dbProfile.Projects.Count);
+        Assert.Contains(dbProfile.Projects, item => item.Name.Value == "Updated Project" && item.Id == projectToUpdate.Id);
+        Assert.Contains(dbProfile.Projects, item => item.Name.Value == "New Project");
+
+        Assert.Equal(2, dbProfile.WorkExperience.Count);
+        Assert.Contains(dbProfile.WorkExperience, item => item.Company.Value == "Updated Company" && item.Id == workToUpdate.Id);
+        Assert.Contains(dbProfile.WorkExperience, item => item.Company.Value == "New Company");
     }
 }

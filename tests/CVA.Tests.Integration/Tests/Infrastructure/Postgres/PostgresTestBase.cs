@@ -1,6 +1,4 @@
-﻿using CVA.Domain.Models;
-using CVA.Infrastructure.Postgres;
-using CVA.Tests.Integration.Fixtures;
+﻿using CVA.Infrastructure.Postgres;
 using Microsoft.EntityFrameworkCore;
 
 namespace CVA.Tests.Integration.Tests.Infrastructure.Postgres;

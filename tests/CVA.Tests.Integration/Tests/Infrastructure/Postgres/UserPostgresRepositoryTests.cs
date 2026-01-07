@@ -1,8 +1,5 @@
-﻿using CVA.Domain.Models;
-using CVA.Infrastructure.Postgres;
-using CVA.Tests.Common;
+﻿using CVA.Infrastructure.Postgres;
 using CVA.Tests.Common.Comparers;
-using CVA.Tests.Integration.Fixtures;
 
 namespace CVA.Tests.Integration.Tests.Infrastructure.Postgres;
 

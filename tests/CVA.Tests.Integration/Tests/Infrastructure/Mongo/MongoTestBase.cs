@@ -1,6 +1,5 @@
 ﻿using CVA.Domain.Interfaces;
 using CVA.Infrastructure.Mongo;
-using CVA.Tests.Integration.Fixtures;
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization;
 using MongoDB.Bson.Serialization.Serializers;
