@@ -9,6 +9,7 @@ public sealed class DomainMappingCustomization : ICustomization
     public void Customize(IFixture fixture)
     {
         fixture.Customizations.Add(EmailAddressBuilder.Instance);
+        fixture.Customizations.Add(PhoneNumberBuilder.Instance);
         fixture.Customizations.Add(UrlBuilder.Instance);
         fixture.Customizations.Add(YearsOfExperienceBuilder.Instance);
         fixture.Customizations.Add(WorkDtoBuilder.Instance);

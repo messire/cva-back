@@ -24,6 +24,7 @@ public static class RequestsMapping
         => ContactInfo.Create(
             request.Location?.ToModel() ?? existing.Location,
             request.Email != null ? EmailAddress.From(request.Email) : existing.Email,
+            request.Phone != null ? PhoneNumber.TryFrom(request.Phone) : existing.Phone,
             request.Website != null ? Url.TryFrom(request.Website) : existing.Website);
 
     /// <summary>
@@ -33,6 +34,7 @@ public static class RequestsMapping
         => ContactInfo.Create(
             request.Location.ToModel(),
             EmailAddress.From(request.Email ?? string.Empty),
+            PhoneNumber.TryFrom(request.Phone),
             Url.TryFrom(request.Website));
 
     /// <summary>

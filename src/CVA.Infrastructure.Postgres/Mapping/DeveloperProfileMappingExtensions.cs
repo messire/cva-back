@@ -15,6 +15,7 @@ internal static class DeveloperProfileMappingExtensions
             OpenToWork = profile.OpenToWork.Value,
             YearsOfExperience = profile.YearsOfExperience.Value,
             Email = profile.Contact.Email.Value,
+            Phone = profile.Contact.Phone?.Value,
             Website = profile.Contact.Website?.Value,
             Location = profile.Contact.Location.ToEntity(),
             SocialLinks = profile.Social.ToEntity(),
@@ -42,6 +43,7 @@ internal static class DeveloperProfileMappingExtensions
             entity.OpenToWork = profile.OpenToWork.Value;
             entity.YearsOfExperience = profile.YearsOfExperience.Value;
             entity.Email = profile.Contact.Email.Value;
+            entity.Phone = profile.Contact.Phone?.Value;
             entity.Website = profile.Contact.Website?.Value;
             entity.Location = profile.Contact.Location.ToEntity();
             entity.SocialLinks ??= new SocialLinksEntity();
@@ -94,6 +96,7 @@ internal static class DeveloperProfileMappingExtensions
             var contactInfo = ContactInfo.Create(
                 Location.TryFrom(entity.Location?.City, entity.Location?.Country),
                 EmailAddress.From(entity.Email),
+                PhoneNumber.TryFrom(entity.Phone),
                 Url.TryFrom(entity.Website));
 
             var socialsEntity = entity.SocialLinks;

@@ -19,8 +19,8 @@ public sealed class UpdateProfileContactsHandler(IDeveloperProfileRepository rep
 
         var request = command.Request;
         var now = DateTimeOffset.UtcNow;
-
-        if (request.Email != null || request.Website != null || request.Location != null)
+        
+        if (request.Email != null || request.Phone != null || request.Website != null || request.Location != null)
         {
             profile.ChangeContact(request.ToModel(profile.Contact), now);
         }

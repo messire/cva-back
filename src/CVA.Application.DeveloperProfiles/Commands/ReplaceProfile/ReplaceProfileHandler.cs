@@ -18,6 +18,7 @@ public sealed class ReplaceProfileHandler(IDeveloperProfileRepository repository
         var contactInfo = ContactInfo.Create(
             request.Location?.ToModel(),
             EmailAddress.From(request.Email ?? string.Empty),
+            PhoneNumber.TryFrom(request.Phone),
             Url.TryFrom(request.Website));
 
         var socials = request.SocialLinks.ToModel();

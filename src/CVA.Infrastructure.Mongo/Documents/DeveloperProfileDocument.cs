@@ -29,6 +29,11 @@ internal sealed class DeveloperProfileDocument
     public string? Role { get; set; }
 
     /// <summary>
+    /// Developer phone number.
+    /// </summary>
+    public string? Phone { get; init; }
+
+    /// <summary>
     /// The summary of the developer profile owner.
     /// </summary>
     public string? Summary { get; set; }

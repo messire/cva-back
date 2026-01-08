@@ -14,6 +14,10 @@ public class UpdateProfileContactsValidator : AbstractValidator<UpdateProfileCon
             .EmailAddress()
             .When(command => !string.IsNullOrEmpty(command.Request.Email));
 
+        RuleFor(command => command.Request.Phone)
+            .MaximumLength(30)
+            .When(command => !string.IsNullOrEmpty(command.Request.Phone));
+
         RuleFor(command => command.Request.Website)
             .Must(value => string.IsNullOrEmpty(value) || Uri.IsWellFormedUriString(value, UriKind.Absolute))
             .WithMessage("Invalid Website URL");

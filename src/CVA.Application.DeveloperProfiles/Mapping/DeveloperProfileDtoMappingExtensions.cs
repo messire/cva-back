@@ -1,6 +1,4 @@
-﻿using CVA.Domain.Models;
-
-namespace CVA.Application.DeveloperProfiles;
+﻿namespace CVA.Application.DeveloperProfiles;
 
 /// <summary>
 /// Provides extension methods for mapping domain models to DTOs.
@@ -14,11 +12,16 @@ public static class DeveloperProfileMapping
         => new()
         {
             Id = profile.Id.Value,
+            FirstName = profile.Name.FirstName,
+            LastName = profile.Name.LastName,
+            Email = profile.Contact.Email.Value,
+            Phone = profile.Contact.Phone?.Value,
+            Website = profile.Contact.Website?.Value,
             Role = profile.Role?.Value,
             Summary = profile.Summary?.Value,
             AvatarUrl = profile.Avatar?.ImageUrl.Value,
             OpenToWork = profile.OpenToWork.Value,
-            Verified = profile.Verification.Value,
+            Verified = profile.Verification.Value.ToString(),
             YearsOfExperience = profile.YearsOfExperience.Value,
             Location = profile.Contact.Location?.ToDto(),
             SocialLinks = profile.Social.ToDto(),
@@ -39,7 +42,10 @@ public static class DeveloperProfileMapping
             Role = profile.Role?.Value,
             AvatarUrl = profile.Avatar?.ImageUrl.Value,
             OpenToWork = profile.OpenToWork.Value,
+            YearsOfExperience = profile.YearsOfExperience.Value,
+            Summary = profile.Summary?.Value,
             VerificationStatus = profile.Verification.Value.ToString(),
+            ProjectsCount = profile.Projects.Count,
             Skills = profile.Skills.Select(tag => tag.Value).ToArray()
         };
 

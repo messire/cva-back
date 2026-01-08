@@ -51,6 +51,11 @@ public sealed record ReplaceProfileRequest
     public string? Email { get; init; }
 
     /// <summary>
+    /// The developer's phone number.
+    /// </summary>
+    public string? Phone { get; init; }
+
+    /// <summary>
     /// The developer's website or portfolio URL.
     /// </summary>
     public string? Website { get; init; }

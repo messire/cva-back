@@ -9,8 +9,8 @@ namespace CVA.Presentation.Web;
 /// <param name="commands">Command executor.</param>
 [ApiController]
 [Authorize]
-[Route("api/me/developer-profile")]
-public sealed class MeDeveloperProfileController(QueryExecutor queries, CommandExecutor commands) : ControllerBase
+[Route("api/profile")]
+public sealed class DeveloperProfilesController(QueryExecutor queries, CommandExecutor commands) : ControllerBase
 {
     /// <summary>
     /// Returns current user's developer profile.

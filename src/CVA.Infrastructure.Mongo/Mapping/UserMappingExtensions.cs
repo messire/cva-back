@@ -109,6 +109,7 @@ internal static class UserMongoMappingExtensions
         var contactInfo = ContactInfo.Create(
             location: Location.TryFrom(document.Location?.City, document.Location?.Country),
             email: EmailAddress.From(document.Email),
+            phone: PhoneNumber.TryFrom(document.Phone),
             website: Url.TryFrom(document.Website));
         var socials = SocialLinks.Create(document.SocialLinks?.LinkedIn, document.SocialLinks?.GitHub, document.SocialLinks?.Twitter, document.SocialLinks?.Telegram);
 

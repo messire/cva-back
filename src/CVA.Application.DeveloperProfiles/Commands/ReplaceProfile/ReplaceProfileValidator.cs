@@ -32,6 +32,10 @@ public class ReplaceProfileValidator : AbstractValidator<ReplaceProfileCommand>
             .NotEmpty()
             .EmailAddress();
 
+        RuleFor(command => command.Request.Phone)
+            .MaximumLength(30)
+            .When(command => !string.IsNullOrEmpty(command.Request.Phone));
+
         RuleFor(command => command.Request.Website)
             .Must(value => string.IsNullOrEmpty(value) || Uri.IsWellFormedUriString(value, UriKind.Absolute))
             .WithMessage("Invalid Website URL");

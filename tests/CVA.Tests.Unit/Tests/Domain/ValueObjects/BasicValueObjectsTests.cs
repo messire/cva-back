@@ -159,15 +159,16 @@ public class BasicValueObjectsTests
     /// When: Valid location, email and website are provided.
     /// </summary>
     [Theory, CvaAutoData]
-    public void ContactInfo_Should_Initialize(Location location, EmailAddress email, Url website)
+    public void ContactInfo_Should_Initialize(Location location, EmailAddress email, Url website, PhoneNumber phoneNumber)
     {
         // Act
-        var contact = ContactInfo.Create(location, email, website);
+        var contact = ContactInfo.Create(location, email, phoneNumber, website);
 
         // Assert
         Assert.Equal(location, contact.Location);
         Assert.Equal(email, contact.Email);
         Assert.Equal(website, contact.Website);
+        Assert.Equal(phoneNumber, contact.Phone);
     }
 
     /// <summary>

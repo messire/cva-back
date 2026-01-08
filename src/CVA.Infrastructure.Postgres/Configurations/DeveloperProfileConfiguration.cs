@@ -20,6 +20,7 @@ internal sealed class DeveloperProfileConfiguration : IEntityTypeConfiguration<D
         builder.SetProperty(entity => entity.OpenToWork).HasDefaultValue(false);
         builder.SetProperty(entity => entity.YearsOfExperience);
         builder.SetProperty(entity => entity.Email, maxLength: 150).IsRequired();
+        builder.SetProperty(entity => entity.Phone, maxLength: 30);
         builder.SetProperty(entity => entity.Website, maxLength: 255);
         builder.SetProperty(entity => entity.Skills).HasColumnType(DatabaseTypes.TextArray);
         builder.SetProperty(entity => entity.Verified).HasConversion<int>();

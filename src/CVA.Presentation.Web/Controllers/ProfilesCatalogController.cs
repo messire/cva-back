@@ -4,8 +4,8 @@
 /// Public read-only API for developer profiles.
 /// </summary>
 [ApiController]
-[Route("api/developer-profiles")]
-public sealed class DeveloperProfilesController(QueryExecutor queries) : ControllerBase
+[Route("api/catalog")]
+public sealed class ProfilesCatalogController(QueryExecutor queries) : ControllerBase
 {
     /// <summary>
     /// Returns developer profiles catalog (cards).

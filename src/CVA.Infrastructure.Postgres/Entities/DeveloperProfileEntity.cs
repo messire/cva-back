@@ -51,6 +51,11 @@ internal sealed class DeveloperProfileEntity
     public string Email { get; set; } = null!;
 
     /// <summary>
+    /// Contact phone number.
+    /// </summary>
+    public string? Phone { get; set; }
+
+    /// <summary>
     /// Contact website URL.
     /// </summary>
     public string? Website { get; set; }

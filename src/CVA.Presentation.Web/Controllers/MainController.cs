@@ -9,6 +9,7 @@ namespace CVA.Presentation.Web;
 [ApiController]
 [Route("/api/users")]
 [AllowAnonymous]
+[Obsolete]
 public sealed class MainController(IUserService userService) : ControllerBase
 {
     /// <summary>

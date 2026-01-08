@@ -13,6 +13,31 @@ public sealed record DeveloperProfileDto
     public Guid Id { get; init; }
 
     /// <summary>
+    /// The first name of the developer associated with the profile card.
+    /// </summary>
+    public string? FirstName { get; init; }
+
+    /// <summary>
+    /// The last name of the developer associated with the profile card.
+    /// </summary>
+    public string? LastName { get; init; }
+
+    /// <summary>
+    /// Developer email address.
+    /// </summary>
+    public string? Email { get; init; }
+
+    /// <summary>
+    /// Developer phone number.
+    /// </summary>
+    public string? Phone { get; init; }
+
+    /// <summary>
+    /// Developer website address
+    /// </summary>
+    public string? Website { get; init; }
+
+    /// <summary>
     /// Developer role or title.
     /// </summary>
     public string? Role { get; init; }
@@ -35,7 +60,7 @@ public sealed record DeveloperProfileDto
     /// <summary>
     /// Indicates whether the profile is verified.
     /// </summary>
-    public VerificationLevel? Verified { get; init; }
+    public string? Verified { get; init; }
 
     /// <summary>
     /// Years of professional experience.

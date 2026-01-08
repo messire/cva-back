@@ -36,9 +36,24 @@ public sealed record DeveloperProfileCardDto
     public bool OpenToWork { get; init; }
 
     /// <summary>
+    /// Years of professional experience.
+    /// </summary>
+    public int? YearsOfExperience { get; init; }
+
+    /// <summary>
+    /// Profile summary.
+    /// </summary>
+    public string? Summary { get; init; }
+
+    /// <summary>
     /// Indicates the current verification status of the developer profile.
     /// </summary>
     public string? VerificationStatus { get; init; }
+
+    /// <summary>
+    /// Number of completed projects by the developer.
+    /// </summary>
+    public int ProjectsCount { get; init; }
 
     /// <summary>
     /// Represents a collection of skills associated with the developer.
