@@ -1,27 +1,21 @@
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
-using CVA.Presentation.Web.Auth.Claims;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 
-namespace CVA.Presentation.Web.Auth.Jwt;
+namespace CVA.Infrastructure.Auth;
 
 /// <summary>
 /// Generates JWT access tokens for authenticated users.
 /// </summary>
 /// <param name="options">JWT configuration options.</param>
-public sealed class JwtTokenGenerator(IOptions<JwtOptions> options)
+internal sealed class JwtTokenGenerator(IOptions<JwtOptions> options) : IAppTokenIssuer
 {
     private readonly JwtOptions _options = options.Value ?? throw new ArgumentNullException(nameof(options));
 
-    /// <summary>
-    /// Generates a signed JWT access token.
-    /// </summary>
-    /// <param name="userId">The current user identifier (goes into <c>sub</c> claim).</param>
-    /// <param name="role">The current user role (goes into <c>role</c> claim).</param>
-    /// <returns>A signed JWT token string.</returns>
-    public string Generate(Guid userId, string role)
+    /// <inheritdoc/>
+    public string Issue(Guid userId, string role)
     {
         if (userId == Guid.Empty)
         {

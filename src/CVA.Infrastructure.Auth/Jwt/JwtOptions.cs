@@ -1,4 +1,4 @@
-namespace CVA.Presentation.Web.Auth.Jwt;
+namespace CVA.Infrastructure.Auth;
 
 
 /// <summary>

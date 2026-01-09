@@ -17,6 +17,7 @@
   <Folder Name="/src/" />
   <Folder Name="/src/application/">
     <Project Path="src/CVA.Application.Abstractions/CVA.Application.Abstractions.csproj" />
+    <Project Path="src/CVA.Application.AuthService/CVA.Application.AuthService.csproj" />
     <Project Path="src/CVA.Application.Contracts/CVA.Application.Contracts.csproj" />
     <Project Path="src/CVA.Application.ProfileService/CVA.Application.ProfileService.csproj" />
     <Project Path="src/CVA.Application.UserService/CVA.Application.UserService.csproj" />
@@ -27,6 +28,7 @@
     <Project Path="src/CVA.Domain.Models/CVA.Domain.Models.csproj" />
   </Folder>
   <Folder Name="/src/infrastructure/">
+    <Project Path="src/CVA.Infrastructure.Auth/CVA.Infrastructure.Auth.csproj" />
     <Project Path="src/CVA.Infrastructure.Common/CVA.Infrastructure.Common.csproj" />
     <Project Path="src/CVA.Infrastructure.Mongo/CVA.Infrastructure.Mongo.csproj" />
     <Project Path="src/CVA.Infrastructure.Postgres/CVA.Infrastructure.Postgres.csproj" />

@@ -1,4 +1,4 @@
-namespace CVA.Presentation.Web.Auth.Claims;
+namespace CVA.Infrastructure.Auth;
 
 /// <summary>
 /// Defines custom JWT claim type names used by the application.

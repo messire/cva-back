@@ -19,10 +19,19 @@
         <ProjectReference Include="..\CVA.Application.ProfileService\CVA.Application.ProfileService.csproj" />
         <ProjectReference Include="..\CVA.Application.UserService\CVA.Application.UserService.csproj"/>
         <ProjectReference Include="..\CVA.Application.Validators\CVA.Application.Validators.csproj"/>
+        <ProjectReference Include="..\CVA.Infrastructure.Auth\CVA.Infrastructure.Auth.csproj" />
         <ProjectReference Include="..\CVA.Infrastructure.Common\CVA.Infrastructure.Common.csproj"/>
         <ProjectReference Include="..\CVA.Infrastructure.Mongo\CVA.Infrastructure.Mongo.csproj"/>
         <ProjectReference Include="..\CVA.Infrastructure.Postgres\CVA.Infrastructure.Postgres.csproj"/>
         <ProjectReference Include="..\CVA.Tools.Common\CVA.Tools.Common.csproj"/>
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="Auth\Jwt\" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Compile Remove="Auth\Jwt\JwtTokenGenerator.cs" />
     </ItemGroup>
 
 </Project>

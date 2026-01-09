@@ -1,5 +1,5 @@
 using System.Security.Claims;
-using CVA.Presentation.Web.Auth.Jwt;
+using CVA.Infrastructure.Auth;
 using Microsoft.AspNetCore.Authorization;
 
 namespace CVA.Presentation.Web;
@@ -10,7 +10,7 @@ namespace CVA.Presentation.Web;
 /// </summary>
 [ApiController]
 [Route("api/_auth")]
-public sealed class AuthDebugController(JwtTokenGenerator tokenGenerator, IHostEnvironment environment) : ControllerBase
+public sealed class AuthDebugController(IAppTokenIssuer tokenGenerator, IHostEnvironment environment) : ControllerBase
 {
     /// <summary>
     /// Health check. Always 200.
@@ -55,7 +55,7 @@ public sealed class AuthDebugController(JwtTokenGenerator tokenGenerator, IHostE
             return NotFound();
         }
 
-        var token = tokenGenerator.Generate(request.UserId, request.Role ?? "User");
+        var token = tokenGenerator.Issue(request.UserId, request.Role ?? "User");
         return Ok(new
         {
             accessToken = token

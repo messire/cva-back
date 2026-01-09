@@ -1,6 +1,7 @@
 ﻿using CVA.Application.ProfileService;
 using CVA.Application.UserService;
 using CVA.Application.Validators;
+using CVA.Infrastructure.Auth;
 using CVA.Infrastructure.Common;
 using CVA.Infrastructure.Mongo;
 using CVA.Infrastructure.Postgres;
@@ -89,6 +90,11 @@ internal static class DiExtensions
         {
             builder.Services.AddFluentValidationAutoValidation();
             builder.Services.AddValidatorsFromAssemblyContaining<IValidatorMarker>();
+        }
+
+        public void RegisterAuth()
+        {
+            builder.Services.RegisterAuthService(builder.Configuration, builder.Environment);
         }
     }
 
