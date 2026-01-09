@@ -16,7 +16,7 @@
     <ItemGroup>
         <ProjectReference Include="..\CVA.Application.Abstractions\CVA.Application.Abstractions.csproj" />
         <ProjectReference Include="..\CVA.Application.Contracts\CVA.Application.Contracts.csproj"/>
-        <ProjectReference Include="..\CVA.Application.DeveloperProfiles\CVA.Application.DeveloperProfiles.csproj" />
+        <ProjectReference Include="..\CVA.Application.ProfileService\CVA.Application.ProfileService.csproj" />
         <ProjectReference Include="..\CVA.Application.Services\CVA.Application.Services.csproj"/>
         <ProjectReference Include="..\CVA.Application.Validators\CVA.Application.Validators.csproj"/>
         <ProjectReference Include="..\CVA.Infrastructure.Common\CVA.Infrastructure.Common.csproj"/>

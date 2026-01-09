@@ -28,7 +28,7 @@
       <ProjectReference Include="..\..\src\CVA.Infrastructure.Mongo\CVA.Infrastructure.Mongo.csproj" />
       <ProjectReference Include="..\..\src\CVA.Infrastructure.Postgres\CVA.Infrastructure.Postgres.csproj" />
       <ProjectReference Include="..\CVA.Tests.Common\CVA.Tests.Common.csproj" />
-      <ProjectReference Include="..\..\src\CVA.Application.DeveloperProfiles\CVA.Application.DeveloperProfiles.csproj" />
+      <ProjectReference Include="..\..\src\CVA.Application.ProfileService\CVA.Application.ProfileService.csproj" />
     </ItemGroup>
 
 </Project>
