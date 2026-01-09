@@ -20,22 +20,6 @@ internal static class UserMongoMappingExtensions
         };
 
     /// <summary>
-    /// Maps a domain <see cref="Work"/> to a Mongo <see cref="WorkDocument"/>.
-    /// </summary>
-    public static WorkDocument ToDocument(this Work work)
-        => new()
-        {
-            CompanyName = work.CompanyName,
-            Role = work.Role,
-            Description = work.Description,
-            Location = work.Location,
-            StartDate = work.StartDate,
-            EndDate = work.EndDate,
-            Achievements = work.Achievements.ToList(),
-            TechStack = work.TechStack.ToList(),
-        };
-
-    /// <summary>
     /// Maps a Mongo <see cref="UserDocument"/> to a domain <see cref="User"/>.
     /// </summary>
     public static User ToDomain(this UserDocument document)
@@ -46,21 +30,6 @@ internal static class UserMongoMappingExtensions
             googleSubject: document.GoogleSubject,
             createdAt: document.CreatedAt,
             updatedAt: document.UpdatedAt
-        );
-
-    /// <summary>
-    /// Maps a Mongo <see cref="WorkDocument"/> to a domain <see cref="Work"/>.
-    /// </summary>
-    public static Work ToDomain(this WorkDocument document)
-        => Work.Create(
-            companyName: document.CompanyName,
-            role: document.Role,
-            startDate: document.StartDate,
-            endDate: document.EndDate,
-            description: document.Description,
-            location: document.Location,
-            achievements: document.Achievements,
-            techStack: document.TechStack
         );
 
     /// <summary>

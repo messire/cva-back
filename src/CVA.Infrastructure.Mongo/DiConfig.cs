@@ -32,14 +32,6 @@ public static class DiConfig
             });
         }
 
-        if (!BsonClassMap.IsClassMapRegistered(typeof(Work)))
-        {
-            BsonClassMap.RegisterClassMap<Work>(classMap =>
-            {
-                classMap.AutoMap();
-            });
-        }
-
         services.AddSingleton<IMongoClient>(_ => new MongoClient(mongoOptions.Connection));
         services.AddSingleton(mongoOptions);
         services.AddScoped<IUserRepository, UserMongoRepository>();

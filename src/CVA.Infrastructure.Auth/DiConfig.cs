@@ -24,7 +24,7 @@ public static class DiConfig
         public void RegisterAuthService(IConfiguration configuration, IHostEnvironment environment)
         {
             services.ConfigureJwtAuth(configuration, environment);
-            services.ConfigureGoogleAuth(configuration);
+            services.ConfigureGoogleAuth(configuration, environment);
             services.AddAuthorization();
         }
 
@@ -41,8 +41,17 @@ public static class DiConfig
                 .AddJwtBearer(options => ConfigureJwtBearer(environment, options, jwt));
         }
 
-        private void ConfigureGoogleAuth(IConfiguration configuration)
+        private void ConfigureGoogleAuth(IConfiguration configuration, IHostEnvironment environment)
         {
+            services.AddSingleton<IGoogleTokenVerifier, GoogleIdTokenVerifier>();
+            var section = configuration.GetSection(GoogleAuthOptions.Path);
+            var clientId = section["ClientId"];
+            if (string.IsNullOrWhiteSpace(clientId))
+            {
+                if (environment.IsDevelopment()) return;
+                throw new InvalidOperationException("Auth:Google:ClientId is required in non-development environments.");
+            }
+
             services.BindAndValidateGoogleAuth(configuration);
             services.AddSingleton(provider => provider.GetRequiredService<IOptions<GoogleAuthOptions>>().Value);
             services.AddSingleton<GoogleIdTokenVerifier>();

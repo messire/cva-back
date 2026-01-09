@@ -1,7 +1,6 @@
-﻿using CVA.Application.UserService;
-using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.Extensions.DependencyInjection;
 
-namespace CVA.Application.UserService;
+namespace CVA.Application.IdentityService;
 
 /// <summary>
 /// Provides dependency injection configuration for the application services.
@@ -14,6 +13,6 @@ public static class DiConfig
     /// <param name="services">The service collection to which the user service will be added.</param>
     public static void RegisterUserService(this IServiceCollection services)
     {
-        services.AddScoped<IUserService, UserService>();
+        services.AddSingleton<IIdentityService, IdentityService>();
     }
 }

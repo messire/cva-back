@@ -1,6 +1,4 @@
-﻿using CVA.Tools.Common;
-
-namespace CVA.Tests.Common.Comparers;
+﻿namespace CVA.Tests.Common.Comparers;
 
 /// <summary>
 /// Provides functionality to compare two <see cref="User"/> objects for equality.
@@ -8,8 +6,6 @@ namespace CVA.Tests.Common.Comparers;
 /// <seealso cref="IEqualityComparer{T}"/>
 public class UserComparer : IEqualityComparer<User>
 {
-    private static readonly WorkComparer WorkComp = new();
-
     /// <summary>
     /// Determines whether two <see cref="User"/> objects are equal based on their properties.
     /// </summary>
@@ -25,15 +21,9 @@ public class UserComparer : IEqualityComparer<User>
         if (x is null || y is null) return false;
 
         return x.Id == y.Id &&
-               string.Equals(x.Name, y.Name) &&
-               string.Equals(x.Surname, y.Surname) &&
-               string.Equals(x.Email, y.Email) &&
-               string.Equals(x.Phone, y.Phone) &&
-               string.Equals(x.Photo, y.Photo) &&
-               string.Equals(x.SummaryInfo, y.SummaryInfo) &&
-               x.Birthday == y.Birthday &&
-               x.Skills.ScrambledEquals(y.Skills) &&
-               x.WorkExperience.ScrambledEquals(y.WorkExperience, WorkComp);
+               string.Equals(x.GoogleSubject, y.GoogleSubject) &&
+               Equals(x.Role, y.Role) &&
+               Equals(x.Email, y.Email);
     }
 
     /// <inheritdoc />
@@ -43,17 +33,9 @@ public class UserComparer : IEqualityComparer<User>
 
         var hash = new HashCode();
         hash.Add(obj.Id);
-        hash.Add(obj.Name);
-        hash.Add(obj.Surname);
+        hash.Add(obj.GoogleSubject);
+        hash.Add(obj.Role);
         hash.Add(obj.Email);
-        hash.Add(obj.Phone);
-        hash.Add(obj.Photo);
-        hash.Add(obj.SummaryInfo);
-        hash.Add(obj.Birthday);
-
-        obj.Skills.ForEach(hash.Add);
-        obj.WorkExperience.ForEach(item => hash.Add(item, WorkComp));
-
         return hash.ToHashCode();
     }
 }

@@ -57,79 +57,6 @@ public sealed class UserMongoRepositoryTests(MongoFixture fixture) : MongoTestBa
     }
 
     /// <summary>
-    /// Purpose: Verify update replaces stored document state.
-    /// When: Updating scalar fields and work experience.
-    /// Should: Persist new values and return them on subsequent reads.
-    /// </summary>
-    [Fact]
-    public async Task UpdateAsync_ShouldUpdateFields()
-    {
-        // Arrange
-        var initialUser = DataGenerator.CreateUser();
-        await GetCollection().InsertOneAsync(initialUser.ToDocument(), cancellationToken: Cts.Token);
-
-        var repository = CreateUserRepository();
-        var newName = DataGenerator.CreateString();
-        var newSurname = DataGenerator.CreateString();
-
-        initialUser.ChangeName(newName, newSurname);
-        initialUser.ReplaceWorkExperience([Work.Create("Mongo Corp")]);
-
-        // Act
-        await repository.UpdateAsync(initialUser, Cts.Token);
-
-        // Assert
-        var dbUser = await GetFreshUser(initialUser.Id);
-        Assert.NotNull(dbUser);
-        Assert.Equal(newName, dbUser.Name);
-        Assert.Equal(newSurname, dbUser.Surname);
-        Assert.Equal("Mongo Corp", dbUser.WorkExperience.FirstOrDefault()?.CompanyName);
-    }
-
-    /// <summary>
-    /// Purpose: Verify deletion removes the stored document.
-    /// When: Deleting an existing user.
-    /// Should: Return null on subsequent reads.
-    /// </summary>
-    [Fact]
-    public async Task DeleteAsync_ShouldRemoveUser()
-    {
-        // Arrange
-        var user = DataGenerator.CreateUser();
-        await GetCollection().InsertOneAsync(user.ToDocument(), cancellationToken: Cts.Token);
-
-        var repository = CreateUserRepository();
-
-        // Act
-        await repository.DeleteAsync(user.Id, Cts.Token);
-
-        // Assert
-        var dbUser = await GetFreshUser(user.Id);
-        Assert.Null(dbUser);
-    }
-
-    /// <summary>
-    /// Purpose: Verify retrieving all users returns all stored documents.
-    /// When: Multiple documents exist in collection.
-    /// Should: Return the same count of domain users.
-    /// </summary>
-    [Fact]
-    public async Task GetAllAsync_ShouldReturnUsers()
-    {
-        // Arrange
-        var users = DataGenerator.CreateUsers(2).ToList();
-        await GetCollection().InsertManyAsync(users.Select(user => user.ToDocument()), cancellationToken: Cts.Token);
-
-        var repository = CreateUserRepository();
-
-        // Act
-        var result = await repository.GetAllAsync(Cts.Token);
-
-        // Assert
-        Assert.Equal(2, result.Count());
-    }
-
-    /// <summary>
     /// Purpose: Verify missing user returns null.
     /// When: Document with the given id does not exist.
     /// Should: Return null.
@@ -145,22 +72,6 @@ public sealed class UserMongoRepositoryTests(MongoFixture fixture) : MongoTestBa
 
         // Assert
         Assert.Null(result);
-    }
-
-    /// <summary>
-    /// Purpose: Verify delete is idempotent.
-    /// When: Deleting a non-existing user.
-    /// Should: Not throw.
-    /// </summary>
-    [Fact]
-    public async Task DeleteAsync_ShouldNotThrow_WhenUserDoesNotExist()
-    {
-        // Arrange
-        var repository = CreateUserRepository();
-
-        // Act & Assert
-        var exception = await Record.ExceptionAsync(() => repository.DeleteAsync(Guid.NewGuid(), Cts.Token));
-        Assert.Null(exception);
     }
 
     private IMongoCollection<UserDocument> GetCollection()

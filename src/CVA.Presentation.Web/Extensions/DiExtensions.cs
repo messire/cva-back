@@ -1,5 +1,4 @@
 ﻿using CVA.Application.ProfileService;
-using CVA.Application.UserService;
 using CVA.Application.Validators;
 using CVA.Infrastructure.Auth;
 using CVA.Infrastructure.Common;
@@ -56,7 +55,6 @@ internal static class DiExtensions
         /// </summary>
         public void RegisterInnerServices()
         {
-            builder.Services.RegisterUserService();
             builder.Services.RegisterDeveloperProfileService();
             builder.Services.AddScoped<CommandExecutor>();
             builder.Services.AddScoped<QueryExecutor>();

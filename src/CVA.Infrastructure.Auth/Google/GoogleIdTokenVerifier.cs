@@ -6,15 +6,11 @@ namespace CVA.Infrastructure.Auth;
 /// Verifies Google ID tokens.
 /// </summary>
 /// <param name="options">Google auth options.</param>
-internal sealed class GoogleIdTokenVerifier(GoogleAuthOptions options)
+internal sealed class GoogleIdTokenVerifier(GoogleAuthOptions options) : IGoogleTokenVerifier
 {
     private readonly GoogleAuthOptions _options = options ?? throw new ArgumentNullException(nameof(options));
 
-    /// <summary>
-    /// Validates a Google ID token and returns its payload.
-    /// </summary>
-    /// <param name="idToken">Google ID token.</param>
-    /// <param name="ct">Cancellation token.</param>
+    /// <iheritdoc/>
     public async Task<GoogleJsonWebSignature.Payload> VerifyAsync(string idToken, CancellationToken ct)
     {
         if (string.IsNullOrWhiteSpace(idToken))
