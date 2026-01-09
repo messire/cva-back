@@ -25,6 +25,7 @@ public static class DiConfig
         {
             services.ConfigureJwtAuth(configuration, environment);
             services.ConfigureGoogleAuth(configuration, environment);
+            services.ConfigureRefreshTokens(configuration, environment);
             services.AddAuthorization();
         }
 
@@ -57,6 +58,12 @@ public static class DiConfig
             services.AddSingleton<GoogleIdTokenVerifier>();
         }
 
+        private void ConfigureRefreshTokens(IConfiguration configuration, IHostEnvironment environment)
+        {
+            services.BindAndValidateRefreshTokenOptions(configuration, environment);
+            services.AddSingleton<IRefreshTokenProtector, RefreshTokenProtector>();
+        }
+
         private void BindAndValidateGoogleAuth(IConfiguration configuration)
             => services
                 .AddOptions<GoogleAuthOptions>()
@@ -73,6 +80,16 @@ public static class DiConfig
                         !string.IsNullOrWhiteSpace(options.Audience) &&
                         !string.IsNullOrWhiteSpace(options.SigningKey) &&
                         options.LifetimeMinutes > 0, $"Invalid '{JwtOptions.Path}' configuration.")
+                .ValidateOnStart();
+
+        private void BindAndValidateRefreshTokenOptions(IConfiguration configuration, IHostEnvironment environment)
+            => services
+                .AddOptions<RefreshTokenOptions>()
+                .Bind(configuration.GetRequiredSection(RefreshTokenOptions.Path))
+                .Validate(options
+                        => options.LifetimeDays > 0, $"Invalid '{RefreshTokenOptions.Path}:LifetimeDays' configuration.")
+                .Validate(options
+                        => environment.IsDevelopment() || !string.IsNullOrWhiteSpace(options.Pepper), $"'{RefreshTokenOptions.Path}:Pepper' is required in non-development environments.")
                 .ValidateOnStart();
     }
 

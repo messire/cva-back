@@ -3,10 +3,5 @@
 /// <summary>
 /// Request model for Google sign-in.
 /// </summary>
-public sealed class GoogleSignInRequest
-{
-    /// <summary>
-    /// Google ID token received on the client side.
-    /// </summary>
-    public string IdToken { get; init; } = string.Empty;
-}
+/// <param name="IdToken">Google ID token received on the client side.</param>
+public sealed record GoogleSignInRequest(string IdToken);

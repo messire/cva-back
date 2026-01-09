@@ -36,5 +36,9 @@
     "Audience": "cva",
     "SigningKey": "a4fd0b33b16bf017bfd3428637c5fbb3",
     "LifetimeMinutes": 60
+  },
+  "RefreshTokens": {
+    "LifetimeDays": 30,
+    "Pepper": "super-secret-refresh-pepper"
   }
 }

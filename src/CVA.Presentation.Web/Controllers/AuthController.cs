@@ -31,6 +31,26 @@ public sealed class AuthController(IIdentityService identityService) : Controlle
     }
 
     /// <summary>
+    /// Exchanges a valid refresh token for a new access token and a new refresh token.
+    /// Refresh tokens are rotated (one-time use).
+    /// </summary>
+    /// <param name="request">Refresh token request.</param>
+    /// <param name="ct">Cancellation token.</param>
+    [HttpPost("refresh")]
+    [AllowAnonymous]
+    [ProducesResponseType(typeof(AuthTokenDto), StatusCodes.Status200OK)]
+    public async Task<ActionResult<AuthTokenDto>> Refresh([FromBody] RefreshTokenRequest request, CancellationToken ct)
+    {
+        if (string.IsNullOrWhiteSpace(request.RefreshToken))
+        {
+            return BadRequest(new { message = "refreshToken is required." });
+        }
+
+        var token = await identityService.RefreshAsync(request.RefreshToken, ct);
+        return Ok(token);
+    }
+
+    /// <summary>
     /// Returns minimal identity info for the current authenticated user.
     /// </summary>
     /// <param name="ct">Cancellation token.</param>

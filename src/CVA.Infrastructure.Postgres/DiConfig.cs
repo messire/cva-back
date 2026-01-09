@@ -32,6 +32,7 @@ public static class DiConfig
             });
 
             services.AddScoped<IUserRepository, UserPostgresRepository>();
+            services.AddScoped<IRefreshTokenRepository, RefreshTokenPostgresRepository>();
             services.AddScoped<IDeveloperProfileRepository, DeveloperProfilePostgresRepository>();
             services.AddHostedService<DbMigrationHostedService>();
         }

@@ -2,7 +2,6 @@
 
 namespace CVA.Application.IdentityService;
 
-
 /// <summary>
 /// Provides operations related to authenticated user identity:
 /// external sign-in and retrieval of the current user's identity information.
@@ -17,6 +16,15 @@ public interface IIdentityService
     /// <param name="ct">Cancellation token.</param>
     /// <returns>Application authentication token information.</returns>
     Task<AuthTokenDto> SignInWithGoogleAsync(string googleIdToken, CancellationToken ct);
+
+    /// <summary>
+    /// Refreshes the access token using a valid refresh token.
+    /// Refresh tokens are rotated: the provided token is revoked and a new token is issued.
+    /// </summary>
+    /// <param name="refreshToken">Refresh token issued by the API.</param>
+    /// <param name="ct">Cancellation token.</param>
+    /// <returns>New authentication token pair.</returns>
+    Task<AuthTokenDto> RefreshAsync(string refreshToken, CancellationToken ct);
 
     /// <summary>
     /// Returns minimal identity information for the currently authenticated user.

@@ -36,5 +36,6 @@ public static class DiConfig
         services.AddSingleton(mongoOptions);
         services.AddScoped<IUserRepository, UserMongoRepository>();
         services.AddScoped<IDeveloperProfileRepository, DeveloperProfileMongoRepository>();
+        services.AddScoped<IRefreshTokenRepository, RefreshTokenMongoRepository>();
     }
 }

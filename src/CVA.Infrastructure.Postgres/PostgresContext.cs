@@ -10,6 +10,11 @@ internal sealed class PostgresContext(DbContextOptions<PostgresContext> options)
     public DbSet<UserEntity> Users { get; set; } = null!;
 
     /// <summary>
+    /// Represents the collection of refresh tokens in the database context.
+    /// </summary>
+    public DbSet<RefreshTokenEntity> RefreshTokens { get; set; } = null!;
+
+    /// <summary>
     /// Represents the collection of developer profiles in the database context.
     /// </summary>
     public DbSet<DeveloperProfileEntity> DeveloperProfiles { get; set; } = null!;
