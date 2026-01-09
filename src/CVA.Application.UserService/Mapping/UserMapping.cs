@@ -1,4 +1,4 @@
-﻿namespace CVA.Application.Services;
+﻿namespace CVA.Application.UserService;
 
 /// <summary>
 /// Provides mapping functionalities related to user entities within the application.

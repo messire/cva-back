@@ -1,5 +1,4 @@
-﻿using CVA.Application.Contracts;
-using CVA.Application.Services;
+﻿using CVA.Application.UserService;
 
 namespace CVA.Tests.Common;
 

@@ -19,7 +19,7 @@
     <Project Path="src/CVA.Application.Abstractions/CVA.Application.Abstractions.csproj" />
     <Project Path="src/CVA.Application.Contracts/CVA.Application.Contracts.csproj" />
     <Project Path="src/CVA.Application.ProfileService/CVA.Application.ProfileService.csproj" />
-    <Project Path="src/CVA.Application.Services/CVA.Application.Services.csproj" />
+    <Project Path="src/CVA.Application.UserService/CVA.Application.UserService.csproj" />
     <Project Path="src/CVA.Application.Validators/CVA.Application.Validators.csproj" />
   </Folder>
   <Folder Name="/src/domain/">

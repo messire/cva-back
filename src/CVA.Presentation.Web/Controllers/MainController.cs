@@ -1,4 +1,4 @@
-﻿using CVA.Application.Services;
+﻿using CVA.Application.UserService;
 using Microsoft.AspNetCore.Authorization;
 
 namespace CVA.Presentation.Web;

@@ -1,6 +1,7 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using CVA.Application.UserService;
+using Microsoft.Extensions.DependencyInjection;
 
-namespace CVA.Application.Services;
+namespace CVA.Application.UserService;
 
 /// <summary>
 /// Provides dependency injection configuration for the application services.

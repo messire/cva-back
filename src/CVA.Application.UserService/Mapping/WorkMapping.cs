@@ -1,4 +1,4 @@
-﻿namespace CVA.Application.Services;
+﻿namespace CVA.Application.UserService;
 
 /// <summary>
 /// Provides utility methods and functionality for mapping work-related data.

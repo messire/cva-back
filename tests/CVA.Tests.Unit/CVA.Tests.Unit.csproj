@@ -19,7 +19,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\..\src\CVA.Application.Services\CVA.Application.Services.csproj" />
+      <ProjectReference Include="..\..\src\CVA.Application.UserService\CVA.Application.UserService.csproj" />
       <ProjectReference Include="..\..\src\CVA.Application.Validators\CVA.Application.Validators.csproj" />
       <ProjectReference Include="..\..\src\CVA.Domain.Interfaces\CVA.Domain.Interfaces.csproj" />
       <ProjectReference Include="..\..\src\CVA.Domain.Models\CVA.Domain.Models.csproj" />

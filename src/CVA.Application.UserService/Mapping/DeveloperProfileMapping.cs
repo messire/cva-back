@@ -1,4 +1,4 @@
-﻿namespace CVA.Application.Services;
+﻿namespace CVA.Application.UserService;
 
 /// <summary>
 /// Provides extension methods for mapping between developer profile domain models and data transfer objects.

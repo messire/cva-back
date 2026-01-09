@@ -1,5 +1,5 @@
 ﻿using CVA.Application.ProfileService;
-using CVA.Application.Services;
+using CVA.Application.UserService;
 using CVA.Application.Validators;
 using CVA.Infrastructure.Common;
 using CVA.Infrastructure.Mongo;

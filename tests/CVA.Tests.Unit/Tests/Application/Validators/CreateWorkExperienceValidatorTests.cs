@@ -75,7 +75,7 @@ public class CreateWorkExperienceValidatorTests
     [Theory]
     [InlineCvaAutoData(4001, true)]
     [InlineCvaAutoData("Some description", false)]
-    [InlineCvaAutoData(null, false)]
+    [InlineCvaAutoData(null!, false)]
     public void Description_Validation(object? input, bool shouldHaveError, CreateWorkExperienceCommand baseCommand)
     {
         // Arrange

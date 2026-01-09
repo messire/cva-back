@@ -39,7 +39,7 @@ public class CreateProjectValidatorTests
     /// When: Description > 2000 characters.
     /// </summary>
     [Theory]
-    [InlineCvaAutoData(null, false)]
+    [InlineCvaAutoData(null!, false)]
     [InlineCvaAutoData("", false)]
     [InlineCvaAutoData("Short description", false)]
     public void Description_Validation_Short(string? description, bool shouldHaveError, CreateProjectCommand baseCommand)
@@ -60,7 +60,7 @@ public class CreateProjectValidatorTests
     /// When: IconUrl is not a valid absolute URI.
     /// </summary>
     [Theory]
-    [InlineCvaAutoData(null, false)]
+    [InlineCvaAutoData(null!, false)]
     [InlineCvaAutoData("", false)]
     [InlineCvaAutoData("invalid-url", true)]
     [InlineCvaAutoData("http://example.com/icon.png", false)]

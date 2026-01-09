@@ -1,6 +1,6 @@
 ﻿using CVA.Application.Abstractions;
 
-namespace CVA.Application.Services;
+namespace CVA.Application.UserService;
 
 /// <summary>
 /// Interface for operations related to user management.
