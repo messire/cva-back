@@ -1,4 +1,5 @@
 ﻿using Google.Apis.Auth;
+using Microsoft.Extensions.Options;
 
 namespace CVA.Infrastructure.Auth;
 
@@ -6,9 +7,9 @@ namespace CVA.Infrastructure.Auth;
 /// Verifies Google ID tokens.
 /// </summary>
 /// <param name="options">Google auth options.</param>
-internal sealed class GoogleIdTokenVerifier(GoogleAuthOptions options) : IGoogleTokenVerifier
+internal sealed class GoogleIdTokenVerifier(IOptions<GoogleAuthOptions> options) : IGoogleTokenVerifier
 {
-    private readonly GoogleAuthOptions _options = options ?? throw new ArgumentNullException(nameof(options));
+    private readonly GoogleAuthOptions _options = options.Value ?? throw new ArgumentNullException(nameof(options));
 
     /// <iheritdoc/>
     public async Task<GoogleJsonWebSignature.Payload> VerifyAsync(string idToken, CancellationToken ct)

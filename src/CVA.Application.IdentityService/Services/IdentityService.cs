@@ -31,14 +31,8 @@ internal sealed class IdentityService(
         }
 
         var payload = await googleVerifier.VerifyAsync(googleIdToken, ct);
-        if (payload is null)
-        {
-            throw new ApplicationException("Invalid Google ID token.");
-        }
-
         var external = new ExternalIdentity(GoogleProviderName, payload.Subject, payload.Email);
         var user = await users.GetByGoogleSubjectAsync(external.Subject, ct);
-
         if (user is null)
         {
             user = User.CreateFromGoogle(external.Email, external.Subject, UserRole.User);
@@ -46,15 +40,18 @@ internal sealed class IdentityService(
         }
 
         var token = tokenIssuer.Issue(user.Id, user.Role.ToString());
-
         return new AuthTokenDto(token, user.Id);
     }
 
     /// <inheritdoc />
     public async Task<IdentityMe> GetMeAsync(CancellationToken ct)
     {
-        var currentUserId = currentUser.UserId;
-        var user = await users.GetByIdAsync(currentUserId, ct);
+        if (!currentUser.IsAuthenticated)
+        {
+            throw new ApplicationException("User is not authenticated.");
+        }
+
+        var user = await users.GetByIdAsync(currentUser.UserId, ct);
         return user is not null
             ? new IdentityMe(user.Id, user.Role.ToString(), user.Email.Value)
             : throw new ApplicationException("User not found.");

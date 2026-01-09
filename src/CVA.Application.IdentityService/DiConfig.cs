@@ -3,16 +3,16 @@
 namespace CVA.Application.IdentityService;
 
 /// <summary>
-/// Provides dependency injection configuration for the application services.
+/// Provides dependency injection configuration for identity services.
 /// </summary>
 public static class DiConfig
 {
     /// <summary>
-    /// Registers the user service implementation for dependency injection.
+    /// Registers identity application services.
     /// </summary>
-    /// <param name="services">The service collection to which the user service will be added.</param>
-    public static void RegisterUserService(this IServiceCollection services)
+    /// <param name="services">Service collection.</param>
+    public static void RegisterIdentityService(this IServiceCollection services)
     {
-        services.AddSingleton<IIdentityService, IdentityService>();
+        services.AddScoped<IIdentityService, IdentityService>();
     }
 }
