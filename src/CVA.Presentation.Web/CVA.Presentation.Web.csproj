@@ -5,9 +5,12 @@
 
     <ItemGroup>
         <PackageReference Include="DotNetEnv" />
+        <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" />
         <PackageReference Include="Microsoft.AspNetCore.OpenApi"/>
         <PackageReference Include="Microsoft.EntityFrameworkCore.Design"/>
+        <PackageReference Include="Microsoft.IdentityModel.Tokens" />
         <PackageReference Include="Scalar.AspNetCore"/>
+        <PackageReference Include="System.IdentityModel.Tokens.Jwt" />
     </ItemGroup>
 
     <ItemGroup>

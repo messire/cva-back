@@ -27,6 +27,10 @@ internal static class AppExtensions
         {
             app.UseCors("Frontend");
             app.UseHttpsRedirection();
+
+            app.UseAuthentication();
+            app.UseAuthorization();
+
             app.MapControllers();
         }
     }
