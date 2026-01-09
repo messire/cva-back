@@ -12,15 +12,11 @@ internal static class UserMongoMappingExtensions
         => new()
         {
             Id = user.Id,
-            Name = user.Name,
-            Surname = user.Surname,
-            Email = user.Email,
-            Phone = user.Phone,
-            Photo = user.Photo,
-            Birthday = user.Birthday,
-            SummaryInfo = user.SummaryInfo,
-            Skills = user.Skills.ToList(),
-            WorkExperience = user.WorkExperience.Select(ToDocument).ToList(),
+            Email = user.Email.Value,
+            Role = user.Role.ToString(),
+            GoogleSubject = user.GoogleSubject,
+            CreatedAt = user.CreatedAt,
+            UpdatedAt = user.UpdatedAt,
         };
 
     /// <summary>
@@ -45,15 +41,11 @@ internal static class UserMongoMappingExtensions
     public static User ToDomain(this UserDocument document)
         => User.FromPersistence(
             id: document.Id,
-            name: document.Name,
-            surname: document.Surname,
             email: document.Email,
-            phone: document.Phone,
-            photo: document.Photo,
-            birthday: document.Birthday,
-            summaryInfo: document.SummaryInfo,
-            skills: document.Skills,
-            workExperience: document.WorkExperience.Select(ToDomain)
+            role: Enum.TryParse(document.Role, true, out UserRole role) ? role : UserRole.User,
+            googleSubject: document.GoogleSubject,
+            createdAt: document.CreatedAt,
+            updatedAt: document.UpdatedAt
         );
 
     /// <summary>
