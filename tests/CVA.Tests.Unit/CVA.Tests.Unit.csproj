@@ -19,7 +19,6 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\..\src\CVA.Application.Services\CVA.Application.Services.csproj" />
       <ProjectReference Include="..\..\src\CVA.Application.Validators\CVA.Application.Validators.csproj" />
       <ProjectReference Include="..\..\src\CVA.Domain.Interfaces\CVA.Domain.Interfaces.csproj" />
       <ProjectReference Include="..\..\src\CVA.Domain.Models\CVA.Domain.Models.csproj" />
@@ -28,7 +27,7 @@
       <ProjectReference Include="..\..\src\CVA.Infrastructure.Mongo\CVA.Infrastructure.Mongo.csproj" />
       <ProjectReference Include="..\..\src\CVA.Infrastructure.Postgres\CVA.Infrastructure.Postgres.csproj" />
       <ProjectReference Include="..\CVA.Tests.Common\CVA.Tests.Common.csproj" />
-      <ProjectReference Include="..\..\src\CVA.Application.DeveloperProfiles\CVA.Application.DeveloperProfiles.csproj" />
+      <ProjectReference Include="..\..\src\CVA.Application.ProfileService\CVA.Application.ProfileService.csproj" />
     </ItemGroup>
 
 </Project>

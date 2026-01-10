@@ -25,26 +25,18 @@ internal class UserMongoRepository(IMongoClient client, MongoOptions options) : 
         return userDocument?.ToDomain();
     }
 
-    /// <inheritdoc />
-    public async Task<IEnumerable<User>> GetAllAsync(CancellationToken ct)
+    public async Task<User?> GetByGoogleSubjectAsync(string googleSubject, CancellationToken ct)
     {
-        var documents = await _users.Find(_ => true).ToListAsync(ct);
-        return documents.Select(document => document.ToDomain());
+        var userDocument = await _users.Find(document => document.GoogleSubject == googleSubject).FirstOrDefaultAsync(ct);
+        return userDocument?.ToDomain();
     }
 
-    /// <inheritdoc />
-    public async Task<User?> UpdateAsync(User updatedUser, CancellationToken ct)
+    public async Task<User?> UpdateRoleAsync(Guid id, string role, CancellationToken ct)
     {
-        var userDocument = updatedUser.ToDocument();
+        var userDocument = await _users.Find(document => document.Id == id).FirstOrDefaultAsync(ct);
+        userDocument.Role = role;
         var options = new FindOneAndReplaceOptions<UserDocument> { ReturnDocument = ReturnDocument.After };
-        var updatedDocument = await _users.FindOneAndReplaceAsync(document => document.Id == userDocument.Id, userDocument, options, ct);
-        return updatedDocument?.ToDomain();
-    }
-
-    /// <inheritdoc />
-    public async Task<User?> DeleteAsync(Guid id, CancellationToken ct)
-    {
-        var deletedDocument = await _users.FindOneAndDeleteAsync(document => document.Id == id, cancellationToken: ct);
-        return deletedDocument?.ToDomain();
+        var user = await _users.FindOneAndReplaceAsync(document => document.Id == userDocument.Id, userDocument, options, ct);
+        return user?.ToDomain();
     }
 }

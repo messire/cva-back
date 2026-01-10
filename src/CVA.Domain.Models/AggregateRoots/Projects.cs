@@ -67,7 +67,6 @@ public sealed partial class DeveloperProfile
     {
         Ensure.NotEmpty(id.Value, nameof(id));
         var project = _projects.Find(item => item.Id.Equals(id));
-        if (project is null) throw new InvalidOperationException("Project not found.");
-        return project;
+        return project ?? throw new InvalidOperationException("Project not found.");
     }
 }

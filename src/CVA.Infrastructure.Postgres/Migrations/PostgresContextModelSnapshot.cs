@@ -145,54 +145,89 @@ namespace CVA.Infrastructure.Postgres.Migrations
                     b.ToTable("projects", (string)null);
                 });
 
-            modelBuilder.Entity("CVA.Infrastructure.Postgres.UserEntity", b =>
+            modelBuilder.Entity("CVA.Infrastructure.Postgres.RefreshTokenEntity", b =>
                 {
                     b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("uuid")
                         .HasColumnName("id");
 
-                    b.Property<DateOnly?>("Birthday")
-                        .HasColumnType("date")
-                        .HasColumnName("birthday");
+                    b.Property<DateTimeOffset>("CreatedAt")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("created_at");
+
+                    b.Property<DateTimeOffset>("ExpiresAt")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("expires_at");
+
+                    b.Property<string>("ReplacedByTokenHash")
+                        .HasMaxLength(64)
+                        .HasColumnType("character varying(64)")
+                        .HasColumnName("replaced_by_token_hash");
+
+                    b.Property<DateTimeOffset?>("RevokedAt")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("revoked_at");
+
+                    b.Property<string>("TokenHash")
+                        .IsRequired()
+                        .HasMaxLength(64)
+                        .HasColumnType("character varying(64)")
+                        .HasColumnName("token_hash");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("user_id");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("TokenHash")
+                        .IsUnique();
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("refresh_tokens", (string)null);
+                });
+
+            modelBuilder.Entity("CVA.Infrastructure.Postgres.UserEntity", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid")
+                        .HasColumnName("id");
+
+                    b.Property<DateTimeOffset>("CreatedAt")
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("Email")
                         .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("character varying(100)")
+                        .HasMaxLength(320)
+                        .HasColumnType("character varying(320)")
                         .HasColumnName("email");
 
-                    b.Property<string>("Name")
+                    b.Property<string>("GoogleSubject")
                         .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("character varying(100)")
-                        .HasColumnName("name");
+                        .HasMaxLength(128)
+                        .HasColumnType("character varying(128)")
+                        .HasColumnName("google_subject");
 
-                    b.Property<string>("Phone")
-                        .HasMaxLength(20)
-                        .HasColumnType("character varying(20)")
-                        .HasColumnName("phone");
-
-                    b.Property<string>("Photo")
-                        .HasMaxLength(255)
-                        .HasColumnType("character varying(255)")
-                        .HasColumnName("photo");
-
-                    b.PrimitiveCollection<List<string>>("Skills")
+                    b.Property<string>("Role")
                         .IsRequired()
-                        .HasColumnType("text[]")
-                        .HasColumnName("skills");
+                        .HasMaxLength(32)
+                        .HasColumnType("character varying(32)")
+                        .HasColumnName("role");
 
-                    b.Property<string>("SummaryInfo")
-                        .HasColumnType("text")
-                        .HasColumnName("summary_info");
-
-                    b.Property<string>("Surname")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("character varying(100)")
-                        .HasColumnName("surname");
+                    b.Property<DateTimeOffset>("UpdatedAt")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("updated_at");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("Email")
+                        .IsUnique();
+
+                    b.HasIndex("GoogleSubject")
+                        .IsUnique();
 
                     b.ToTable("users", (string)null);
                 });
@@ -315,65 +350,13 @@ namespace CVA.Infrastructure.Postgres.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("CVA.Infrastructure.Postgres.UserEntity", b =>
+            modelBuilder.Entity("CVA.Infrastructure.Postgres.RefreshTokenEntity", b =>
                 {
-                    b.OwnsMany("CVA.Infrastructure.Postgres.WorkEntity", "WorkExperience", b1 =>
-                        {
-                            b1.Property<Guid>("id")
-                                .ValueGeneratedOnAdd()
-                                .HasColumnType("uuid");
-
-                            b1.PrimitiveCollection<List<string>>("Achievements")
-                                .IsRequired()
-                                .HasColumnType("text[]")
-                                .HasColumnName("achievements");
-
-                            b1.Property<string>("CompanyName")
-                                .HasMaxLength(100)
-                                .HasColumnType("character varying(100)")
-                                .HasColumnName("company_name");
-
-                            b1.Property<string>("Description")
-                                .HasColumnType("text")
-                                .HasColumnName("description");
-
-                            b1.Property<DateOnly?>("EndDate")
-                                .HasColumnType("date")
-                                .HasColumnName("end_date");
-
-                            b1.Property<string>("Location")
-                                .HasMaxLength(200)
-                                .HasColumnType("character varying(200)")
-                                .HasColumnName("location");
-
-                            b1.Property<string>("Role")
-                                .HasMaxLength(100)
-                                .HasColumnType("character varying(100)")
-                                .HasColumnName("role");
-
-                            b1.Property<DateOnly?>("StartDate")
-                                .HasColumnType("date")
-                                .HasColumnName("start_date");
-
-                            b1.PrimitiveCollection<List<string>>("TechStack")
-                                .IsRequired()
-                                .HasColumnType("text[]")
-                                .HasColumnName("tech_stack");
-
-                            b1.Property<Guid>("user_id")
-                                .HasColumnType("uuid");
-
-                            b1.HasKey("id");
-
-                            b1.HasIndex("user_id");
-
-                            b1.ToTable("works", (string)null);
-
-                            b1.WithOwner()
-                                .HasForeignKey("user_id");
-                        });
-
-                    b.Navigation("WorkExperience");
+                    b.HasOne("CVA.Infrastructure.Postgres.UserEntity", null)
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("CVA.Infrastructure.Postgres.WorkExperienceEntity", b =>

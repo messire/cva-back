@@ -5,21 +5,33 @@
 
     <ItemGroup>
         <PackageReference Include="DotNetEnv" />
+        <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" />
         <PackageReference Include="Microsoft.AspNetCore.OpenApi"/>
         <PackageReference Include="Microsoft.EntityFrameworkCore.Design"/>
+        <PackageReference Include="Microsoft.IdentityModel.Tokens" />
         <PackageReference Include="Scalar.AspNetCore"/>
+        <PackageReference Include="System.IdentityModel.Tokens.Jwt" />
     </ItemGroup>
 
     <ItemGroup>
         <ProjectReference Include="..\CVA.Application.Abstractions\CVA.Application.Abstractions.csproj" />
         <ProjectReference Include="..\CVA.Application.Contracts\CVA.Application.Contracts.csproj"/>
-        <ProjectReference Include="..\CVA.Application.DeveloperProfiles\CVA.Application.DeveloperProfiles.csproj" />
-        <ProjectReference Include="..\CVA.Application.Services\CVA.Application.Services.csproj"/>
+        <ProjectReference Include="..\CVA.Application.IdentityService\CVA.Application.IdentityService.csproj" />
+        <ProjectReference Include="..\CVA.Application.ProfileService\CVA.Application.ProfileService.csproj" />
         <ProjectReference Include="..\CVA.Application.Validators\CVA.Application.Validators.csproj"/>
+        <ProjectReference Include="..\CVA.Infrastructure.Auth\CVA.Infrastructure.Auth.csproj" />
         <ProjectReference Include="..\CVA.Infrastructure.Common\CVA.Infrastructure.Common.csproj"/>
         <ProjectReference Include="..\CVA.Infrastructure.Mongo\CVA.Infrastructure.Mongo.csproj"/>
         <ProjectReference Include="..\CVA.Infrastructure.Postgres\CVA.Infrastructure.Postgres.csproj"/>
         <ProjectReference Include="..\CVA.Tools.Common\CVA.Tools.Common.csproj"/>
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="Auth\Jwt\" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Compile Remove="Auth\Jwt\JwtTokenGenerator.cs" />
     </ItemGroup>
 
 </Project>

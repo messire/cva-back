@@ -1,4 +1,4 @@
-﻿using CVA.Application.DeveloperProfiles;
+﻿using CVA.Application.ProfileService;
 
 namespace CVA.Tests.Unit.Application.Validators;
 
@@ -64,7 +64,7 @@ public class UpdateProjectValidatorTests
     /// When: Description > 2000 characters.
     /// </summary>
     [Theory]
-    [InlineCvaAutoData(null, false)]
+    [InlineCvaAutoData(null!, false)]
     [InlineCvaAutoData("", false)]
     public void Description_Validation(string? description, bool shouldHaveError, UpdateProjectCommand baseCommand)
     {
@@ -87,7 +87,7 @@ public class UpdateProjectValidatorTests
     /// When: IconUrl is not a valid absolute URI.
     /// </summary>
     [Theory]
-    [InlineCvaAutoData(null, false)]
+    [InlineCvaAutoData(null!, false)]
     [InlineCvaAutoData("invalid-url", true)]
     [InlineCvaAutoData("https://example.com/icon.png", false)]
     public void IconUrl_Validation(string? iconUrl, bool shouldHaveError, UpdateProjectCommand baseCommand)

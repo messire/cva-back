@@ -1,4 +1,4 @@
-﻿using CVA.Application.DeveloperProfiles;
+﻿using CVA.Application.ProfileService;
 
 namespace CVA.Tests.Integration.Tests.Application.DeveloperProfiles;
 

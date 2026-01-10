@@ -8,6 +8,7 @@ namespace CVA.Infrastructure.Postgres;
 /// </summary>
 public static class DiConfig
 {
+    /// <param name="services">The <see cref="IServiceCollection"/> to which the validators should be added.</param>
     extension(IServiceCollection services)
     {
         /// <summary>
@@ -31,6 +32,7 @@ public static class DiConfig
             });
 
             services.AddScoped<IUserRepository, UserPostgresRepository>();
+            services.AddScoped<IRefreshTokenRepository, RefreshTokenPostgresRepository>();
             services.AddScoped<IDeveloperProfileRepository, DeveloperProfilePostgresRepository>();
             services.AddHostedService<DbMigrationHostedService>();
         }

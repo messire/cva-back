@@ -1,4 +1,4 @@
-﻿using CVA.Application.DeveloperProfiles;
+﻿using CVA.Application.ProfileService;
 
 namespace CVA.Tests.Unit.Application.Validators;
 
@@ -83,7 +83,7 @@ public class ReplaceProfileValidatorTests
     /// When: Website is not a valid absolute URI.
     /// </summary>
     [Theory]
-    [InlineCvaAutoData(null, false)]
+    [InlineCvaAutoData(null!, false)]
     [InlineCvaAutoData("", false)]
     [InlineCvaAutoData("invalid-url", true)]
     [InlineCvaAutoData("https://example.com", false)]

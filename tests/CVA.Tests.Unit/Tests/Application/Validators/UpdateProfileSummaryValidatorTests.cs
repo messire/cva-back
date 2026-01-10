@@ -1,4 +1,4 @@
-﻿using CVA.Application.DeveloperProfiles;
+﻿using CVA.Application.ProfileService;
 
 namespace CVA.Tests.Unit.Application.Validators;
 
@@ -16,7 +16,7 @@ public class UpdateProfileSummaryValidatorTests
     /// When: Summary exceeds 5000 characters.
     /// </summary>
     [Theory]
-    [InlineCvaAutoData(null, false)]
+    [InlineCvaAutoData(null!, false)]
     [InlineCvaAutoData("", false)]
     [InlineCvaAutoData("A valid summary", false)]
     [InlineCvaAutoData(5000, false)]

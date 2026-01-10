@@ -3,7 +3,7 @@ namespace CVA.Domain.Models;
 /// <summary>
 /// Represents a developer profile.
 /// </summary>
-public sealed partial class DeveloperProfile
+public sealed partial class DeveloperProfile: AggregateRoot
 {
     private readonly List<SkillTag> _skills = new();
     private readonly List<ProjectItem> _projects = new();
@@ -75,16 +75,6 @@ public sealed partial class DeveloperProfile
     public IReadOnlyList<WorkExperienceItem> WorkExperience => _workExperience;
 
     /// <summary>
-    /// The date and time when the developer profile was created.
-    /// </summary>
-    public DateTimeOffset CreatedAt { get; private set; }
-
-    /// <summary>
-    /// The date and time when the developer profile was last updated.
-    /// </summary>
-    public DateTimeOffset UpdatedAt { get; private set; }
-
-    /// <summary>
     /// Private constructor.
     /// </summary>
     /// <param name="id"> Developer identifier. </param>
@@ -123,8 +113,8 @@ public sealed partial class DeveloperProfile
         Contact = contact;
         Social = social;
         Verification = verification;
+        Touch(updatedAt);
         CreatedAt = createdAt;
-        UpdatedAt = updatedAt;
     }
 
     /// <summary>
@@ -165,6 +155,4 @@ public sealed partial class DeveloperProfile
 
         return new DeveloperProfile(id, name, role, summary, avatar, openToWork, yearsOfExperience, contact, social, verification, createdAt: now, updatedAt: now);
     }
-
-    private void Touch(DateTimeOffset now) => UpdatedAt = now;
 }

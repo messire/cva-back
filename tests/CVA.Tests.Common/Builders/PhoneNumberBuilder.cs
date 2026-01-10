@@ -1,5 +1,4 @@
 ﻿using System.Reflection;
-using CVA.Domain.Models;
 using static System.StringComparison;
 
 namespace CVA.Tests.Common;

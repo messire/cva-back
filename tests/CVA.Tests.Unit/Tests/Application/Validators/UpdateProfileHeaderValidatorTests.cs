@@ -1,4 +1,4 @@
-﻿using CVA.Application.DeveloperProfiles;
+﻿using CVA.Application.ProfileService;
 
 namespace CVA.Tests.Unit.Application.Validators;
 
@@ -42,7 +42,7 @@ public class UpdateProfileHeaderValidatorTests
     [InlineCvaAutoData("invalid-url", true)]
     [InlineCvaAutoData("https://example.com/avatar.png", false)]
     [InlineCvaAutoData("", false)]
-    [InlineCvaAutoData(null, false)]
+    [InlineCvaAutoData(null!, false)]
     public void AvatarUrl_Validation(string? avatarUrl, bool shouldHaveError, UpdateProfileHeaderCommand baseCommand)
     {
         // Arrange

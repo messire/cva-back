@@ -1,5 +1,4 @@
-﻿using CVA.Domain.Models;
-using CVA.Tools.Common;
+﻿using CVA.Tools.Common;
 
 namespace CVA.Tests.Common.Comparers;
 

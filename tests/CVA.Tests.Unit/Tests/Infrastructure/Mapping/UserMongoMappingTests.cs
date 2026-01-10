@@ -25,15 +25,11 @@ public sealed class UserMongoMappingTests
 
         // Assert
         Assert.Equal(user.Id, document.Id);
-        Assert.Equal(user.Name, (string?)document.Name);
-        Assert.Equal(user.Surname, (string?)document.Surname);
+        Assert.Equal(user.GoogleSubject, document.GoogleSubject);
         Assert.Equal(user.Email.Value, document.Email);
-        Assert.Equal(user.Phone, document.Phone);
-        Assert.Equal(user.Photo, document.Photo);
-        Assert.Equal(user.Birthday, document.Birthday);
-        Assert.Equal(user.SummaryInfo, document.SummaryInfo);
-        Assert.Equal(user.Skills.Count, document.Skills.Count);
-        Assert.Equal(user.WorkExperience.Count, document.WorkExperience.Count);
+        Assert.Equal(user.Role.ToString(), document.Role);
+        Assert.Equal(user.CreatedAt, document.CreatedAt);
+        Assert.Equal(user.UpdatedAt, document.UpdatedAt);
     }
 
     /// <summary>
@@ -50,15 +46,11 @@ public sealed class UserMongoMappingTests
 
         // Assert
         Assert.Equal(user.Id, result.Id);
-        Assert.Equal(user.Name, result.Name);
-        Assert.Equal(user.Surname, result.Surname);
+        Assert.Equal(user.GoogleSubject, result.GoogleSubject);
         Assert.Equal(user.Email.Value, result.Email.Value);
-        Assert.Equal(user.Phone, result.Phone);
-        Assert.Equal(user.Photo, result.Photo);
-        Assert.Equal(user.Birthday, result.Birthday);
-        Assert.Equal(user.SummaryInfo, result.SummaryInfo);
-        Assert.Equal(user.Skills.Count, result.Skills.Count);
-        Assert.Equal(user.WorkExperience.Count, result.WorkExperience.Count);
+        Assert.Equal(user.Role, result.Role);
+        Assert.Equal(user.CreatedAt, result.CreatedAt);
+        Assert.Equal(user.UpdatedAt, result.UpdatedAt);
     }
 
     /// <summary>

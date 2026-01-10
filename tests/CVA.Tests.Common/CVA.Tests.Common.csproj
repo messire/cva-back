@@ -8,7 +8,7 @@
 
     <ItemGroup>
       <ProjectReference Include="..\..\src\CVA.Application.Contracts\CVA.Application.Contracts.csproj" />
-      <ProjectReference Include="..\..\src\CVA.Application.Services\CVA.Application.Services.csproj" />
+      <ProjectReference Include="..\..\src\CVA.Application.IdentityService\CVA.Application.IdentityService.csproj" />
       <ProjectReference Include="..\..\src\CVA.Domain.Models\CVA.Domain.Models.csproj" />
       <ProjectReference Include="..\..\src\CVA.Tools.Common\CVA.Tools.Common.csproj" />
     </ItemGroup>
