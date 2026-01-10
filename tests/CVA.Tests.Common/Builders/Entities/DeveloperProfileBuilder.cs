@@ -1,6 +1,4 @@
-﻿using CVA.Domain.Models;
-
-namespace CVA.Tests.Common;
+﻿namespace CVA.Tests.Common;
 
 /// <summary>
 /// A builder class that creates instances of the <see cref="DeveloperProfile"/> type using the AutoFixture library.

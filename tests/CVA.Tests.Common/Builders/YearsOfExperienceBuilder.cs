@@ -1,5 +1,4 @@
 ﻿using System.Reflection;
-using CVA.Domain.Models;
 
 namespace CVA.Tests.Common;
 

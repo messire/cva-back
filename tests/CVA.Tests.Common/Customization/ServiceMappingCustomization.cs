@@ -1,5 +1,4 @@
-﻿using CVA.Application.Contracts;
-using CVA.Application.Services;
+﻿using CVA.Application.IdentityService;
 
 namespace CVA.Tests.Common;
 
@@ -11,7 +10,6 @@ public class ServiceMappingCustomization: ICustomization
     /// <inheritdoc />
     public void Customize(IFixture fixture)
     {
-        fixture.Customizations.Add(new TypeRelay(typeof(IUserService), typeof(UserService)));
-        fixture.Customizations.Add(new TypeRelay(typeof(IUserService), typeof(UserService)));
+        fixture.Customizations.Add(new TypeRelay(typeof(IIdentityService), typeof(IdentityService)));
     }
 }

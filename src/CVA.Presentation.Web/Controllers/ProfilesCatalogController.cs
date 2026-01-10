@@ -1,4 +1,6 @@
-﻿namespace CVA.Presentation.Web;
+﻿using CVA.Application.ProfileService;
+
+namespace CVA.Presentation.Web;
 
 /// <summary>
 /// Public read-only API for developer profiles.

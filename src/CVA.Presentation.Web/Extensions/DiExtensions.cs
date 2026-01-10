@@ -1,5 +1,7 @@
-﻿using CVA.Application.Services;
+﻿using CVA.Application.IdentityService;
+using CVA.Application.ProfileService;
 using CVA.Application.Validators;
+using CVA.Infrastructure.Auth;
 using CVA.Infrastructure.Common;
 using CVA.Infrastructure.Mongo;
 using CVA.Infrastructure.Postgres;
@@ -16,6 +18,30 @@ internal static class DiExtensions
 {
     extension(WebApplicationBuilder builder)
     {
+        internal void RegisterConfig(string configName)
+            => new Builder(builder).RegisterConfig(configName);
+
+        internal void RegisterCors()
+            => new Builder(builder).RegisterCors();
+
+        internal void RegisterApiServices()
+            => new Builder(builder).RegisterApiServices();
+
+        internal void RegisterInnerServices()
+            => new Builder(builder).RegisterInnerServices();
+
+        internal void RegisterDatabase()
+            => new Builder(builder).RegisterDatabase();
+
+        internal void RegisterValidation()
+            => new Builder(builder).RegisterValidation();
+
+        internal void RegisterAuth()
+            => new Builder(builder).RegisterAuth();
+    }
+
+    private sealed class Builder(WebApplicationBuilder builder)
+    {
         /// <summary>
         /// Registers a specific configuration file to the application's configuration builder.
         /// </summary>
@@ -30,14 +56,13 @@ internal static class DiExtensions
         /// </summary>
         public void RegisterCors()
         {
-            var origins = builder.Configuration["CORS_ORIGINS"]?.Split(',', RemoveEmptyEntries | TrimEntries);
-            if (!builder.Environment.IsDevelopment() && (origins == null || origins.Length == 0))
+            var origins = builder.Configuration["CORS_ORIGINS"];
+            if (!builder.Environment.IsDevelopment() && string.IsNullOrEmpty(origins))
             {
                 throw new InvalidOperationException("CORS_ORIGINS configuration is required for non-development environments.");
             }
 
-            builder.Services.AddCors(options =>
-                ConfigureCors(options, builder.Environment, origins));
+            builder.Services.AddCors(options => ConfigureCors(options, builder.Environment, origins));
         }
 
         /// <summary>
@@ -54,20 +79,21 @@ internal static class DiExtensions
         /// </summary>
         public void RegisterInnerServices()
         {
-            builder.Services.RegisterUserService();
             builder.Services.RegisterDeveloperProfileService();
+            builder.Services.RegisterIdentityService();
+
             builder.Services.AddScoped<CommandExecutor>();
             builder.Services.AddScoped<QueryExecutor>();
-            builder.Services.RegisterHandlers();
         }
 
         /// <summary>
-        /// Registers the necessary services for the application's database layer, including connection setup and registration.
+        /// Registers persistence services depending on the configured database type.
         /// </summary>
         public void RegisterDatabase()
         {
-            var dbType = builder.Configuration.GetRequiredSection(DatabaseOptions.Path).Get<DatabaseOptions>();
+            var dbType = builder.Configuration.GetSection(DatabaseOptions.Path).Get<DatabaseOptions>();
             ArgumentNullException.ThrowIfNull(dbType);
+
             switch (dbType.Type)
             {
                 case DatabaseType.Mongo:
@@ -89,34 +115,24 @@ internal static class DiExtensions
             builder.Services.AddFluentValidationAutoValidation();
             builder.Services.AddValidatorsFromAssemblyContaining<IValidatorMarker>();
         }
-    }
 
-    private static void RegisterHandlers(this IServiceCollection services)
-    {
-        var assemblies = AppDomain.CurrentDomain.GetAssemblies()
-            .Where(assembly => assembly.FullName?.StartsWith("CVA.Application") == true);
-
-        foreach (var assembly in assemblies)
+        /// <summary>
+        /// Registers authentication and authorization services.
+        /// </summary>
+        public void RegisterAuth()
         {
-            var handlers = assembly.GetTypes()
-                .Where(type => type is { IsClass: true, IsAbstract: false })
-                .SelectMany(type => type.GetInterfaces(), (t, i) => new { Implementation = t, Interface = i })
-                .Where(arg => arg.Interface.IsGenericType &&
-                            (arg.Interface.GetGenericTypeDefinition() == typeof(ICommandHandler<,>) ||
-                             arg.Interface.GetGenericTypeDefinition() == typeof(IQueryHandler<,>)));
-
-            foreach (var handler in handlers)
-            {
-                services.AddScoped(handler.Interface, handler.Implementation);
-            }
+            builder.Services.RegisterAuthService(builder.Configuration, builder.Environment);
         }
     }
 
-    private static void ConfigureCors(CorsOptions options, IWebHostEnvironment env, string[]? origins)
+    private static void ConfigureCors(CorsOptions options, IWebHostEnvironment env, string? origins)
     {
+        var allowedOrigins = origins?.Split(';', TrimEntries | RemoveEmptyEntries) ?? [];
+
         options.AddPolicy("Frontend", policy =>
         {
-            policy.ApplyEnvironmentOrigins(env.IsDevelopment(), origins)
+            policy
+                .ApplyEnvironmentOrigins(env.IsDevelopment(), allowedOrigins)
                 .AllowAnyHeader()
                 .AllowAnyMethod();
         });
@@ -124,10 +140,15 @@ internal static class DiExtensions
 
     private static CorsPolicyBuilder ApplyEnvironmentOrigins(this CorsPolicyBuilder policy, bool isDevelopment, string[]? origins)
     {
-        if (isDevelopment) return policy.AllowAnyOrigin();
-            
-        return origins is { Length: > 0 } 
-            ? policy.WithOrigins(origins).AllowCredentials() 
+        if (isDevelopment)
+        {
+            return origins?.Length > 0
+                ? policy.WithOrigins(origins).AllowCredentials()
+                : policy.AllowAnyOrigin();
+        }
+
+        return origins?.Length > 0
+            ? policy.WithOrigins(origins).AllowCredentials()
             : throw new InvalidOperationException("Production origins missing");
     }
 }

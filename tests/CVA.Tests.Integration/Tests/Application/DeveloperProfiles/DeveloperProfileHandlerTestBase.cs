@@ -1,4 +1,4 @@
-﻿using CVA.Application.DeveloperProfiles;
+﻿using CVA.Application.ProfileService;
 using CVA.Infrastructure.Postgres;
 using CVA.Tests.Integration.Tests.Infrastructure.Postgres;
 using Moq;

@@ -1,4 +1,4 @@
-﻿using CVA.Application.DeveloperProfiles;
+﻿using CVA.Application.ProfileService;
 
 namespace CVA.Tests.Unit.Application.Validators;
 
@@ -19,7 +19,7 @@ public class UpdateProfileContactsValidatorTests
     [InlineCvaAutoData("invalid-email", true)]
     [InlineCvaAutoData("john@example.com", false)]
     [InlineCvaAutoData("", false)]
-    [InlineCvaAutoData(null, false)]
+    [InlineCvaAutoData(null!, false)]
     public void Email_Validation(string? email, bool shouldHaveError, UpdateProfileContactsCommand baseCommand)
     {
         // Arrange
@@ -41,7 +41,7 @@ public class UpdateProfileContactsValidatorTests
     [InlineCvaAutoData("invalid-url", true)]
     [InlineCvaAutoData("https://example.com", false)]
     [InlineCvaAutoData("", false)]
-    [InlineCvaAutoData(null, false)]
+    [InlineCvaAutoData(null!, false)]
     public void Website_Validation(string? website, bool shouldHaveError, UpdateProfileContactsCommand baseCommand)
     {
         // Arrange
