@@ -9,7 +9,7 @@ public class DatabaseOptions
     /// The static default path representing the database configuration section in the settings.
     /// Used to locate database-specific configuration options within a configuration file.
     /// </summary>
-    public static string Path = "Database";
+    public const string Path = "Database";
 
     /// <summary>
     /// Specifies the type of database associated with the configuration.

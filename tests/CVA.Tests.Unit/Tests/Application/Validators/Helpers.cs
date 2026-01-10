@@ -28,4 +28,26 @@ internal static class Helpers
         result.ShouldNotHaveValidationErrorFor(expression);
     }
 
+    /// <summary>
+    /// Asserts whether a validation result contains an error for a specific property identified by a string path.
+    /// </summary>
+    /// <typeparam name="T">The type of the object being validated.</typeparam>
+    /// <param name="result">The validation result to be checked.</param>
+    /// <param name="propertyName">The name or path of the property being validated.</param>
+    /// <param name="shouldHaveError">
+    /// A boolean indicating whether the validation result is expected to have an error
+    /// for the specified property. Pass <c>true</c> to assert the presence of an error,
+    /// and <c>false</c> to assert its absence.
+    /// </param>
+    public static void AssertValidation<T>(TestValidationResult<T> result, string propertyName, bool shouldHaveError)
+    {
+        if (shouldHaveError)
+        {
+            result.ShouldHaveValidationErrorFor(propertyName);
+            return;
+        }
+
+        result.ShouldNotHaveValidationErrorFor(propertyName);
+    }
+
 }

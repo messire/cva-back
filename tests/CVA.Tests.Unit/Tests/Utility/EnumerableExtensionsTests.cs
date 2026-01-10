@@ -3,7 +3,7 @@
 namespace CVA.Tests.Unit.Utility;
 
 /// <summary>
-/// Unit tests for the <see cref="EnumerableExtensions"/> class.
+/// Unit tests for the EnumerableExtensions class.
 /// </summary>
 [Trait(Layer.Utility, Category.Helpers)]
 public sealed class EnumerableExtensionsTests

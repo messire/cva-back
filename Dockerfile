@@ -7,11 +7,15 @@ WORKDIR /app
 COPY cva-back.slnx ./
 COPY Directory.Build.props ./
 COPY Directory.Packages.props ./
+
+COPY src/CVA.Application.Abstractions/CVA.Application.Abstractions.csproj src/CVA.Application.Abstractions/
 COPY src/CVA.Application.Contracts/CVA.Application.Contracts.csproj src/CVA.Application.Contracts/
-COPY src/CVA.Application.Services/CVA.Application.Services.csproj src/CVA.Application.Services/
+COPY src/CVA.Application.IdentityService/CVA.Application.IdentityService.csproj src/CVA.Application.IdentityService/
+COPY src/CVA.Application.ProfileService/CVA.Application.ProfileService.csproj src/CVA.Application.ProfileService/
 COPY src/CVA.Application.Validators/CVA.Application.Validators.csproj src/CVA.Application.Validators/
 COPY src/CVA.Domain.Interfaces/CVA.Domain.Interfaces.csproj src/CVA.Domain.Interfaces/
 COPY src/CVA.Domain.Models/CVA.Domain.Models.csproj src/CVA.Domain.Models/
+COPY src/CVA.Infrastructure.Auth/CVA.Infrastructure.Auth.csproj src/CVA.Infrastructure.Auth/
 COPY src/CVA.Infrastructure.Common/CVA.Infrastructure.Common.csproj src/CVA.Infrastructure.Common/
 COPY src/CVA.Infrastructure.Mongo/CVA.Infrastructure.Mongo.csproj src/CVA.Infrastructure.Mongo/
 COPY src/CVA.Infrastructure.Postgres/CVA.Infrastructure.Postgres.csproj src/CVA.Infrastructure.Postgres/
