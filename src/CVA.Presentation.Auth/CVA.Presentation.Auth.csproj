@@ -1,0 +1,14 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  
+    <ItemGroup>
+        <PackageReference Include="Microsoft.AspNetCore.Mvc"/>
+        <PackageReference Include="Microsoft.Extensions.Caching.Abstractions" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\CVA.Application.Contracts\CVA.Application.Contracts.csproj"/>
+        <ProjectReference Include="..\CVA.Application.IdentityService\CVA.Application.IdentityService.csproj"/>
+        <ProjectReference Include="..\CVA.Infrastructure.Auth\CVA.Infrastructure.Auth.csproj"/>
+    </ItemGroup>
+
+</Project>
