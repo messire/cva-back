@@ -1,5 +1,7 @@
 ﻿using CVA.Application.IdentityService;
+using CVA.Presentation.Auth;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Cors;
 
 namespace CVA.Presentation.Web;
 
@@ -8,7 +10,8 @@ namespace CVA.Presentation.Web;
 /// </summary>
 [ApiController]
 [Route("api/auth")]
-public sealed class AuthController(IIdentityService identityService) : ControllerBase
+public sealed class AuthController(IIdentityService identityService, IGoogleOAuthFlow googleOAuthFlow, IOneTimeCodeStore oneTimeCodeStore)
+    : ControllerBase
 {
     /// <summary>
     /// Authenticates the user using a Google ID token and returns an application JWT.
@@ -61,5 +64,54 @@ public sealed class AuthController(IIdentityService identityService) : Controlle
     {
         var me = await identityService.GetMeAsync(ct);
         return Ok(me);
+    }
+
+    /// <summary>
+    /// Starts backend-driven Google OAuth redirect flow.
+    /// </summary>
+    /// <param name="returnUrl">Absolute frontend return URL.</param>
+    /// <param name="ct">Cancellation token.</param>
+    [HttpGet("google/start")]
+    [AllowAnonymous]
+    public Task<IActionResult> GoogleStart([FromQuery] string? returnUrl, CancellationToken ct)
+        => Task.FromResult(googleOAuthFlow.Start(returnUrl));
+
+    /// <summary>
+    /// Handles Google OAuth callback.
+    /// Exchanges Google auth code for a Google ID token, signs in user, and redirects to frontend with a one-time code.
+    /// </summary>
+    /// <param name="code">Google authorization code.</param>
+    /// <param name="state">OAuth state.</param>
+    /// <param name="error">OAuth error code.</param>
+    /// <param name="errorDescription">OAuth error description.</param>
+    /// <param name="ct">Cancellation token.</param>
+    [HttpGet("google/callback")]
+    [AllowAnonymous]
+    public Task<IActionResult> GoogleCallback([FromQuery] string? code, [FromQuery] string? state, [FromQuery] string? error, [FromQuery] string? errorDescription, CancellationToken ct)
+        => googleOAuthFlow.Callback(code, state, error, errorDescription, ct);
+
+    /// <summary>
+    /// Exchanges a one-time code for application JWT tokens.
+    /// This is the only endpoint that needs CORS for SPA fetch.
+    /// </summary>
+    /// <param name="request">One-time code exchange request.</param>
+    /// <param name="ct">Cancellation token.</param>
+    [HttpPost("exchange")]
+    [AllowAnonymous]
+    [EnableCors("AuthExchange")]
+    [ProducesResponseType(typeof(AuthTokenDto), StatusCodes.Status200OK)]
+    public Task<ActionResult<AuthTokenDto>> Exchange([FromBody] AuthCodeExchangeRequest request, CancellationToken ct)
+    {
+        if (string.IsNullOrWhiteSpace(request.Code))
+        {
+            return Task.FromResult<ActionResult<AuthTokenDto>>(BadRequest(new { message = "code is required." }));
+        }
+
+        if (!oneTimeCodeStore.TryConsume(request.Code, out var token))
+        {
+            return Task.FromResult<ActionResult<AuthTokenDto>>(BadRequest(new { message = "Invalid or expired code." }));
+        }
+
+        return Task.FromResult<ActionResult<AuthTokenDto>>(Ok(token));
     }
 }

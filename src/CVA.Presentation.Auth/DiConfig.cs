@@ -17,7 +17,8 @@ public static class DiConfig
     /// <param name="configuration">Application configuration.</param>
     public static void AddPresentationAuth(this IServiceCollection services, IConfiguration configuration)
     {
-        services.Configure<GoogleAuthOptions>(configuration.GetSection(GoogleAuthOptions.Path));
+        services.AddHttpContextAccessor();
+        
         services.AddSingleton(provider => provider.GetRequiredService<IOptions<GoogleAuthOptions>>().Value);
 
         services.AddMemoryCache();
@@ -31,7 +32,6 @@ public static class DiConfig
         });
 
         services.AddHttpClient<IGoogleOAuthClient, GoogleOAuthClient>();
-
         services.AddScoped<IGoogleOAuthFlow, GoogleOAuthFlow>();
     }
 }

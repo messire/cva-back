@@ -19,6 +19,7 @@ COPY src/CVA.Infrastructure.Auth/CVA.Infrastructure.Auth.csproj src/CVA.Infrastr
 COPY src/CVA.Infrastructure.Common/CVA.Infrastructure.Common.csproj src/CVA.Infrastructure.Common/
 COPY src/CVA.Infrastructure.Mongo/CVA.Infrastructure.Mongo.csproj src/CVA.Infrastructure.Mongo/
 COPY src/CVA.Infrastructure.Postgres/CVA.Infrastructure.Postgres.csproj src/CVA.Infrastructure.Postgres/
+COPY src/CVA.Presentation.Auth/CVA.Presentation.Auth.csproj src/CVA.Presentation.Auth/
 COPY src/CVA.Presentation.Web/CVA.Presentation.Web.csproj src/CVA.Presentation.Web/
 COPY src/CVA.Tools.Common/CVA.Tools.Common.csproj src/CVA.Tools.Common/
 
