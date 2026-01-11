@@ -9,6 +9,7 @@ using CVA.Presentation.Auth;
 using CVA.Tools.Common;
 using Microsoft.AspNetCore.Cors.Infrastructure;
 using static System.StringSplitOptions;
+using static Microsoft.AspNetCore.HttpOverrides.ForwardedHeaders;
 
 namespace CVA.Presentation.Web;
 
@@ -122,6 +123,12 @@ internal static class DiExtensions
         {
             builder.Services.RegisterAuthService(builder.Configuration, builder.Environment);
             builder.Services.AddPresentationAuth(builder.Configuration);
+            builder.Services.Configure<ForwardedHeadersOptions>(options =>
+            {
+                options.ForwardedHeaders = XForwardedFor | XForwardedProto;
+                options.KnownIPNetworks.Clear();
+                options.KnownProxies.Clear();
+            });
         }
     }
 

@@ -27,12 +27,4 @@
         <ProjectReference Include="..\CVA.Tools.Common\CVA.Tools.Common.csproj"/>
     </ItemGroup>
 
-    <ItemGroup>
-      <Folder Include="Auth\Jwt\" />
-    </ItemGroup>
-
-    <ItemGroup>
-      <Compile Remove="Auth\Jwt\JwtTokenGenerator.cs" />
-    </ItemGroup>
-
 </Project>

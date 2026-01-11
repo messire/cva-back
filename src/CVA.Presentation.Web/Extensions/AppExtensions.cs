@@ -26,7 +26,10 @@ internal static class AppExtensions
         public void ConfigureApi()
         {
             app.UseCors();
-            app.UseHttpsRedirection();
+            if (app.Environment.IsDevelopment())
+            {
+                app.UseHttpsRedirection();
+            }
 
             app.UseAuthentication();
             app.UseAuthorization();
