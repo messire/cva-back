@@ -129,6 +129,14 @@ internal static class DiExtensions
     {
         var allowedOrigins = origins?.Split(';', TrimEntries | RemoveEmptyEntries) ?? [];
 
+        options.AddDefaultPolicy(policy =>
+        {
+            policy
+                .ApplyEnvironmentOrigins(env.IsDevelopment(), allowedOrigins)
+                .AllowAnyHeader()
+                .AllowAnyMethod();
+        });
+
         options.AddPolicy("AuthExchange", policy =>
         {
             policy

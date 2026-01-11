@@ -46,7 +46,10 @@ public sealed class AuthController(IIdentityService identityService, IGoogleOAut
     {
         if (string.IsNullOrWhiteSpace(request.RefreshToken))
         {
-            return BadRequest(new { message = "refreshToken is required." });
+            return Problem(
+                title: "Invalid request",
+                detail: "refreshToken is required.",
+                statusCode: StatusCodes.Status400BadRequest);
         }
 
         var token = await identityService.RefreshAsync(request.RefreshToken, ct);
@@ -104,12 +107,18 @@ public sealed class AuthController(IIdentityService identityService, IGoogleOAut
     {
         if (string.IsNullOrWhiteSpace(request.Code))
         {
-            return Task.FromResult<ActionResult<AuthTokenDto>>(BadRequest(new { message = "code is required." }));
+            return Task.FromResult<ActionResult<AuthTokenDto>>(Problem(
+                title: "Invalid request",
+                detail: "code is required.",
+                statusCode: StatusCodes.Status400BadRequest));
         }
 
         if (!oneTimeCodeStore.TryConsume(request.Code, out var token))
         {
-            return Task.FromResult<ActionResult<AuthTokenDto>>(BadRequest(new { message = "Invalid or expired code." }));
+            return Task.FromResult<ActionResult<AuthTokenDto>>(Problem(
+                title: "Invalid or expired code",
+                detail: "The one-time code is invalid or has expired.",
+                statusCode: StatusCodes.Status400BadRequest));
         }
 
         return Task.FromResult<ActionResult<AuthTokenDto>>(Ok(token));
