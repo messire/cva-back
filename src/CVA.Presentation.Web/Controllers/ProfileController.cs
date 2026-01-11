@@ -27,6 +27,21 @@ public sealed class DeveloperProfilesController(QueryExecutor queries, CommandEx
     }
 
     /// <summary>
+    /// Creates the current user's developer profile (only if it does not exist).
+    /// </summary>
+    /// <param name="request">Profile create fields.</param>
+    /// <param name="ct">Cancellation token.</param>
+    [HttpPost]
+    [ProducesResponseType(typeof(DeveloperProfileDto), StatusCodes.Status201Created)]
+    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status409Conflict)]
+    public async Task<ActionResult> CreateMyProfile([FromBody] CreateProfileRequest request, CancellationToken ct)
+    {
+        var command = new CreateProfileCommand(request);
+        var result = await commands.ExecuteAsync<CreateProfileCommand, DeveloperProfileDto>(command, ct);
+        return this.ToCreatedAtActionResult(result, actionName: nameof(GetMyProfile), routeValues: null);
+    }
+
+    /// <summary>
     /// Replaces the whole developer profile (full-save).
     /// </summary>
     /// <param name="request">New profile snapshot.</param>

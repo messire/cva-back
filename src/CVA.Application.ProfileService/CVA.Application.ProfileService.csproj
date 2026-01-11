@@ -13,4 +13,8 @@
       <PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Folder Include="Commands\Profiles\" />
+    </ItemGroup>
+
 </Project>
