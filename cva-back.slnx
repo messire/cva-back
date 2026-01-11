@@ -33,6 +33,7 @@
     <Project Path="src/CVA.Infrastructure.Postgres/CVA.Infrastructure.Postgres.csproj" />
   </Folder>
   <Folder Name="/src/presentation/">
+    <Project Path="src/CVA.Presentation.Auth/CVA.Presentation.Auth.csproj" />
     <Project Path="src/CVA.Presentation.Web/CVA.Presentation.Web.csproj" />
   </Folder>
   <Folder Name="/src/utility/">

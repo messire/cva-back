@@ -23,6 +23,7 @@
         <ProjectReference Include="..\CVA.Infrastructure.Common\CVA.Infrastructure.Common.csproj"/>
         <ProjectReference Include="..\CVA.Infrastructure.Mongo\CVA.Infrastructure.Mongo.csproj"/>
         <ProjectReference Include="..\CVA.Infrastructure.Postgres\CVA.Infrastructure.Postgres.csproj"/>
+        <ProjectReference Include="..\CVA.Presentation.Auth\CVA.Presentation.Auth.csproj" />
         <ProjectReference Include="..\CVA.Tools.Common\CVA.Tools.Common.csproj"/>
     </ItemGroup>
 

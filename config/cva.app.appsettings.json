@@ -2,7 +2,8 @@
   "AllowedHosts": "*",
   "Auth": {
     "Google": {
-      "ClientId": "$Auth__Google__ClientId"
+      "ClientId": "$Auth__Google__ClientId",
+      "ClientSecret": "$Auth__Google__ClientSecret"
     }
   },
   "Database": {

@@ -25,7 +25,7 @@ internal static class AppExtensions
         /// </summary>
         public void ConfigureApi()
         {
-            app.UseCors("Frontend");
+            app.UseCors();
             app.UseHttpsRedirection();
 
             app.UseAuthentication();

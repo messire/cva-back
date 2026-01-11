@@ -5,6 +5,7 @@ using CVA.Infrastructure.Auth;
 using CVA.Infrastructure.Common;
 using CVA.Infrastructure.Mongo;
 using CVA.Infrastructure.Postgres;
+using CVA.Presentation.Auth;
 using CVA.Tools.Common;
 using Microsoft.AspNetCore.Cors.Infrastructure;
 using static System.StringSplitOptions;
@@ -47,9 +48,7 @@ internal static class DiExtensions
         /// </summary>
         /// <param name="configName">The name of the configuration file to be added.</param>
         public void RegisterConfig(string configName)
-        {
-            builder.Configuration.AddConfigFiles(configName, builder.Environment);
-        }
+            => builder.Configuration.AddConfigFiles(configName, builder.Environment);
 
         /// <summary>
         /// Configures and registers Cross-Origin Resource Sharing (CORS) policies for the application.
@@ -122,6 +121,7 @@ internal static class DiExtensions
         public void RegisterAuth()
         {
             builder.Services.RegisterAuthService(builder.Configuration, builder.Environment);
+            builder.Services.AddPresentationAuth(builder.Configuration);
         }
     }
 
@@ -129,7 +129,15 @@ internal static class DiExtensions
     {
         var allowedOrigins = origins?.Split(';', TrimEntries | RemoveEmptyEntries) ?? [];
 
-        options.AddPolicy("Frontend", policy =>
+        options.AddDefaultPolicy(policy =>
+        {
+            policy
+                .ApplyEnvironmentOrigins(env.IsDevelopment(), allowedOrigins)
+                .AllowAnyHeader()
+                .AllowAnyMethod();
+        });
+
+        options.AddPolicy("AuthExchange", policy =>
         {
             policy
                 .ApplyEnvironmentOrigins(env.IsDevelopment(), allowedOrigins)
