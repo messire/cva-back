@@ -41,7 +41,7 @@ public sealed class CreateProfileHandler(
             Avatar.TryFrom(request.AvatarUrl),
             contactInfo,
             request.SocialLinks.ToModel(),
-            verification: VerificationStatus.Default,
+            verification: VerificationStatus.TryFrom("Verified"),
             openToWork: new OpenToWorkStatus(request.OpenToWork),
             yearsOfExperience: YearsOfExperience.From(request.YearsOfExperience),
             now);

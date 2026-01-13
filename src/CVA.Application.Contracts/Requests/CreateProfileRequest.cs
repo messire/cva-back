@@ -63,5 +63,5 @@ public sealed record CreateProfileRequest
     /// <summary>
     /// Social links.
     /// </summary>
-    public SocialLinksDto SocialLinks { get; init; } = new();
+    public SocialLinksDto? SocialLinks { get; init; } = new();
 }
