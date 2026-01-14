@@ -102,5 +102,13 @@ public static class ConfigTools
         => Environment.GetEnvironmentVariables().Cast<DictionaryEntry>();
 
     private static string CombineConfigs(string config, IEnumerable<DictionaryEntry> envs)
-        => envs.Aggregate(config, (current, envPair) => current.Replace($"${envPair.Key}", $"{envPair.Value}"));
+        => envs.Aggregate(config, (current, envPair) =>
+        {
+            var key = envPair.Key?.ToString();
+            if (string.IsNullOrWhiteSpace(key)) return current;
+
+            var rawValue = envPair.Value?.ToString() ?? string.Empty;
+            var escapedValue = JsonEncodedText.Encode(rawValue).ToString();
+            return current.Replace($"${key}", escapedValue);
+        });
 }

@@ -21,6 +21,13 @@ public sealed class ProfileMediaController(
     private const long AvatarMaxBytes = 500 * 1024;
     private const long ProjectImageMaxBytes = 500 * 1024;
 
+    private static readonly string[] AllowedImageContentTypes =
+    [
+        "image/jpeg",
+        "image/png",
+        "image/webp"
+    ];
+
     /// <summary>
     /// Uploads and sets the current user's avatar image.
     /// Replaces the old avatar (if present).
@@ -48,6 +55,24 @@ public sealed class ProfileMediaController(
                 title: "Validation");
         }
 
+        var contentType = NormalizeContentType(file.ContentType);
+
+        if (string.IsNullOrWhiteSpace(contentType) || contentType.Equals("application/octet-stream", StringComparison.OrdinalIgnoreCase))
+        {
+            return Problem(
+                detail: "Invalid file type. Please upload an image file (JPEG/PNG/WebP), not a link.",
+                statusCode: StatusCodes.Status400BadRequest,
+                title: "Validation");
+        }
+
+        if (!AllowedImageContentTypes.Contains(contentType, StringComparer.OrdinalIgnoreCase))
+        {
+            return Problem(
+                detail: "Unsupported file type. Allowed: image/jpeg, image/png, image/webp.",
+                statusCode: StatusCodes.Status400BadRequest,
+                title: "Validation");
+        }
+
         var publicBaseUrl = BuildPublicBaseUrl();
         var mediaRequestPath = mediaOptions.Value.PublicRequestPath;
 
@@ -56,7 +81,7 @@ public sealed class ProfileMediaController(
         var command = new UpdateProfileAvatarCommand(
             Content: stream,
             ContentLength: file.Length,
-            ContentType: file.ContentType,
+            ContentType: contentType,
             PublicBaseUrl: publicBaseUrl,
             MediaRequestPath: mediaRequestPath);
 
@@ -81,16 +106,31 @@ public sealed class ProfileMediaController(
     {
         if (file is null || file.Length <= 0)
         {
-            return Problem(
-                detail: "File is required.",
-                statusCode: StatusCodes.Status400BadRequest,
-                title: "Validation");
+            return Problem(detail: "File is required.", statusCode: StatusCodes.Status400BadRequest, title: "Validation");
         }
 
         if (file.Length > ProjectImageMaxBytes)
         {
             return Problem(
                 detail: $"Project image is too large. Max size is {ProjectImageMaxBytes} bytes.",
+                statusCode: StatusCodes.Status400BadRequest,
+                title: "Validation");
+        }
+
+        var contentType = NormalizeContentType(file.ContentType);
+
+        if (string.IsNullOrWhiteSpace(contentType) || contentType.Equals("application/octet-stream", StringComparison.OrdinalIgnoreCase))
+        {
+            return Problem(
+                detail: "Invalid file type. Please upload an image file (JPEG/PNG/WebP), not a link.",
+                statusCode: StatusCodes.Status400BadRequest,
+                title: "Validation");
+        }
+
+        if (!AllowedImageContentTypes.Contains(contentType, StringComparer.OrdinalIgnoreCase))
+        {
+            return Problem(
+                detail: "Unsupported file type. Allowed: image/jpeg, image/png, image/webp.",
                 statusCode: StatusCodes.Status400BadRequest,
                 title: "Validation");
         }
@@ -104,13 +144,16 @@ public sealed class ProfileMediaController(
             ProjectId: projectId,
             Content: stream,
             ContentLength: file.Length,
-            ContentType: file.ContentType,
+            ContentType: contentType,
             PublicBaseUrl: publicBaseUrl,
             MediaRequestPath: mediaRequestPath);
 
         var result = await commands.ExecuteAsync<UpdateProjectImageCommand, DeveloperProfileDto>(command, ct);
         return this.ToActionResult(result);
     }
+
+    private static string NormalizeContentType(string? contentType)
+        => (contentType ?? string.Empty).Trim();
 
     private string BuildPublicBaseUrl()
         => $"{Request.Scheme}://{Request.Host}";

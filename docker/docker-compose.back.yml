@@ -22,13 +22,10 @@ services:
       Media__PublicRequestPath: /media
 
     volumes:
-      - cva_media:/data/media
+      - ../.data/media:/data/media
 
     networks:
       - docker-network
-
-volumes:
-  cva_media:
 
 networks:
   docker-network:
