@@ -1,8 +1,10 @@
-﻿using CVA.Application.IdentityService;
+﻿using CVA.Application.Abstractions.Media;
+using CVA.Application.IdentityService;
 using CVA.Application.ProfileService;
 using CVA.Application.Validators;
 using CVA.Infrastructure.Auth;
 using CVA.Infrastructure.Common;
+using CVA.Infrastructure.Common.Media;
 using CVA.Infrastructure.Mongo;
 using CVA.Infrastructure.Postgres;
 using CVA.Presentation.Auth;
@@ -84,6 +86,9 @@ internal static class DiExtensions
 
             builder.Services.AddScoped<CommandExecutor>();
             builder.Services.AddScoped<QueryExecutor>();
+
+            builder.Services.Configure<MediaOptions>(builder.Configuration.GetSection(MediaOptions.Path));
+            builder.Services.AddSingleton<IMediaStorage, LocalMediaStorage>();
         }
 
         /// <summary>

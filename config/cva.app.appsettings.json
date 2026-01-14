@@ -38,6 +38,10 @@
     "SigningKey": "$Jwt__SigningKey",
     "LifetimeMinutes": 60
   },
+  "Media": {
+    "RootPath": "$Media__RootPath",
+    "PublicRequestPath": "/media"
+  },
   "RefreshTokens": {
     "LifetimeDays": 30,
     "Pepper": "$RefreshTokens__Pepper"

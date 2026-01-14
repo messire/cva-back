@@ -1,4 +1,6 @@
-﻿using Scalar.AspNetCore;
+﻿using CVA.Infrastructure.Common.Media;
+using Microsoft.Extensions.FileProviders;
+using Scalar.AspNetCore;
 
 namespace CVA.Presentation.Web;
 
@@ -29,6 +31,18 @@ internal static class AppExtensions
             if (app.Environment.IsDevelopment())
             {
                 app.UseHttpsRedirection();
+            }
+
+            var mediaOptions = app.Configuration.GetSection(MediaOptions.Path).Get<MediaOptions>();
+            if (mediaOptions is not null && !string.IsNullOrWhiteSpace(mediaOptions.RootPath))
+            {
+                Directory.CreateDirectory(mediaOptions.RootPath);
+                var options = new StaticFileOptions
+                {
+                    FileProvider = new PhysicalFileProvider(mediaOptions.RootPath),
+                    RequestPath = mediaOptions.PublicRequestPath
+                };
+                app.UseStaticFiles(options);
             }
 
             app.UseAuthentication();
