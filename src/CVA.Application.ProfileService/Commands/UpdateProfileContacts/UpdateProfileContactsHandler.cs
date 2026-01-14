@@ -19,17 +19,8 @@ public sealed class UpdateProfileContactsHandler(IDeveloperProfileRepository rep
 
         var request = command.Request;
         var now = DateTimeOffset.UtcNow;
-        
-        if (request.Email != null || request.Phone != null || request.Website != null || request.Location != null)
-        {
-            profile.ChangeContact(request.ToModel(profile.Contact), now);
-        }
-
-        if (request.SocialLinks != null)
-        {
-            profile.ChangeSocialLinks(request.SocialLinks.ToModel(), now);
-        }
-
+        profile.ChangeContact(request.ToModel(profile.Contact), now);
+        profile.ChangeSocialLinks(request.SocialLinks.ToModel(), now);
         var updatedProfile = await repository.UpdateAsync(profile, ct);
         return updatedProfile?.ToDto() ?? Result<DeveloperProfileDto>.Fail("Failed to update profile.");
     }

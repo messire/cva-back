@@ -18,15 +18,13 @@ public class CreateProjectValidator : AbstractValidator<CreateProjectCommand>
             .MaximumLength(2000);
 
         RuleFor(command => command.Request.IconUrl)
-            .Must(value => string.IsNullOrEmpty(value) || Uri.IsWellFormedUriString(value, UriKind.Absolute))
-            .WithMessage("Invalid Icon URL");
+            .Must(value => Uri.IsWellFormedUriString(value, UriKind.Absolute))
+            .WithMessage("Invalid Image URL")
+            .When(command => !string.IsNullOrEmpty(command.Request.IconUrl));
 
         RuleFor(command => command.Request.LinkUrl)
             .NotEmpty()
             .Must(uriString => Uri.IsWellFormedUriString(uriString, UriKind.Absolute))
             .WithMessage("Invalid Link URL");
-
-        RuleFor(command => command.Request.TechStack)
-            .NotNull();
     }
 }

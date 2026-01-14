@@ -20,5 +20,5 @@ public sealed record RoleTitle(string Value)
     /// <param name="value">The role title value.</param>
     /// <returns>The created role title or null if the value is null or empty.</returns>
     public static RoleTitle? TryFrom(string? value)
-        => string.IsNullOrWhiteSpace(value) ? null : From(value!);
+        => string.IsNullOrWhiteSpace(value) ? null : From(value);
 }

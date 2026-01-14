@@ -22,10 +22,11 @@ public static class RequestsMapping
     /// </summary>
     public static ContactInfo ToModel(this UpdateProfileContactsRequest request, ContactInfo existing)
         => ContactInfo.Create(
-            request.Location?.ToModel() ?? existing.Location,
+            request.Location?.ToModel(),
             request.Email != null ? EmailAddress.From(request.Email) : existing.Email,
-            request.Phone != null ? PhoneNumber.TryFrom(request.Phone) : existing.Phone,
-            request.Website != null ? Url.TryFrom(request.Website) : existing.Website);
+            PhoneNumber.TryFrom(request.Phone),
+            Url.TryFrom(request.Website)
+        );
 
     /// <summary>
     /// Maps a <see cref="ReplaceProfileRequest"/> to a <see cref="ContactInfo"/> domain model.

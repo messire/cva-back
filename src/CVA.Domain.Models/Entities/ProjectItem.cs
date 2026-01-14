@@ -75,7 +75,6 @@ public sealed class ProjectItem
         Ensure.NotEmpty(id.Value, nameof(id));
         Ensure.NotNull(name, nameof(name));
         Ensure.NotNull(link, nameof(link));
-        Ensure.NotNull(techStack, nameof(techStack));
 
         return new ProjectItem(id, name, description, icon, link, techStack);
     }
