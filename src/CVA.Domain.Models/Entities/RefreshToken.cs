@@ -44,8 +44,9 @@ public sealed class RefreshToken
     /// <summary>
     /// Indicates whether the token is currently active.
     /// </summary>
-    public bool IsActive
-        => RevokedAt is null && ExpiresAt > DateTimeOffset.UtcNow;
+    /// <param name="now">The current timestamp.</param>
+    public bool IsActive(DateTimeOffset now)
+        => RevokedAt is null && ExpiresAt > now;
 
     /// <summary>
     /// EF constructor.
@@ -78,13 +79,14 @@ public sealed class RefreshToken
     /// <param name="userId">User id.</param>
     /// <param name="tokenHash">Hashed token value.</param>
     /// <param name="expiresAt">Expiration time (UTC).</param>
-    public static RefreshToken Create(Guid userId, string tokenHash, DateTimeOffset expiresAt)
+    /// <param name="now">The current timestamp.</param>
+    public static RefreshToken Create(Guid userId, string tokenHash, DateTimeOffset expiresAt, DateTimeOffset now)
         => new(
             id: Guid.CreateVersion7(),
             userId: userId,
             tokenHash: tokenHash,
             expiresAt: expiresAt,
-            createdAt: DateTimeOffset.UtcNow,
+            createdAt: now,
             revokedAt: null,
             replacedByTokenHash: null);
 

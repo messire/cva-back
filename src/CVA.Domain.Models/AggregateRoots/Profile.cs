@@ -58,16 +58,6 @@ public sealed partial class DeveloperProfile
         Touch(now);
     }
 
-    /// <summary>
-    /// Updates the years of experience of the developer profile to the specified value and updates the last modified timestamp.
-    /// </summary>
-    /// <param name="years">The new years of experience for the developer profile.</param>
-    /// <param name="now">The timestamp indicating when the years of experience change occurred.</param>
-    public void UpdateYearsOfExperience(int years, DateTimeOffset now)
-    {
-        YearsOfExperience = YearsOfExperience.From(years);
-        Touch(now);
-    }
 
     /// <summary>
     /// Changes the contact information of the developer profile to the specified values and updates the last modified timestamp.

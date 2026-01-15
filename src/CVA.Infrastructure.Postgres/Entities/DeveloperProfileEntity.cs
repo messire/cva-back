@@ -40,10 +40,6 @@ internal sealed class DeveloperProfileEntity
     /// </summary>
     public bool OpenToWork { get; set; }
 
-    /// <summary>
-    /// Total years of professional experience.
-    /// </summary>
-    public int YearsOfExperience { get; set; }
 
     /// <summary>
     /// Contact email.

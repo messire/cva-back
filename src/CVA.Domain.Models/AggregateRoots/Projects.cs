@@ -56,17 +56,22 @@ public sealed partial class DeveloperProfile
     /// </summary>
     /// <param name="projectId">The ID of the project to remove.</param>
     /// <param name="now">The current timestamp.</param>
-    public void RemoveProject(ProjectId projectId, DateTimeOffset now)
+    /// <returns>True if the project was removed; otherwise, false.</returns>
+    public bool RemoveProject(ProjectId projectId, DateTimeOffset now)
     {
         Ensure.NotEmpty(projectId.Value, nameof(projectId));
-        _projects.RemoveAll(item => item.Id.Equals(projectId));
-        Touch(now);
+        var removed = _projects.RemoveAll(item => item.Id.Equals(projectId)) > 0;
+        if (removed)
+        {
+            Touch(now);
+        }
+        return removed;
     }
 
     private ProjectItem FindProject(ProjectId id)
     {
         Ensure.NotEmpty(id.Value, nameof(id));
         var project = _projects.Find(item => item.Id.Equals(id));
-        return project ?? throw new InvalidOperationException("Project not found.");
+        return project ?? throw new ProjectNotFoundException(id);
     }
 }

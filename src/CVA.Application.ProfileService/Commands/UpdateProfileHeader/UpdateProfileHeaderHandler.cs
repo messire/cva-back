@@ -40,10 +40,6 @@ public sealed class UpdateProfileHeaderHandler(IDeveloperProfileRepository repos
             profile.SetOpenToWork(request.OpenToWork.Value, now);
         }
 
-        if (request.YearsOfExperience.HasValue)
-        {
-            profile.UpdateYearsOfExperience(request.YearsOfExperience.Value, now);
-        }
 
         if (request.VerificationStatus != null)
         {

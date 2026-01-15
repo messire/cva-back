@@ -40,8 +40,6 @@ public sealed class CreateProfileValidator : AbstractValidator<CreateProfileComm
             .Must(value => string.IsNullOrEmpty(value) || Uri.IsWellFormedUriString(value, UriKind.Absolute))
             .WithMessage("Invalid Website URL");
 
-        RuleFor(command => command.Request.YearsOfExperience)
-            .InclusiveBetween(0, 80);
 
         RuleFor(command => command.Request.Location)
             .SetValidator(new LocationDtoValidator()!)

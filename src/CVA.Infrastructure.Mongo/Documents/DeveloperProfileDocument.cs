@@ -48,10 +48,6 @@ internal sealed class DeveloperProfileDocument
     /// </summary>
     public bool OpenToWork { get; set; }
 
-    /// <summary>
-    /// The years of experience of the developer profile owner.
-    /// </summary>
-    public int YearsOfExperience { get; set; }
 
     /// <summary>
     /// The verification status of the developer profile owner.
