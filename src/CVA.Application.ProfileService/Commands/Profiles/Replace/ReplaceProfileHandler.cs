@@ -33,7 +33,6 @@ public sealed class ReplaceProfileHandler(IDeveloperProfileRepository repository
             socials,
             VerificationStatus.TryFrom(request.VerificationStatus),
             new OpenToWorkStatus(request.OpenToWork),
-            YearsOfExperience.From(request.YearsOfExperience),
             now);
 
         profile.ReplaceSkills(request.Skills.Select(SkillTag.From), now);

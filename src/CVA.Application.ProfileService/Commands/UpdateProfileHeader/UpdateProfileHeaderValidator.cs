@@ -26,9 +26,6 @@ public class UpdateProfileHeaderValidator : AbstractValidator<UpdateProfileHeade
             .Must(value => string.IsNullOrEmpty(value) || Uri.IsWellFormedUriString(value, UriKind.Absolute))
             .WithMessage("Invalid Avatar URL");
         
-        RuleFor(command => command.Request.YearsOfExperience)
-            .GreaterThanOrEqualTo(0)
-            .When(command => command.Request.YearsOfExperience.HasValue);
 
         RuleFor(command => command.Request.VerificationStatus)
             .MaximumLength(50);

@@ -40,10 +40,6 @@ public sealed record CreateProfileRequest
     /// </summary>
     public bool OpenToWork { get; init; }
 
-    /// <summary>
-    /// The number of years of professional experience.
-    /// </summary>
-    public int YearsOfExperience { get; init; }
 
     /// <summary>
     /// The developer location (city + country).

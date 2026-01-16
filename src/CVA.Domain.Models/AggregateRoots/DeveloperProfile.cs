@@ -40,9 +40,30 @@ public sealed partial class DeveloperProfile: AggregateRoot
     public OpenToWorkStatus OpenToWork { get; private set; }
 
     /// <summary>
-    /// The years of experience of the developer.
+    /// Gets the years of experience of the developer, derived from work experience items.
     /// </summary>
-    public YearsOfExperience YearsOfExperience { get; private set; }
+    /// <param name="now">The current timestamp to use for ongoing work experience.</param>
+    /// <returns>The number of full years of experience.</returns>
+    public YearsOfExperience GetYearsOfExperience(DateTimeOffset now)
+    {
+        if (!_workExperience.Any())
+        {
+            return YearsOfExperience.From(0);
+        }
+
+        var today = DateOnly.FromDateTime(now.Date);
+        var minStart = _workExperience.Min(x => x.Period.Start);
+        var maxEnd = _workExperience.Max(x => x.Period.End ?? today);
+
+        var years = maxEnd.Year - minStart.Year;
+
+        if (maxEnd < minStart.AddYears(years))
+        {
+            years--;
+        }
+
+        return YearsOfExperience.From(Math.Max(0, years));
+    }
 
     /// <summary>
     /// The contact information of the developer.
@@ -83,7 +104,6 @@ public sealed partial class DeveloperProfile: AggregateRoot
     /// <param name="summary"> Developer's profile summary. </param>
     /// <param name="avatar"> Developer's avatar image. </param>
     /// <param name="openToWork"> Developer's open to work status. </param>
-    /// <param name="yearsOfExperience"> Developer's years of experience. </param>
     /// <param name="contact"> Developer's contact information. </param>
     /// <param name="social"> Developer's social links. </param>
     /// <param name="verification"> Developer's verification status. </param>
@@ -96,7 +116,6 @@ public sealed partial class DeveloperProfile: AggregateRoot
         ProfileSummary? summary,
         Avatar? avatar,
         OpenToWorkStatus openToWork,
-        YearsOfExperience yearsOfExperience,
         ContactInfo contact,
         SocialLinks social,
         VerificationStatus verification,
@@ -109,7 +128,6 @@ public sealed partial class DeveloperProfile: AggregateRoot
         Summary = summary;
         Avatar = avatar;
         OpenToWork = openToWork;
-        YearsOfExperience = yearsOfExperience;
         Contact = contact;
         Social = social;
         Verification = verification;
@@ -129,7 +147,6 @@ public sealed partial class DeveloperProfile: AggregateRoot
     /// <param name="social">The developer's social media links.</param>
     /// <param name="verification">Verification status of the developer's profile.</param>
     /// <param name="openToWork">The developer's open-to-work status.</param>
-    /// <param name="yearsOfExperience">The number of years of experience the developer has.</param>
     /// <param name="now">The current timestamp to assign as the creation and last update time.</param>
     /// <returns>A new instance of the DeveloperProfile class.</returns>
     public static DeveloperProfile Create(
@@ -142,7 +159,6 @@ public sealed partial class DeveloperProfile: AggregateRoot
         SocialLinks social,
         VerificationStatus verification,
         OpenToWorkStatus openToWork,
-        YearsOfExperience yearsOfExperience,
         DateTimeOffset now)
     {
         Ensure.NotEmpty(id.Value, nameof(id));
@@ -151,8 +167,7 @@ public sealed partial class DeveloperProfile: AggregateRoot
         Ensure.NotNull(social, nameof(social));
         Ensure.NotNull(verification, nameof(verification));
         Ensure.NotNull(openToWork, nameof(openToWork));
-        Ensure.NotNull(yearsOfExperience, nameof(yearsOfExperience));
 
-        return new DeveloperProfile(id, name, role, summary, avatar, openToWork, yearsOfExperience, contact, social, verification, createdAt: now, updatedAt: now);
+        return new DeveloperProfile(id, name, role, summary, avatar, openToWork, contact, social, verification, createdAt: now, updatedAt: now);
     }
 }

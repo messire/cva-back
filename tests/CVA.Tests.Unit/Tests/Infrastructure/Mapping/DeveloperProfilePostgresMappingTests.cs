@@ -1,4 +1,4 @@
-﻿using CVA.Domain.Models;
+using CVA.Domain.Models;
 using CVA.Infrastructure.Postgres;
 
 namespace CVA.Tests.Unit.Infrastructure.Mapping;
@@ -30,7 +30,6 @@ public sealed class DeveloperProfilePostgresMappingTests
         Assert.Equal(profile.Summary?.Value, entity.Summary);
         Assert.Equal(profile.Avatar?.ImageUrl.Value, entity.AvatarUrl);
         Assert.Equal(profile.OpenToWork.Value, entity.OpenToWork);
-        Assert.Equal(profile.YearsOfExperience.Value, entity.YearsOfExperience);
         Assert.Equal(profile.Contact.Email.Value, (string?)entity.Email);
         Assert.Equal(profile.Contact.Website?.Value, entity.Website);
         Assert.Equal(profile.Verification.Value, entity.Verified);
@@ -60,7 +59,6 @@ public sealed class DeveloperProfilePostgresMappingTests
         Assert.Equal(newProfile.Summary?.Value, entity.Summary);
         Assert.Equal(newProfile.Avatar?.ImageUrl.Value, entity.AvatarUrl);
         Assert.Equal(newProfile.OpenToWork.Value, entity.OpenToWork);
-        Assert.Equal(newProfile.YearsOfExperience.Value, entity.YearsOfExperience);
         Assert.Equal(newProfile.Contact.Email.Value, (string?)entity.Email);
         Assert.Equal(newProfile.Contact.Website?.Value, entity.Website);
         Assert.Equal(newProfile.Verification.Value, entity.Verified);
@@ -90,7 +88,6 @@ public sealed class DeveloperProfilePostgresMappingTests
         Assert.Equal(profile.Summary?.Value, result.Summary?.Value);
         Assert.Equal(profile.Avatar?.ImageUrl.Value, result.Avatar?.ImageUrl.Value);
         Assert.Equal(profile.OpenToWork.Value, result.OpenToWork.Value);
-        Assert.Equal(profile.YearsOfExperience.Value, result.YearsOfExperience.Value);
         Assert.Equal(profile.Contact.Email.Value, result.Contact.Email.Value);
         Assert.Equal(profile.Contact.Website?.Value, result.Contact.Website?.Value);
         Assert.Equal(profile.Verification.Value, result.Verification.Value);

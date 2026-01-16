@@ -1,4 +1,4 @@
-﻿namespace CVA.Tests.Common;
+namespace CVA.Tests.Common;
 
 /// <summary>
 /// A builder class that creates instances of the <see cref="DeveloperProfile"/> type using the AutoFixture library.
@@ -25,7 +25,6 @@ internal sealed class DeveloperProfileBuilder : ISpecimenBuilder
             social: (SocialLinks)context.Resolve(typeof(SocialLinks)),
             verification: (VerificationStatus)context.Resolve(typeof(VerificationStatus)),
             openToWork: (OpenToWorkStatus)context.Resolve(typeof(OpenToWorkStatus)),
-            yearsOfExperience: (YearsOfExperience)context.Resolve(typeof(YearsOfExperience)),
             skills: (IEnumerable<SkillTag>)context.Resolve(typeof(IEnumerable<SkillTag>)),
             projects: (IEnumerable<ProjectItem>)context.Resolve(typeof(IEnumerable<ProjectItem>)),
             workExperience: (IEnumerable<WorkExperienceItem>)context.Resolve(typeof(IEnumerable<WorkExperienceItem>)),

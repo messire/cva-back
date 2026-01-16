@@ -43,7 +43,6 @@ public sealed class CreateProfileHandler(
             request.SocialLinks.ToModel(),
             verification: VerificationStatus.TryFrom("Verified"),
             openToWork: new OpenToWorkStatus(request.OpenToWork),
-            yearsOfExperience: YearsOfExperience.From(request.YearsOfExperience),
             now);
 
         var created = await repository.CreateAsync(profile, ct);

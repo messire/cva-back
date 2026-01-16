@@ -1,4 +1,4 @@
-﻿using CVA.Application.ProfileService;
+using CVA.Application.ProfileService;
 
 namespace CVA.Tests.Unit.Application.Validators;
 
@@ -53,26 +53,5 @@ public class UpdateProfileHeaderValidatorTests
 
         // Assert
         Helpers.AssertValidation(result, headerCommand => headerCommand.Request.AvatarUrl, shouldHaveError);
-    }
-
-    /// <summary>
-    /// Purpose: Validate the YearsOfExperience property (must be >= 0).
-    /// Should: Return validation error if negative.
-    /// When: YearsOfExperience is negative.
-    /// </summary>
-    [Theory]
-    [InlineCvaAutoData(-1, true)]
-    [InlineCvaAutoData(0, false)]
-    [InlineCvaAutoData(5, false)]
-    public void YearsOfExperience_Validation(int? years, bool shouldHaveError, UpdateProfileHeaderCommand baseCommand)
-    {
-        // Arrange
-        var command = new UpdateProfileHeaderCommand(Request: baseCommand.Request with { YearsOfExperience = years });
-
-        // Act
-        var result = _validator.TestValidate(command);
-
-        // Assert
-        Helpers.AssertValidation(result, headerCommand => headerCommand.Request.YearsOfExperience, shouldHaveError);
     }
 }

@@ -1,4 +1,4 @@
-﻿using CVA.Application.ProfileService;
+using CVA.Application.ProfileService;
 
 namespace CVA.Tests.Unit.Application.Validators;
 
@@ -108,7 +108,12 @@ public class CreateProjectValidatorTests
     public void TechStack_Validation_NotNull(CreateProjectCommand baseCommand)
     {
         // Arrange
-        var command = new CreateProjectCommand(Request: baseCommand.Request with { TechStack = null! });
+        var command = new CreateProjectCommand(Request: baseCommand.Request with
+        {
+            TechStack = null!,
+            IconUrl = "https://example.com/icon.png",
+            LinkUrl = "https://example.com"
+        });
 
         // Act
         var result = _validator.TestValidate(command);

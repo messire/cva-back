@@ -12,8 +12,11 @@ namespace CVA.Application.IdentityService;
 /// Handles external sign-in (Google) and the retrieval of the current user's identity info.
 /// </summary>
 /// <param name="users">User repository.</param>
+/// <param name="refreshTokens">Refresh token repo.</param>
 /// <param name="googleVerifier">Google ID token verifier.</param>
 /// <param name="tokenIssuer">Application JWT issuer.</param>
+/// <param name="refreshTokenProtector">Refresh token protector.</param>
+/// <param name="refreshTokenOptions">Refresh token options</param>
 /// <param name="currentUser">Accessor for the current user identity (claims-based).</param>
 internal sealed class IdentityService(
     IUserRepository users,
@@ -63,7 +66,8 @@ internal sealed class IdentityService(
 
         var tokenHash = refreshTokenProtector.Hash(refreshToken);
         var stored = await refreshTokens.GetByTokenHashAsync(tokenHash, ct);
-        if (stored is null || !stored.IsActive)
+        var now = DateTimeOffset.UtcNow;
+        if (stored is null || !stored.IsActive(now))
         {
             throw new ApplicationException("Invalid or expired refresh token.");
         }
@@ -76,10 +80,10 @@ internal sealed class IdentityService(
 
         var newRefreshToken = refreshTokenProtector.Generate();
         var newHash = refreshTokenProtector.Hash(newRefreshToken);
-        var newExpiresAt = DateTimeOffset.UtcNow.AddDays(_refreshOptions.LifetimeDays);
+        var newExpiresAt = now.AddDays(_refreshOptions.LifetimeDays);
 
-        await refreshTokens.RevokeAsync(stored.Id, DateTimeOffset.UtcNow, newHash, ct);
-        await refreshTokens.CreateAsync(RefreshToken.Create(user.Id, newHash, newExpiresAt), ct);
+        await refreshTokens.RevokeAsync(stored.Id, now, newHash, ct);
+        await refreshTokens.CreateAsync(RefreshToken.Create(user.Id, newHash, newExpiresAt, now), ct);
 
         var newAccessToken = tokenIssuer.Issue(user.Id, user.Role.ToString());
         return new AuthTokenDto(newAccessToken, newRefreshToken, user.Id);
@@ -101,11 +105,12 @@ internal sealed class IdentityService(
     
     private async Task<string> IssueRefreshTokenAsync(Guid userId, CancellationToken ct)
     {
+        var now = DateTimeOffset.UtcNow;
         var refreshToken = refreshTokenProtector.Generate();
         var tokenHash = refreshTokenProtector.Hash(refreshToken);
-        var expiresAt = DateTimeOffset.UtcNow.AddDays(_refreshOptions.LifetimeDays);
+        var expiresAt = now.AddDays(_refreshOptions.LifetimeDays);
 
-        await refreshTokens.CreateAsync(RefreshToken.Create(userId, tokenHash, expiresAt), ct);
+        await refreshTokens.CreateAsync(RefreshToken.Create(userId, tokenHash, expiresAt, now), ct);
         return refreshToken;
     }
 }

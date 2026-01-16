@@ -1,4 +1,4 @@
-﻿namespace CVA.Infrastructure.Mongo;
+namespace CVA.Infrastructure.Mongo;
 
 /// <summary>
 /// Mapping between domain models and Mongo persistence documents.
@@ -47,8 +47,8 @@ internal static class UserMongoMappingExtensions
             Summary = profile.Summary?.Value,
             AvatarUrl = profile.Avatar?.ImageUrl.Value,
             OpenToWork = profile.OpenToWork.Value,
-            YearsOfExperience = profile.YearsOfExperience.Value,
             Email = profile.Contact.Email.Value,
+            Phone = profile.Contact.Phone?.Value,
             Website = profile.Contact.Website?.Value,
             Location = profile.Contact.Location.ToDocument(),
             SocialLinks = profile.Social.ToDocument(),
@@ -105,7 +105,6 @@ internal static class UserMongoMappingExtensions
             social: socials,
             verification: new VerificationStatus((VerificationLevel)document.VerificationStatus),
             openToWork: new OpenToWorkStatus(document.OpenToWork),
-            yearsOfExperience: YearsOfExperience.From(document.YearsOfExperience),
             skills: document.Skills.Select(SkillTag.From),
             projects: projects,
             workExperience: work,

@@ -35,10 +35,6 @@ public sealed record UpdateProfileHeaderRequest
     /// </summary>
     public string? VerificationStatus { get; init; }
 
-    /// <summary>
-    /// The number of years of experience the developer has.
-    /// </summary>
-    public int? YearsOfExperience { get; init; }
 
     /// <summary>
     /// The average rating of the developer's profile.

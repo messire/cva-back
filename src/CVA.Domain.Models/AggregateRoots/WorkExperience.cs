@@ -16,7 +16,7 @@ public sealed partial class DeveloperProfile
     public WorkExperienceId AddWorkExperience(
         CompanyName company,
         Location? location,
-        RoleTitle? role,
+        RoleTitle role,
         WorkDescription? description,
         DateRange period,
         IEnumerable<TechTag> techStack,
@@ -44,7 +44,7 @@ public sealed partial class DeveloperProfile
         WorkExperienceId id,
         CompanyName company,
         Location? location,
-        RoleTitle? role,
+        RoleTitle role,
         WorkDescription? description,
         DateRange period,
         IEnumerable<TechTag> techStack,
@@ -60,17 +60,22 @@ public sealed partial class DeveloperProfile
     /// </summary>
     /// <param name="id">The unique identifier of the work experience entry to be removed.</param>
     /// <param name="now">The current timestamp, used to update the profile's last modified time.</param>
-    public void RemoveWorkExperience(WorkExperienceId id, DateTimeOffset now)
+    /// <returns>True if the work experience was removed; otherwise, false.</returns>
+    public bool RemoveWorkExperience(WorkExperienceId id, DateTimeOffset now)
     {
         Ensure.NotEmpty(id.Value, nameof(id));
-        _workExperience.RemoveAll(item => item.Id.Equals(id));
-        Touch(now);
+        var removed = _workExperience.RemoveAll(item => item.Id.Equals(id)) > 0;
+        if (removed)
+        {
+            Touch(now);
+        }
+        return removed;
     }
     
     private WorkExperienceItem FindWorkExperience(WorkExperienceId id)
     {
         Ensure.NotEmpty(id.Value, nameof(id));
         var experienceItem = _workExperience.FirstOrDefault(item => item.Id.Equals(id));
-        return experienceItem ?? throw new InvalidOperationException("Work experience not found.");
+        return experienceItem ?? throw new WorkExperienceNotFoundException(id);
     }
 }

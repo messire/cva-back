@@ -41,11 +41,6 @@ public sealed record ReplaceProfileRequest
     public string? VerificationStatus { get; init; }
 
     /// <summary>
-    /// The number of years of professional experience the developer has.
-    /// </summary>
-    public int YearsOfExperience { get; init; }
-
-    /// <summary>
     /// The developer's email address.
     /// </summary>
     public string? Email { get; init; }

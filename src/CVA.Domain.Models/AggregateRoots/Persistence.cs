@@ -12,7 +12,6 @@ public sealed partial class DeveloperProfile
     /// <param name="avatar">The avatar or profile picture of the developer.</param>
     /// <param name="openToWork">The developer's availability for new work opportunities.</param>
     /// <param name="verification">The verification status of the developer's profile.</param>
-    /// <param name="yearsOfExperience">The developer's years of professional experience.</param>
     /// <param name="contact">The developer's contact information.</param>
     /// <param name="social">The developer's social media links or handles.</param>
     /// <param name="skills">A collection of skill tags associated with the developer.</param>
@@ -31,14 +30,13 @@ public sealed partial class DeveloperProfile
         SocialLinks social,
         VerificationStatus verification,
         OpenToWorkStatus openToWork,
-        YearsOfExperience yearsOfExperience,
         IEnumerable<SkillTag> skills,
         IEnumerable<ProjectItem> projects,
         IEnumerable<WorkExperienceItem> workExperience,
         DateTimeOffset createdAt,
         DateTimeOffset updatedAt)
     {
-        var profile = new DeveloperProfile(id, name, role, summary, avatar, openToWork, yearsOfExperience, contact, social, verification, createdAt, updatedAt);
+        var profile = new DeveloperProfile(id, name, role, summary, avatar, openToWork, contact, social, verification, createdAt, updatedAt);
 
         profile._skills.AddRange(skills);
         profile._projects.AddRange(projects);

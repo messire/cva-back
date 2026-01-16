@@ -1,4 +1,4 @@
-﻿using CVA.Application.Contracts;
+using CVA.Application.Contracts;
 using CVA.Application.ProfileService;
 
 namespace CVA.Tests.Integration.Tests.Application.DeveloperProfiles;
@@ -12,7 +12,7 @@ public sealed class UpdateProfileHeaderHandlerTests(PostgresFixture fixture) : D
     /// <summary>
     /// Purpose: Verify that profile header information can be updated.
     /// When: UpdateProfileHeaderCommand is handled for an existing profile.
-    /// Should: Update name, role, avatar, and experience in the database.
+    /// Should: Update name, role, and avatar in the database.
     /// </summary>
     [Fact]
     public async Task HandleAsync_ShouldUpdateHeader()
@@ -26,8 +26,7 @@ public sealed class UpdateProfileHeaderHandlerTests(PostgresFixture fixture) : D
             FirstName = "UpdatedFirstName",
             LastName = "UpdatedLastName",
             Role = "Updated Role",
-            AvatarUrl = "https://updated.com/avatar.png",
-            YearsOfExperience = 10
+            AvatarUrl = "https://updated.com/avatar.png"
         };
         var command = new UpdateProfileHeaderCommand(request);
         var handler = new UpdateProfileHeaderHandler(CreateRepository(), UserAccessorMock.Object);
@@ -45,7 +44,6 @@ public sealed class UpdateProfileHeaderHandlerTests(PostgresFixture fixture) : D
         Assert.Equal(request.LastName, dbProfile.Name.LastName);
         Assert.Equal(request.Role, dbProfile.Role?.Value);
         Assert.Equal(request.AvatarUrl, dbProfile.Avatar?.ImageUrl.Value);
-        Assert.Equal(request.YearsOfExperience, dbProfile.YearsOfExperience.Value);
     }
 
     /// <summary>

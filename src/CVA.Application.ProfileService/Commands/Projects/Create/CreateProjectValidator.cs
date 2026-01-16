@@ -1,4 +1,4 @@
-﻿namespace CVA.Application.ProfileService;
+namespace CVA.Application.ProfileService;
 
 /// <summary>
 /// Validator for the <see cref="CreateProjectCommand"/>.
@@ -26,5 +26,8 @@ public class CreateProjectValidator : AbstractValidator<CreateProjectCommand>
             .NotEmpty()
             .Must(uriString => Uri.IsWellFormedUriString(uriString, UriKind.Absolute))
             .WithMessage("Invalid Link URL");
+
+        RuleFor(command => command.Request.TechStack)
+            .NotNull();
     }
 }
