@@ -79,7 +79,7 @@ public sealed class WorkExperienceItem
         WorkExperienceId id,
         CompanyName company,
         Location? location,
-        RoleTitle? role,
+        RoleTitle role,
         WorkDescription? description,
         DateRange period,
         IEnumerable<TechTag> techStack)

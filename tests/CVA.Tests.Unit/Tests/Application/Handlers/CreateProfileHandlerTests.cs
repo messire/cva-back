@@ -1,11 +1,7 @@
 using AutoFixture;
-using AutoFixture.AutoMoq;
-using CVA.Application.Abstractions;
-using CVA.Application.Contracts;
 using CVA.Application.ProfileService;
 using CVA.Domain.Interfaces;
 using CVA.Domain.Models;
-using CVA.Tests.Common;
 using Moq;
 
 namespace CVA.Tests.Unit.Application.Handlers;
@@ -21,6 +17,9 @@ public sealed class CreateProfileHandlerTests
     private readonly Mock<ICurrentUserAccessor> _userAccessorMock;
     private readonly CreateProfileHandler _sut;
 
+    /// <summary>
+    /// Initializes a new instance of the <see cref="CreateProfileHandlerTests"/> class.
+    /// </summary>
     public CreateProfileHandlerTests()
     {
         _fixture = new Fixture().Customize(new ApplicationTestCustomization());
@@ -36,6 +35,11 @@ public sealed class CreateProfileHandlerTests
         _sut = _fixture.Create<CreateProfileHandler>();
     }
 
+    /// <summary>
+    /// Purpose: Verify a profile is created for an authenticated user without an existing profile.
+    /// When: HandleAsync is called with a valid create command.
+    /// Should: Persist a new profile tied to the current user.
+    /// </summary>
     [Fact]
     public async Task HandleAsync_ShouldCreateProfile_WhenUserIsAuthenticatedAndProfileDoesNotExist()
     {
@@ -66,6 +70,11 @@ public sealed class CreateProfileHandlerTests
         _repositoryMock.Verify(x => x.CreateAsync(It.Is<DeveloperProfile>(p => p.Id.Value == userId), It.IsAny<CancellationToken>()), Times.Once);
     }
 
+    /// <summary>
+    /// Purpose: Verify handler rejects unauthenticated users.
+    /// When: HandleAsync is called with a user that is not authenticated.
+    /// Should: Return a failure result with an auth error message.
+    /// </summary>
     [Fact]
     public async Task HandleAsync_ShouldReturnFailure_WhenUserIsNotAuthenticated()
     {
@@ -83,6 +92,11 @@ public sealed class CreateProfileHandlerTests
         Assert.Equal("User is not authenticated.", result.Error?.Message);
     }
 
+    /// <summary>
+    /// Purpose: Verify handler prevents duplicate profiles.
+    /// When: HandleAsync is called for a user that already has a profile.
+    /// Should: Return a conflict error.
+    /// </summary>
     [Fact]
     public async Task HandleAsync_ShouldReturnConflict_WhenProfileAlreadyExists()
     {

@@ -6,7 +6,6 @@ using CVA.Application.IdentityService;
 using CVA.Infrastructure.Auth;
 using CVA.Presentation.Auth;
 using CVA.Presentation.Web;
-using CVA.Tests.Integration;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -30,6 +29,10 @@ public class AuthControllerTests : IAsyncLifetime
     private readonly HttpClient _client;
     private readonly IServiceScope _scope;
 
+    /// <summary>
+    /// Initializes a new instance of the <see cref="AuthControllerTests"/> class.
+    /// </summary>
+    /// <param name="postgresFixture"></param>
     public AuthControllerTests(PostgresFixture postgresFixture)
     {
         _factory = new AuthTestWebApplicationFactory(postgresFixture, new MongoFixture());
@@ -164,8 +167,11 @@ public class AuthControllerTests : IAsyncLifetime
         Assert.Equal((int)HttpStatusCode.BadRequest, problem.Status);
     }
 
-    public Task InitializeAsync() => Task.CompletedTask;
+    /// <inheritdoc />
+    public Task InitializeAsync()
+        => Task.CompletedTask;
 
+    /// <inheritdoc />
     public async Task DisposeAsync()
     {
         _scope.Dispose();

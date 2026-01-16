@@ -4,11 +4,17 @@ using CVA.Domain.Models;
 
 namespace CVA.Tests.Unit.Application.Mapping;
 
+/// <summary>
+/// Unit tests for developer profile DTO mapping.
+/// </summary>
 [Trait(Layer.Application, Category.Mapping)]
 public sealed class DeveloperProfileMappingTests
 {
     private readonly IFixture _fixture;
 
+    /// <summary>
+    /// Initializes a new instance of the <see cref="DeveloperProfileMappingTests"/> class.
+    /// </summary>
     public DeveloperProfileMappingTests()
     {
         _fixture = new Fixture();
@@ -17,6 +23,11 @@ public sealed class DeveloperProfileMappingTests
         _fixture.Register(() => Url.From("https://example.com/" + Guid.NewGuid()));
     }
 
+    /// <summary>
+    /// Purpose: Verify that all profile fields are mapped to the DTO.
+    /// When: ToDto is called on a populated <see cref="DeveloperProfile"/>.
+    /// Should: Copy identifiers, primitives, and nested collections.
+    /// </summary>
     [Fact]
     public void ToDto_ShouldMapProfileToDto()
     {
@@ -40,7 +51,7 @@ public sealed class DeveloperProfileMappingTests
         Assert.Equal(profile.Social.LinkedIn?.Value, dto.SocialLinks?.LinkedIn);
         Assert.Equal(profile.Social.GitHub?.Value, dto.SocialLinks?.GitHub);
         
-        Assert.Equal(profile.Projects.Count(), dto.Projects.Length);
-        Assert.Equal(profile.WorkExperience.Count(), dto.WorkExperience.Length);
+        Assert.Equal(profile.Projects.Count, dto.Projects.Length);
+        Assert.Equal(profile.WorkExperience.Count, dto.WorkExperience.Length);
     }
 }

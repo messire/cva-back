@@ -1,4 +1,4 @@
-﻿using CVA.Application.ProfileService;
+using CVA.Application.ProfileService;
 using CVA.Infrastructure.Postgres;
 using CVA.Tests.Integration.Tests.Infrastructure.Postgres;
 using Moq;
@@ -25,7 +25,7 @@ public abstract class DeveloperProfileHandlerTestBase : PostgresTestBase
     /// <summary>
     /// Initializes a new instance of the <see cref="DeveloperProfileHandlerTestBase"/> class.
     /// </summary>
-    /// <param name="fixture"></param>
+    /// <param name="fixture">Shared Postgres fixture for integration tests.</param>
     protected DeveloperProfileHandlerTestBase(PostgresFixture fixture) : base(fixture)
     {
         UserAccessorMock.Setup(accessor => accessor.UserId).Returns(() => CurrentUserId);

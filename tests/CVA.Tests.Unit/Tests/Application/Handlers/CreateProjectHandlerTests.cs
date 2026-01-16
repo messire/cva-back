@@ -25,17 +25,17 @@ public sealed class CreateProjectHandlerTests
     {
         _fixture = new Fixture().Customize(new AutoMoqCustomization());
         _fixture.Customizations.Add(DeveloperProfileBuilder.Instance);
-        
+
         _fixture.Register(() => DateOnly.FromDateTime(DateTime.Today));
         _fixture.Register(() => Url.From("https://example.com/" + Guid.NewGuid()));
-        
+
         _fixture.Customize<UpsertProjectRequest>(c => c
             .With(x => x.LinkUrl, "https://example.com/project")
             .With(x => x.IconUrl, "https://example.com/icon.png"));
-            
+
         _repositoryMock = _fixture.Freeze<Mock<IDeveloperProfileRepository>>();
         _userAccessorMock = _fixture.Freeze<Mock<ICurrentUserAccessor>>();
-        
+
         _sut = _fixture.Create<CreateProjectHandler>();
     }
 
@@ -51,10 +51,14 @@ public sealed class CreateProjectHandlerTests
         var request = _fixture.Create<UpsertProjectRequest>();
         var command = new CreateProjectCommand(request);
 
-        _userAccessorMock.Setup(x => x.UserId).Returns(userId);
-        _repositoryMock.Setup(x => x.GetByIdAsync(userId, It.IsAny<CancellationToken>()))
+        _userAccessorMock
+            .Setup(accessor => accessor.UserId)
+            .Returns(userId);
+        _repositoryMock
+            .Setup(repository => repository.GetByIdAsync(userId, It.IsAny<CancellationToken>()))
             .ReturnsAsync(profile);
-        _repositoryMock.Setup(x => x.UpdateAsync(It.IsAny<DeveloperProfile>(), It.IsAny<CancellationToken>()))
+        _repositoryMock
+            .Setup(repository => repository.UpdateAsync(It.IsAny<DeveloperProfile>(), It.IsAny<CancellationToken>()))
             .ReturnsAsync(profile);
 
         // Act
@@ -62,8 +66,10 @@ public sealed class CreateProjectHandlerTests
 
         // Assert
         Assert.True(result.IsSuccess);
-        _repositoryMock.Verify(x => x.UpdateAsync(It.Is<DeveloperProfile>(p => 
-            p.Projects.Any(pr => pr.Name.Value == request.Name)), It.IsAny<CancellationToken>()), Times.Once);
+        _repositoryMock
+            .Verify(repository =>
+                repository.UpdateAsync(It.Is<DeveloperProfile>(developerProfile =>
+                    developerProfile.Projects.Any(item => item.Name.Value == request.Name)), It.IsAny<CancellationToken>()), Times.Once);
     }
 
     /// <summary>
@@ -77,8 +83,11 @@ public sealed class CreateProjectHandlerTests
         var request = _fixture.Create<UpsertProjectRequest>();
         var command = new CreateProjectCommand(request);
 
-        _userAccessorMock.Setup(x => x.UserId).Returns(userId);
-        _repositoryMock.Setup(x => x.GetByIdAsync(userId, It.IsAny<CancellationToken>()))
+        _userAccessorMock
+            .Setup(accessor => accessor.UserId)
+            .Returns(userId);
+        _repositoryMock
+            .Setup(repository => repository.GetByIdAsync(userId, It.IsAny<CancellationToken>()))
             .ReturnsAsync((DeveloperProfile?)null);
 
         // Act

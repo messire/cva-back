@@ -15,6 +15,7 @@ namespace CVA.Application.IdentityService;
 /// <param name="refreshTokens">Refresh token repo.</param>
 /// <param name="googleVerifier">Google ID token verifier.</param>
 /// <param name="tokenIssuer">Application JWT issuer.</param>
+/// <param name="refreshTokenProtector">Refresh token protector.</param>
 /// <param name="refreshTokenOptions">Refresh token options</param>
 /// <param name="currentUser">Accessor for the current user identity (claims-based).</param>
 internal sealed class IdentityService(

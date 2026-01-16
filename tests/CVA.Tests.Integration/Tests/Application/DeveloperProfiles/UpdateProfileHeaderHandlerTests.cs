@@ -12,7 +12,7 @@ public sealed class UpdateProfileHeaderHandlerTests(PostgresFixture fixture) : D
     /// <summary>
     /// Purpose: Verify that profile header information can be updated.
     /// When: UpdateProfileHeaderCommand is handled for an existing profile.
-    /// Should: Update name, role, avatar, and experience in the database.
+    /// Should: Update name, role, and avatar in the database.
     /// </summary>
     [Fact]
     public async Task HandleAsync_ShouldUpdateHeader()
