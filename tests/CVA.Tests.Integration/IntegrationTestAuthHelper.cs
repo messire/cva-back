@@ -1,6 +1,7 @@
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
+using CVA.Infrastructure.Auth;
 using Microsoft.IdentityModel.Tokens;
 
 namespace CVA.Tests.Integration;
@@ -15,8 +16,8 @@ public static class IntegrationTestAuthHelper
     {
         var claims = new[]
         {
-            new Claim(JwtRegisteredClaimNames.Sub, userId.ToString()),
-            new Claim(ClaimTypes.Role, role),
+            new Claim(CustomClaimTypes.Subject, userId.ToString()),
+            new Claim(CustomClaimTypes.Role, role),
             new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
         };
 
@@ -27,7 +28,7 @@ public static class IntegrationTestAuthHelper
             issuer: Issuer,
             audience: Audience,
             claims: claims,
-            expires: DateTime.Now.AddMinutes(60),
+            expires: DateTime.UtcNow.AddMinutes(60),
             signingCredentials: creds);
 
         return new JwtSecurityTokenHandler().WriteToken(token);
