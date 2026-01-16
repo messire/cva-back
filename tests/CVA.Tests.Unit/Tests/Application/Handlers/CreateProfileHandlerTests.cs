@@ -23,11 +23,6 @@ public sealed class CreateProfileHandlerTests
     public CreateProfileHandlerTests()
     {
         _fixture = new Fixture().Customize(new ApplicationTestCustomization());
-        _fixture.Customizations.Add(DeveloperProfileBuilder.Instance);
-        
-        _fixture.Register(() => EmailAddress.From("test@example.com"));
-        _fixture.Register(() => PhoneNumber.From("+1234567890"));
-        _fixture.Register(() => Url.From("https://example.com"));
 
         _repositoryMock = _fixture.Freeze<Mock<IDeveloperProfileRepository>>();
         _userAccessorMock = _fixture.Freeze<Mock<ICurrentUserAccessor>>();
@@ -50,7 +45,7 @@ public sealed class CreateProfileHandlerTests
             .With(x => x.Phone, "+1234567890")
             .With(x => x.Website, "https://example.com")
             .With(x => x.AvatarUrl, "https://example.com/avatar.png")
-            .With(x => x.SocialLinks, new SocialLinksDto())
+            .With(x => x.SocialLinks, _fixture.Create<SocialLinksDto>())
             .Create();
         var command = new CreateProfileCommand(request);
         var profile = _fixture.Create<DeveloperProfile>();

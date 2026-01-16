@@ -17,10 +17,7 @@ public sealed class DeveloperProfileMappingTests
     /// </summary>
     public DeveloperProfileMappingTests()
     {
-        _fixture = new Fixture();
-        _fixture.Customizations.Add(DeveloperProfileBuilder.Instance);
-        _fixture.Register(() => DateOnly.FromDateTime(DateTime.Today));
-        _fixture.Register(() => Url.From("https://example.com/" + Guid.NewGuid()));
+        _fixture = new Fixture().Customize(new ApplicationTestCustomization());
     }
 
     /// <summary>

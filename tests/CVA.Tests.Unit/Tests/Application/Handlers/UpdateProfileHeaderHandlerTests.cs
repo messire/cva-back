@@ -1,5 +1,4 @@
 using AutoFixture;
-using AutoFixture.AutoMoq;
 using CVA.Application.ProfileService;
 using CVA.Domain.Interfaces;
 using CVA.Domain.Models;
@@ -23,11 +22,7 @@ public sealed class UpdateProfileHeaderHandlerTests
     /// </summary>
     public UpdateProfileHeaderHandlerTests()
     {
-        _fixture = new Fixture().Customize(new AutoMoqCustomization());
-        _fixture.Customizations.Add(DeveloperProfileBuilder.Instance);
-
-        _fixture.Register(() => DateOnly.FromDateTime(DateTime.Today));
-        _fixture.Register(() => Url.From("https://example.com/" + Guid.NewGuid()));
+        _fixture = new Fixture().Customize(new ApplicationTestCustomization());
 
         _fixture
             .Customize<UpdateProfileHeaderRequest>(composer =>

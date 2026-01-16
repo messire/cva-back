@@ -9,7 +9,7 @@ namespace CVA.Tests.Unit.Application.Validators;
 [Trait(Layer.Application, Category.Validators)]
 public sealed class CreateProfileValidatorTests
 {
-    private readonly IFixture _fixture = new Fixture();
+    private readonly IFixture _fixture = new Fixture().Customize(new ApplicationTestCustomization());
     private readonly CreateProfileValidator _validator = new ();
 
     /// <summary>
@@ -80,8 +80,8 @@ public sealed class CreateProfileValidatorTests
             .With(profileRequest => profileRequest.AvatarUrl, avatarUrl)
             .With(profileRequest => profileRequest.Phone, "+1234567890")
             .With(profileRequest => profileRequest.Website, "https://example.com")
-            .With(profileRequest => profileRequest.SocialLinks, new SocialLinksDto())
-            .With(profileRequest => profileRequest.Location, new LocationDto { City = "New York", Country = "USA" })
+            .With(profileRequest => profileRequest.SocialLinks, _fixture.Create<SocialLinksDto>())
+            .With(profileRequest => profileRequest.Location, _fixture.Create<LocationDto>())
             .Create();
 
         return new CreateProfileCommand(request);
