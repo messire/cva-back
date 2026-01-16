@@ -1,4 +1,4 @@
-﻿using CVA.Domain.Models;
+using CVA.Domain.Models;
 
 namespace CVA.Tests.Unit.Domain.Models;
 
@@ -15,13 +15,13 @@ public class DeveloperProfileTests
     /// </summary>
     [Theory, CvaAutoData]
     public void Create_Should_Initialize_DeveloperProfile(
-        DeveloperId id, PersonName name, ContactInfo contact, SocialLinks social, VerificationStatus verification, OpenToWorkStatus openToWork, YearsOfExperience yearsOfExperience)
+        DeveloperId id, PersonName name, ContactInfo contact, SocialLinks social, VerificationStatus verification, OpenToWorkStatus openToWork)
     {
         // Arrange
         var now = DateTimeOffset.UtcNow;
 
         // Act
-        var profile = DeveloperProfile.Create(id, name, null, null, null, contact, social, verification, openToWork, yearsOfExperience, now);
+        var profile = DeveloperProfile.Create(id, name, null, null, null, contact, social, verification, openToWork, now);
 
         // Assert
         Assert.Equal(id, profile.Id);
@@ -30,7 +30,6 @@ public class DeveloperProfileTests
         Assert.Equal(social, profile.Social);
         Assert.Equal(verification, profile.Verification);
         Assert.Equal(openToWork, profile.OpenToWork);
-        Assert.Equal(yearsOfExperience, profile.YearsOfExperience);
         Assert.Equal(now, profile.CreatedAt);
         Assert.Equal(now, profile.UpdatedAt);
         Assert.Empty(profile.Skills);
@@ -45,7 +44,7 @@ public class DeveloperProfileTests
     /// </summary>
     [Theory, CvaAutoData]
     public void FromPersistence_Should_Reconstruct_DeveloperProfile(
-        DeveloperId id, PersonName name, ContactInfo contact, SocialLinks social, VerificationStatus verification, OpenToWorkStatus openToWork, YearsOfExperience yearsOfExperience,
+        DeveloperId id, PersonName name, ContactInfo contact, SocialLinks social, VerificationStatus verification, OpenToWorkStatus openToWork,
         SkillTag[] skills, ProjectItem[] projects, WorkExperienceItem[] workExperience)
     {
         // Arrange
@@ -54,7 +53,7 @@ public class DeveloperProfileTests
 
         // Act
         var profile = DeveloperProfile.FromPersistence(
-            id, name, null!, null!, null!, contact, social, verification, openToWork, yearsOfExperience, skills, projects, workExperience, createdAt, updatedAt);
+            id, name, null!, null!, null!, contact, social, verification, openToWork, skills, projects, workExperience, createdAt, updatedAt);
 
         // Assert
         Assert.Equal(id, profile.Id);
@@ -238,20 +237,95 @@ public class DeveloperProfileTests
     }
 
     /// <summary>
-    /// Purpose: Verify updating years of experience.
-    /// Should: Update YearsOfExperience and the profile's update timestamp.
-    /// When: A valid number of years is provided.
+    /// Purpose: Verify that RemoveProject returns false when the project does not exist.
+    /// Should: Return false and not update the timestamp.
+    /// When: Non-existent project ID is provided.
     /// </summary>
     [Theory, CvaAutoData]
-    public void UpdateYearsOfExperience_Should_Update_And_Touch(DeveloperProfile profile, int years, DateTimeOffset now)
+    public void RemoveProject_Should_ReturnFalse_When_NotFound(DeveloperProfile profile, ProjectId nonExistentId, DateTimeOffset now)
     {
         // Act
-        var targetYears = Math.Clamp(years, 0, 80);
-        profile.UpdateYearsOfExperience(targetYears, now);
+        var result = profile.RemoveProject(nonExistentId, now);
 
         // Assert
-        Assert.Equal(targetYears, profile.YearsOfExperience.Value);
-        Assert.Equal(now, profile.UpdatedAt);
+        Assert.False(result);
+    }
+
+    /// <summary>
+    /// Purpose: Verify that RemoveWorkExperience returns false when the work experience does not exist.
+    /// Should: Return false and not update the timestamp.
+    /// When: Non-existent work experience ID is provided.
+    /// </summary>
+    [Theory, CvaAutoData]
+    public void RemoveWorkExperience_Should_ReturnFalse_When_NotFound(DeveloperProfile profile, WorkExperienceId nonExistentId, DateTimeOffset now)
+    {
+        // Act
+        var result = profile.RemoveWorkExperience(nonExistentId, now);
+
+        // Assert
+        Assert.False(result);
+    }
+
+    /// <summary>
+    /// Purpose: Verify years of experience calculation.
+    /// Should: Correctly calculate full years of experience.
+    /// When: Work experience entries are provided.
+    /// </summary>
+    [Theory, CvaAutoData]
+    public void GetYearsOfExperience_Should_CalculateDerivedValue(
+        DeveloperId id, PersonName name, ContactInfo contact, SocialLinks social, VerificationStatus verification, OpenToWorkStatus openToWork)
+    {
+        // Arrange
+        var now = new DateTimeOffset(2025, 1, 1, 0, 0, 0, TimeSpan.Zero);
+        var profile = DeveloperProfile.Create(id, name, null, null, null, contact, social, verification, openToWork, now);
+        
+        var start = new DateOnly(2020, 1, 1);
+        var end = new DateOnly(2023, 1, 1);
+        
+        profile.AddWorkExperience(
+            CompanyName.From("C"), 
+            null, 
+            RoleTitle.From("R"), 
+            null, 
+            DateRange.From(start, end), 
+            [], 
+            now);
+
+        // Act
+        var years = profile.GetYearsOfExperience(now);
+
+        // Assert
+        Assert.Equal(3, years.Value);
+    }
+
+    /// <summary>
+    /// Purpose: Verify years of experience calculation with ongoing work.
+    /// Should: Use 'now' as the end date for ongoing experience.
+    /// </summary>
+    [Theory, CvaAutoData]
+    public void GetYearsOfExperience_Should_UseNow_ForOngoingExperience(
+        DeveloperId id, PersonName name, ContactInfo contact, SocialLinks social, VerificationStatus verification, OpenToWorkStatus openToWork)
+    {
+        // Arrange
+        var now = new DateTimeOffset(2025, 1, 1, 0, 0, 0, TimeSpan.Zero);
+        var profile = DeveloperProfile.Create(id, name, null, null, null, contact, social, verification, openToWork, now);
+        
+        var start = new DateOnly(2020, 1, 1);
+        
+        profile.AddWorkExperience(
+            CompanyName.From("C"), 
+            null, 
+            RoleTitle.From("R"), 
+            null, 
+            DateRange.From(start, null), 
+            [], 
+            now);
+
+        // Act
+        var years = profile.GetYearsOfExperience(now);
+
+        // Assert
+        Assert.Equal(5, years.Value);
     }
 
     /// <summary>
@@ -413,24 +487,24 @@ public class DeveloperProfileTests
     /// </summary>
     [Theory, CvaAutoData]
     public void UpdateProject_Should_Throw_When_NotFound(
-        DeveloperProfile profile, ProjectName name, ProjectLink link, DateTimeOffset now)
+        DeveloperProfile profile, ProjectId nonExistentId, ProjectName name, ProjectLink link, DateTimeOffset now)
     {
         // Act & Assert
-        Assert.Throws<InvalidOperationException>(() => 
-            profile.UpdateProject(new ProjectId(Guid.NewGuid()), name, null, null, link, [], now));
+        Assert.Throws<ProjectNotFoundException>(() => 
+            profile.UpdateProject(nonExistentId, name, null, null, link, [], now));
     }
 
     /// <summary>
     /// Purpose: Verify handling of non-existent work experience during update.
-    /// Should: Throw InvalidOperationException.
+    /// Should: Throw WorkExperienceNotFoundException.
     /// When: A random WorkExperienceId is provided to UpdateWorkExperience.
     /// </summary>
     [Theory, CvaAutoData]
     public void UpdateWorkExperience_Should_Throw_When_NotFound(
-        DeveloperProfile profile, CompanyName company, RoleTitle role, DateRange period, DateTimeOffset now)
+        DeveloperProfile profile, WorkExperienceId nonExistentId, CompanyName company, RoleTitle role, DateRange period, DateTimeOffset now)
     {
         // Act & Assert
-        Assert.Throws<InvalidOperationException>(() => 
-            profile.UpdateWorkExperience(new WorkExperienceId(Guid.NewGuid()), company, null, role, null, period, [], now));
+        Assert.Throws<WorkExperienceNotFoundException>(() => 
+            profile.UpdateWorkExperience(nonExistentId, company, null, role, null, period, [], now));
     }
 }

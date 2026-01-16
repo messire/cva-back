@@ -1,4 +1,4 @@
-﻿using CVA.Domain.Models;
+using CVA.Domain.Models;
 using CVA.Infrastructure.Mongo;
 
 namespace CVA.Tests.Unit.Infrastructure.Mapping;
@@ -70,7 +70,6 @@ public sealed class UserMongoMappingTests
         Assert.Equal(profile.Summary?.Value, document.Summary);
         Assert.Equal(profile.Avatar?.ImageUrl.Value, document.AvatarUrl);
         Assert.Equal(profile.OpenToWork.Value, document.OpenToWork);
-        Assert.Equal(profile.YearsOfExperience.Value, document.YearsOfExperience);
         Assert.Equal(profile.Contact.Email.Value, (string?)document.Email);
         Assert.Equal(profile.Contact.Website?.Value, document.Website);
         Assert.Equal((int)profile.Verification.Value, document.VerificationStatus);
@@ -100,7 +99,6 @@ public sealed class UserMongoMappingTests
         Assert.Equal(profile.Summary?.Value, result.Summary?.Value);
         Assert.Equal(profile.Avatar?.ImageUrl.Value, result.Avatar?.ImageUrl.Value);
         Assert.Equal(profile.OpenToWork.Value, result.OpenToWork.Value);
-        Assert.Equal(profile.YearsOfExperience.Value, result.YearsOfExperience.Value);
         Assert.Equal(profile.Contact.Email.Value, result.Contact.Email.Value);
         Assert.Equal(profile.Contact.Website?.Value, result.Contact.Website?.Value);
         Assert.Equal(profile.Verification.Value, result.Verification.Value);

@@ -1,4 +1,4 @@
-﻿using CVA.Tools.Common;
+using CVA.Tools.Common;
 
 namespace CVA.Tests.Common.Comparers;
 
@@ -30,7 +30,6 @@ public class DeveloperProfileComparer : IEqualityComparer<DeveloperProfile>
                x.Summary == y.Summary &&
                x.Avatar == y.Avatar &&
                x.OpenToWork == y.OpenToWork &&
-               x.YearsOfExperience == y.YearsOfExperience &&
                x.Contact == y.Contact &&
                x.Social == y.Social &&
                x.Verification == y.Verification &&
@@ -52,7 +51,6 @@ public class DeveloperProfileComparer : IEqualityComparer<DeveloperProfile>
         hash.Add(obj.Summary);
         hash.Add(obj.Avatar);
         hash.Add(obj.OpenToWork);
-        hash.Add(obj.YearsOfExperience);
         hash.Add(obj.Contact);
         hash.Add(obj.Social);
         hash.Add(obj.Verification);

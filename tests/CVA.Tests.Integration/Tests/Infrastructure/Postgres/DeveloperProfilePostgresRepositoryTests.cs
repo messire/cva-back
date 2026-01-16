@@ -1,4 +1,4 @@
-﻿using CVA.Infrastructure.Postgres;
+using CVA.Infrastructure.Postgres;
 using CVA.Tests.Common.Comparers;
 
 namespace CVA.Tests.Integration.Tests.Infrastructure.Postgres;
@@ -226,7 +226,7 @@ public sealed class DeveloperProfilePostgresRepositoryTests(PostgresFixture fixt
         var updatedProfile = DeveloperProfile.FromPersistence(
             created.Id, created.Name, created.Role, created.Summary, created.Avatar,
             created.Contact, created.Social, created.Verification, created.OpenToWork,
-            created.YearsOfExperience, created.Skills, updatedProjects, updatedWork,
+            created.Skills, updatedProjects, updatedWork,
             created.CreatedAt, DateTimeOffset.UtcNow);
 
         await using var context = CreateContext();

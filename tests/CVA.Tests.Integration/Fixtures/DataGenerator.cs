@@ -1,4 +1,4 @@
-﻿using AutoFixture;
+using AutoFixture;
 
 namespace CVA.Tests.Integration.Fixtures;
 
@@ -46,7 +46,6 @@ internal static class DataGenerator
             profile.Social,
             profile.Verification,
             profile.OpenToWork,
-            profile.YearsOfExperience,
             [], // Empty skills
             [], // Empty projects
             [], // Empty work experience

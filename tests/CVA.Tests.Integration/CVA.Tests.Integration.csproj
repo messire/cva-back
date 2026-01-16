@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
         <IsTestProject>true</IsTestProject>
@@ -7,6 +7,7 @@
     <ItemGroup>
         <PackageReference Include="AutoFixture" />
         <PackageReference Include="coverlet.collector" />
+        <PackageReference Include="Microsoft.AspNetCore.Mvc.Testing" />
         <PackageReference Include="Microsoft.NET.Test.Sdk" />
         <PackageReference Include="MongoDB.Driver" />
         <PackageReference Include="Testcontainers" />
@@ -25,6 +26,7 @@
       <ProjectReference Include="..\..\src\CVA.Infrastructure.Postgres\CVA.Infrastructure.Postgres.csproj" />
       <ProjectReference Include="..\CVA.Tests.Common\CVA.Tests.Common.csproj" />
       <ProjectReference Include="..\..\src\CVA.Application.ProfileService\CVA.Application.ProfileService.csproj" />
+      <ProjectReference Include="..\..\src\CVA.Presentation.Web\CVA.Presentation.Web.csproj" />
     </ItemGroup>
 
 </Project>
