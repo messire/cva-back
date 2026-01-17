@@ -22,7 +22,7 @@ public sealed class ResumePdfService(IOptions<ResumePdfOptions> options, S3Objec
     /// </summary>
     /// <param name="profile">Developer profile DTO.</param>
     /// <param name="ct">Cancellation token.</param>
-    public async Task<Uri> GetOrCreateDownloadUrlAsync(DeveloperProfileDto profile, CancellationToken ct)
+    public async Task<(byte[] Content, string FileName)> GetOrCreateAsync(DeveloperProfileDto profile, CancellationToken ct)
     {
         var hash = ComputeProfileHash(profile);
         var key = $"{options.Value.CachePrefix.TrimEnd('/')}/{profile.Id:D}/{hash}.pdf";
@@ -36,9 +36,10 @@ public sealed class ResumePdfService(IOptions<ResumePdfOptions> options, S3Objec
             await storage.PutAsync(key, ms, "application/pdf", ct);
         }
 
+        var bytes = await storage.GetBytesAsync(key, ct);
         var fileName = BuildFileName(profile);
-        var ttl = TimeSpan.FromMinutes(options.Value.PresignedUrlTtlMinutes);
-        return storage.GetPresignedDownloadUrl(key, fileName, ttl);
+
+        return (bytes, fileName);
     }
 
     private string BuildProfileUrl(Guid profileId)

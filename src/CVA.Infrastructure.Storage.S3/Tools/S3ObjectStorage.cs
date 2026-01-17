@@ -6,7 +6,7 @@ using Microsoft.Extensions.Options;
 namespace CVA.Infrastructure.Storage.S3;
 
 /// <summary>
-/// Minimal S3-compatible object storage wrapper: exists/put + presigned URL.
+/// Minimal S3-compatible object storage wrapper.
 /// </summary>
 /// <param name="s3">S3 client.</param>
 /// <param name="options">S3 options.</param>
@@ -31,6 +31,27 @@ public sealed class S3ObjectStorage(IAmazonS3 s3, IOptions<S3Options> options)
     }
 
     /// <summary>
+    /// Downloads an object as bytes.
+    /// </summary>
+    /// <param name="key">Object key.</param>
+    /// <param name="ct">Cancellation token.</param>
+    public async Task<byte[]> GetBytesAsync(string key, CancellationToken ct)
+    {
+        var request = new GetObjectRequest
+        {
+            BucketName = options.Value.Bucket,
+            Key = key
+        };
+
+        using var response = await s3.GetObjectAsync(request, ct);
+        await using var rs = response.ResponseStream;
+
+        await using var ms = new MemoryStream();
+        await rs.CopyToAsync(ms, ct);
+        return ms.ToArray();
+    }
+
+    /// <summary>
     /// Uploads an object.
     /// </summary>
     /// <param name="key">Object key.</param>
@@ -48,31 +69,6 @@ public sealed class S3ObjectStorage(IAmazonS3 s3, IOptions<S3Options> options)
         };
 
         await s3.PutObjectAsync(request, ct);
-    }
-
-    /// <summary>
-    /// Builds a presigned GET URL for downloading an object.
-    /// </summary>
-    /// <param name="key">Object key.</param>
-    /// <param name="fileName">Download filename for Content-Disposition.</param>
-    /// <param name="ttl">URL time-to-live.</param>
-    public Uri GetPresignedDownloadUrl(string key, string fileName, TimeSpan ttl)
-    {
-        var overrides = new ResponseHeaderOverrides
-        {
-            ContentDisposition = $"attachment; filename=\"{fileName}\""
-        };
-        var req = new GetPreSignedUrlRequest
-        {
-            BucketName = options.Value.Bucket,
-            Key = key,
-            Verb = HttpVerb.GET,
-            Expires = DateTime.UtcNow.Add(ttl),
-            ResponseHeaderOverrides = overrides,
-        };
-
-        var url = s3.GetPreSignedURL(req);
-        return new Uri(url);
     }
 
     /// <summary>
