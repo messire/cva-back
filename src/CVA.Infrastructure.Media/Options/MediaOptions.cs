@@ -1,4 +1,4 @@
-﻿namespace CVA.Infrastructure.Common.Media;
+﻿namespace CVA.Infrastructure.Common;
 
 /// <summary>
 /// Configuration options for media storage.

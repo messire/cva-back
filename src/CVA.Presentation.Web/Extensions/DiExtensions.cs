@@ -1,12 +1,13 @@
-﻿using CVA.Application.Abstractions.Media;
-using CVA.Application.IdentityService;
+﻿using CVA.Application.IdentityService;
 using CVA.Application.ProfileService;
 using CVA.Application.Validators;
 using CVA.Infrastructure.Auth;
 using CVA.Infrastructure.Common;
-using CVA.Infrastructure.Common.Media;
+using CVA.Infrastructure.Media;
 using CVA.Infrastructure.Mongo;
 using CVA.Infrastructure.Postgres;
+using CVA.Infrastructure.ResumePdf;
+using CVA.Infrastructure.Storage.S3;
 using CVA.Presentation.Auth;
 using CVA.Tools.Common;
 using Microsoft.AspNetCore.Cors.Infrastructure;
@@ -88,7 +89,9 @@ internal static class DiExtensions
             builder.Services.AddScoped<QueryExecutor>();
 
             builder.Services.Configure<MediaOptions>(builder.Configuration.GetSection(MediaOptions.Path));
-            builder.Services.AddSingleton<IMediaStorage, LocalMediaStorage>();
+            builder.Services.AddCvaS3Storage(builder.Configuration);
+            builder.Services.AddCvaMediaStorage(builder.Configuration);
+            builder.Services.AddCvaResumePdf(builder.Configuration);
         }
 
         /// <summary>

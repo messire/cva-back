@@ -29,8 +29,11 @@
   <Folder Name="/src/infrastructure/">
     <Project Path="src/CVA.Infrastructure.Auth/CVA.Infrastructure.Auth.csproj" />
     <Project Path="src/CVA.Infrastructure.Common/CVA.Infrastructure.Common.csproj" />
+    <Project Path="src/CVA.Infrastructure.Media/CVA.Infrastructure.Media.csproj" />
     <Project Path="src/CVA.Infrastructure.Mongo/CVA.Infrastructure.Mongo.csproj" />
     <Project Path="src/CVA.Infrastructure.Postgres/CVA.Infrastructure.Postgres.csproj" />
+    <Project Path="src/CVA.Infrastructure.ResumePdf/CVA.Infrastructure.ResumePdf.csproj" />
+    <Project Path="src/CVA.Infrastructure.Storage.S3/CVA.Infrastructure.Storage.S3.csproj" />
   </Folder>
   <Folder Name="/src/presentation/">
     <Project Path="src/CVA.Presentation.Auth/CVA.Presentation.Auth.csproj" />
