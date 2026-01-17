@@ -1,4 +1,5 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
+
     <ItemGroup>
         <Compile Update="AggregateRoots\Projects.cs">
             <DependentUpon>DeveloperProfile.cs</DependentUpon>
@@ -7,13 +8,14 @@
             <DependentUpon>DeveloperProfile.cs</DependentUpon>
         </Compile>
         <Compile Update="AggregateRoots\Profile.cs">
-          <DependentUpon>DeveloperProfile.cs</DependentUpon>
+            <DependentUpon>DeveloperProfile.cs</DependentUpon>
         </Compile>
         <Compile Update="AggregateRoots\WorkExperience.cs">
-          <DependentUpon>DeveloperProfile.cs</DependentUpon>
+            <DependentUpon>DeveloperProfile.cs</DependentUpon>
         </Compile>
         <Compile Update="AggregateRoots\Persistence.cs">
-          <DependentUpon>DeveloperProfile.cs</DependentUpon>
+            <DependentUpon>DeveloperProfile.cs</DependentUpon>
         </Compile>
     </ItemGroup>
+
 </Project>

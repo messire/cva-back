@@ -20,10 +20,8 @@ services:
       EnableOpenApi: "true"
       Media__RootPath: /data/media
       Media__PublicRequestPath: /media
-
     volumes:
       - ../.data/media:/data/media
-
     networks:
       - docker-network
 

@@ -1,5 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-  <ItemGroup>
-    <ProjectReference Include="..\CVA.Domain.Models\CVA.Domain.Models.csproj" />
-  </ItemGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\CVA.Domain.Models\CVA.Domain.Models.csproj"/>
+    </ItemGroup>
+
 </Project>

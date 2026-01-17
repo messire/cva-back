@@ -1,7 +1,8 @@
 ﻿using CVA.Application.Abstractions.Media;
+using CVA.Infrastructure.Common;
 using Microsoft.Extensions.Options;
 
-namespace CVA.Infrastructure.Common.Media;
+namespace CVA.Infrastructure.Media;
 
 /// <summary>
 /// Local file system implementation of <see cref="IMediaStorage"/>.

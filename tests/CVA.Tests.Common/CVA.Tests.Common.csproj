@@ -2,15 +2,15 @@
 
     <ItemGroup>
         <PackageReference Include="AutoFixture"/>
-        <PackageReference Include="AutoFixture.AutoMoq" />
-        <PackageReference Include="AutoFixture.Xunit2" />
+        <PackageReference Include="AutoFixture.AutoMoq"/>
+        <PackageReference Include="AutoFixture.Xunit2"/>
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\..\src\CVA.Application.Contracts\CVA.Application.Contracts.csproj" />
-      <ProjectReference Include="..\..\src\CVA.Application.IdentityService\CVA.Application.IdentityService.csproj" />
-      <ProjectReference Include="..\..\src\CVA.Domain.Models\CVA.Domain.Models.csproj" />
-      <ProjectReference Include="..\..\src\CVA.Tools.Common\CVA.Tools.Common.csproj" />
+        <ProjectReference Include="..\..\src\CVA.Application.Contracts\CVA.Application.Contracts.csproj"/>
+        <ProjectReference Include="..\..\src\CVA.Application.IdentityService\CVA.Application.IdentityService.csproj"/>
+        <ProjectReference Include="..\..\src\CVA.Domain.Models\CVA.Domain.Models.csproj"/>
+        <ProjectReference Include="..\..\src\CVA.Tools.Common\CVA.Tools.Common.csproj"/>
     </ItemGroup>
 
 </Project>

@@ -1,4 +1,4 @@
-﻿using CVA.Infrastructure.Common.Media;
+﻿using CVA.Infrastructure.Common;
 using Microsoft.Extensions.FileProviders;
 using Scalar.AspNetCore;
 

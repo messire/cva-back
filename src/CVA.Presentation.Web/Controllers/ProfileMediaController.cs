@@ -1,6 +1,6 @@
 ﻿using CVA.Application.ProfileService.UpdateProfileAvatar;
 using CVA.Application.ProfileService.UpdateProjectImage;
-using CVA.Infrastructure.Common.Media;
+using CVA.Infrastructure.Common;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.Extensions.Options;
 

@@ -1,0 +1,38 @@
+﻿name: minio
+
+services:
+  minio:
+    image: minio/minio
+    container_name: cva-minio
+    command: server /data --console-address ":9001"
+    restart: unless-stopped
+    environment:
+      MINIO_ROOT_USER: minioadmin
+      MINIO_ROOT_PASSWORD: miniopass
+    ports:
+      - "9000:9000"
+      - "9001:9001"
+    volumes:
+      - ../.data/minio:/data
+    networks:
+      - docker-network
+
+  minio-init:
+    image: minio/mc
+    container_name: cva-minio-init
+    depends_on:
+      - minio
+    restart: "no"
+    entrypoint: >
+      /bin/sh -c "
+      mc alias set local http://minio:9000 minioadmin miniopass &&
+      mc mb -p local/cva || true &&
+      exit 0;
+      "
+    networks:
+      - docker-network
+
+networks:
+  docker-network:
+    external: true
+    name: docker-network-shared

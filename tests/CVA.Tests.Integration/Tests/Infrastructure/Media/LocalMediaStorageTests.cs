@@ -1,4 +1,5 @@
-using CVA.Infrastructure.Common.Media;
+using CVA.Infrastructure.Common;
+using CVA.Infrastructure.Media;
 using Microsoft.Extensions.Options;
 
 namespace CVA.Tests.Integration.Tests.Infrastructure.Media;
