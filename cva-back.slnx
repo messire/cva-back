@@ -6,6 +6,7 @@
   </Folder>
   <Folder Name="/build/docker/">
     <File Path="docker/docker-compose.back.yml" />
+    <File Path="docker/docker-compose.minio.yml" />
     <File Path="docker/docker-compose.mongo.yml" />
     <File Path="docker/docker-compose.postgres.yml" />
   </Folder>
