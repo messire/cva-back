@@ -9,6 +9,30 @@ namespace CVA.Infrastructure.ResumePdf;
 /// <param name="options">Resume PDF options.</param>
 public sealed class PlaywrightResumePdfRenderer(IOptions<ResumePdfOptions> options) : IAsyncDisposable
 {
+    private static readonly PagePdfOptions PdfOptions = new()
+    {
+        Format = "A4",
+        PrintBackground = true,
+        Margin = new Margin { Top = "12mm", Bottom = "12mm", Left = "10mm", Right = "10mm" }
+    };
+
+    private readonly PageGotoOptions _pageOptions = new()
+    {
+        WaitUntil = WaitUntilState.NetworkIdle,
+        Timeout = options.Value.NavigationTimeoutSeconds * 1000
+    };
+
+    private readonly PageWaitForSelectorOptions _selectorOptions = new()
+    {
+        State = WaitForSelectorState.Attached,
+        Timeout = options.Value.NavigationTimeoutSeconds * 1000
+    };
+
+    private readonly PageEmulateMediaOptions _mediaOptions = new()
+    {
+        Media = Media.Print
+    };
+
     private IPlaywright? _playwright;
     private IBrowser? _browser;
     private readonly SemaphoreSlim _initLock = new(1, 1);
@@ -27,21 +51,10 @@ public sealed class PlaywrightResumePdfRenderer(IOptions<ResumePdfOptions> optio
         await using var context = await _browser!.NewContextAsync(contextOptions);
 
         var page = await context.NewPageAsync();
-
-        await page.GotoAsync(url, new PageGotoOptions
-        {
-            WaitUntil = WaitUntilState.NetworkIdle,
-            Timeout = options.Value.NavigationTimeoutSeconds * 1000
-        });
-
-        await page.EmulateMediaAsync(new PageEmulateMediaOptions { Media = Media.Print });
-
-        return await page.PdfAsync(new PagePdfOptions
-        {
-            Format = "A4",
-            PrintBackground = true,
-            Margin = new Margin { Top = "12mm", Bottom = "12mm", Left = "10mm", Right = "10mm" }
-        });
+        await page.GotoAsync(url, _pageOptions);
+        await page.WaitForSelectorAsync(options.Value.ProfileReadySelector, _selectorOptions);
+        await page.EmulateMediaAsync(_mediaOptions);
+        return await page.PdfAsync(PdfOptions);
     }
 
     private async Task EnsureInitializedAsync(CancellationToken ct)

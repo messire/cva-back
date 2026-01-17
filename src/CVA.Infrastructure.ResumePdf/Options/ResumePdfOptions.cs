@@ -11,15 +11,21 @@ public sealed class ResumePdfOptions
     public const string Path = "ResumePdf";
 
     /// <summary>
-    /// Frontend base URL (e.g. https://cva-production.up.railway.app or http://frontend:3000).
+    /// Frontend base URL.
     /// </summary>
     public string FrontendBaseUrl { get; set; } = string.Empty;
 
     /// <summary>
-    /// Profile page path template (e.g. /profile/{id}?print=1).
+    /// Profile page path template.
     /// Supported placeholders: {id}.
     /// </summary>
     public string ProfilePathTemplate { get; set; } = "/profile/{id}?print=1";
+
+    /// <summary>
+    /// CSS selector that must exist on the profile page before generating the PDF.
+    /// Prevents silently generating the wrong page (e.g. catalog/home).
+    /// </summary>
+    public string ProfileReadySelector { get; set; } = "[data-print-anchor=\"profile-page\"]";
 
     /// <summary>
     /// Cache prefix inside the bucket.
