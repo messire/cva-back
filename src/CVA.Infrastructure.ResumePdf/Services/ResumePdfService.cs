@@ -22,7 +22,7 @@ public sealed class ResumePdfService(IOptions<ResumePdfOptions> options, S3Objec
     /// </summary>
     /// <param name="profile">Developer profile DTO.</param>
     /// <param name="ct">Cancellation token.</param>
-    public async Task<(byte[] Content, string FileName)> GetOrCreateAsync(DeveloperProfileDto profile, CancellationToken ct)
+    public async Task<(byte[] Content, string FileName)> GetOrCreateAsync(ProfileDto profile, CancellationToken ct)
     {
         var hash = ComputeProfileHash(profile);
         var key = $"{options.Value.CachePrefix.TrimEnd('/')}/{profile.Id:D}/{hash}.pdf";
@@ -54,14 +54,14 @@ public sealed class ResumePdfService(IOptions<ResumePdfOptions> options, S3Objec
         return baseUrl + path;
     }
 
-    private static string ComputeProfileHash(DeveloperProfileDto profile)
+    private static string ComputeProfileHash(ProfileDto profile)
     {
         var json = JsonSerializer.Serialize(profile, JsonOptions);
         var bytes = Encoding.UTF8.GetBytes(json);
         return S3ObjectStorage.Sha256Hex(bytes);
     }
 
-    private static string BuildFileName(DeveloperProfileDto profile)
+    private static string BuildFileName(ProfileDto profile)
     {
         var first = (profile.FirstName ?? string.Empty).Trim();
         var last = (profile.LastName ?? string.Empty).Trim();

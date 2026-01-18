@@ -16,7 +16,40 @@ public class GetProfilesCatalogValidator : AbstractValidator<GetProfilesCatalogQ
         RuleForEach(query => query.Skills)
             .MaximumLength(50);
 
+        RuleFor(query => query.Page)
+            .GreaterThanOrEqualTo(1);
+
+        RuleFor(query => query.PageSize)
+            .InclusiveBetween(1, 100);
+
+        RuleFor(query => query.SortField)
+            .Must(BeValidSortField)
+            .WithMessage("Unsupported sortField.");
+
+        RuleFor(query => query.SortOrder)
+            .Must(BeValidSortOrder)
+            .WithMessage("Unsupported sortOrder.");
+
         RuleFor(query => query.VerificationStatus)
-            .MaximumLength(50);
+            .Must(BeValidVerificationStatus)
+            .WithMessage("Unsupported verificationStatus.");
     }
+
+    private static bool BeValidSortField(string? value)
+    {
+        if (string.IsNullOrWhiteSpace(value)) return true;
+        var v = value.Trim();
+        return v is ProfilesSortFields.UpdatedAt or ProfilesSortFields.Name or ProfilesSortFields.Id;
+    }
+
+    private static bool BeValidSortOrder(string? value)
+    {
+        if (string.IsNullOrWhiteSpace(value)) return true;
+        var v = value.Trim();
+        return v is SortOrders.Asc or SortOrders.Desc;
+    }
+
+    private static bool BeValidVerificationStatus(string? value)
+        => string.IsNullOrWhiteSpace(value)
+           || Enum.TryParse<VerificationLevel>(value.Trim(), true, out _);
 }

@@ -1,4 +1,6 @@
 ﻿using CVA.Application.ProfileService;
+using CVA.Domain.Interfaces;
+using CVA.Presentation.Web.Dtos;
 
 namespace CVA.Presentation.Web;
 
@@ -10,24 +12,27 @@ namespace CVA.Presentation.Web;
 public sealed class ProfilesCatalogController(QueryExecutor queries) : ControllerBase
 {
     /// <summary>
-    /// Returns developer profiles catalog (cards).
+    /// Returns profiles catalog (cards) with mandatory paging and sorting.
     /// </summary>
-    /// <param name="search">Free-text search.</param>
-    /// <param name="skills">Skills filter.</param>
-    /// <param name="openToWork">Open-to-work filter.</param>
-    /// <param name="verificationStatus">Verification status filter.</param>
+    /// <param name="request">Catalog query parameters.</param>
     /// <param name="ct">Cancellation token.</param>
     [HttpGet]
-    [ProducesResponseType(typeof(ProfileCardDto[]), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(CatalogResponseDto<ProfileCardDto>), StatusCodes.Status200OK)]
     public async Task<ActionResult> GetCatalog(
-        [FromQuery] string? search,
-        [FromQuery] string[]? skills,
-        [FromQuery] bool? openToWork,
-        [FromQuery] string? verificationStatus,
+        GetCatalogRequest request,
         CancellationToken ct)
     {
-        var query = new GetProfilesCatalogQuery(search, skills ?? [], openToWork, verificationStatus);
-        var result = await queries.ExecuteAsync<GetProfilesCatalogQuery, ProfileCardDto[]>(query, ct);
+        var query = new GetProfilesCatalogQuery(
+            Search: request.Search,
+            Skills: request.Skills ?? [],
+            OpenToWork: request.OpenToWork,
+            VerificationStatus: request.VerificationStatus,
+            Page: request.Page ?? 1,
+            PageSize: request.PageSize ?? 10,
+            SortField: request.SortField ?? ProfilesSortFields.UpdatedAt,
+            SortOrder: request.SortOrder ?? SortOrders.Desc);
+
+        var result = await queries.ExecuteAsync<GetProfilesCatalogQuery, CatalogResponseDto<ProfileCardDto>>(query, ct);
         return this.ToActionResult(result);
     }
 
