@@ -17,7 +17,7 @@ public sealed class S3Options
     public string Bucket { get; set; } = string.Empty;
 
     /// <summary>
-    /// S3 endpoint URL (e.g. https://storage.railway.app or http://minio:9000).
+    /// S3 endpoint URL.
     /// </summary>
     public string Endpoint { get; set; } = string.Empty;
 
