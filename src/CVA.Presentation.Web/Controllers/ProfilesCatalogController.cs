@@ -18,7 +18,7 @@ public sealed class ProfilesCatalogController(QueryExecutor queries) : Controlle
     /// <param name="verificationStatus">Verification status filter.</param>
     /// <param name="ct">Cancellation token.</param>
     [HttpGet]
-    [ProducesResponseType(typeof(DeveloperProfileCardDto[]), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(ProfileCardDto[]), StatusCodes.Status200OK)]
     public async Task<ActionResult> GetCatalog(
         [FromQuery] string? search,
         [FromQuery] string[]? skills,
@@ -26,8 +26,8 @@ public sealed class ProfilesCatalogController(QueryExecutor queries) : Controlle
         [FromQuery] string? verificationStatus,
         CancellationToken ct)
     {
-        var query = new GetDeveloperProfilesCatalogQuery(search, skills ?? [], openToWork, verificationStatus);
-        var result = await queries.ExecuteAsync<GetDeveloperProfilesCatalogQuery, DeveloperProfileCardDto[]>(query, ct);
+        var query = new GetProfilesCatalogQuery(search, skills ?? [], openToWork, verificationStatus);
+        var result = await queries.ExecuteAsync<GetProfilesCatalogQuery, ProfileCardDto[]>(query, ct);
         return this.ToActionResult(result);
     }
 
@@ -37,12 +37,12 @@ public sealed class ProfilesCatalogController(QueryExecutor queries) : Controlle
     /// <param name="id">Developer profile id.</param>
     /// <param name="ct">Cancellation token.</param>
     [HttpGet("{id:guid}")]
-    [ProducesResponseType(typeof(DeveloperProfileDto), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(ProfileDto), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<ActionResult> GetById(Guid id, CancellationToken ct)
     {
-        var query = new GetDeveloperProfileByIdQuery(id);
-        var result = await queries.ExecuteAsync<GetDeveloperProfileByIdQuery, DeveloperProfileDto>(query, ct);
+        var query = new GetProfileByIdQuery(id);
+        var result = await queries.ExecuteAsync<GetProfileByIdQuery, ProfileDto>(query, ct);
         return this.ToActionResult(result);
     }
 }

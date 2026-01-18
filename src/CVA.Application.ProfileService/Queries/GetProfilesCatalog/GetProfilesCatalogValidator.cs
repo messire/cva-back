@@ -1,14 +1,14 @@
 ﻿namespace CVA.Application.ProfileService;
 
 /// <summary>
-/// Validator for the <see cref="GetDeveloperProfilesCatalogQuery"/>.
+/// Validator for the <see cref="GetProfilesCatalogQuery"/>.
 /// </summary>
-public class GetDeveloperProfilesCatalogValidator : AbstractValidator<GetDeveloperProfilesCatalogQuery>
+public class GetProfilesCatalogValidator : AbstractValidator<GetProfilesCatalogQuery>
 {
     /// <summary>
-    /// Initializes a new instance of the <see cref="GetDeveloperProfilesCatalogValidator"/> class.
+    /// Initializes a new instance of the <see cref="GetProfilesCatalogValidator"/> class.
     /// </summary>
-    public GetDeveloperProfilesCatalogValidator()
+    public GetProfilesCatalogValidator()
     {
         RuleFor(query => query.Search)
             .MaximumLength(100);

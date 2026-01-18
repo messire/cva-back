@@ -3,12 +3,12 @@
 namespace CVA.Tests.Unit.Application.Validators;
 
 /// <summary>
-/// Unit tests for the <see cref="GetDeveloperProfilesCatalogValidator"/> class.
+/// Unit tests for the <see cref="GetProfilesCatalogValidator"/> class.
 /// </summary>
 [Trait(Layer.Application, Category.Validators)]
-public class GetDeveloperProfilesCatalogValidatorTests
+public class GetProfilesCatalogValidatorTests
 {
-    private readonly GetDeveloperProfilesCatalogValidator _validator = new();
+    private readonly GetProfilesCatalogValidator _validator = new();
 
     /// <summary>
     /// Purpose: Validate the Search property length.
@@ -18,7 +18,7 @@ public class GetDeveloperProfilesCatalogValidatorTests
     [Theory]
     [InlineCvaAutoData(100, false)]
     [InlineCvaAutoData(101, true)]
-    public void Search_Length_Validation(int length, bool shouldHaveError, GetDeveloperProfilesCatalogQuery baseQuery)
+    public void Search_Length_Validation(int length, bool shouldHaveError, GetProfilesCatalogQuery baseQuery)
     {
         // Arrange
         var query = baseQuery with
@@ -41,7 +41,7 @@ public class GetDeveloperProfilesCatalogValidatorTests
     [Theory]
     [InlineCvaAutoData(50, false)]
     [InlineCvaAutoData(51, true)]
-    public void Skills_Item_Length_Validation(int length, bool shouldHaveError, GetDeveloperProfilesCatalogQuery baseQuery)
+    public void Skills_Item_Length_Validation(int length, bool shouldHaveError, GetProfilesCatalogQuery baseQuery)
     {
         // Arrange
         var query = baseQuery with
@@ -64,7 +64,7 @@ public class GetDeveloperProfilesCatalogValidatorTests
     [Theory]
     [InlineCvaAutoData(50, false)]
     [InlineCvaAutoData(51, true)]
-    public void VerificationStatus_Length_Validation(int length, bool shouldHaveError, GetDeveloperProfilesCatalogQuery baseQuery)
+    public void VerificationStatus_Length_Validation(int length, bool shouldHaveError, GetProfilesCatalogQuery baseQuery)
     {
         // Arrange
         var query = baseQuery with

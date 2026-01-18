@@ -3,10 +3,10 @@
 namespace CVA.Tests.Integration.Tests.Application.DeveloperProfiles;
 
 /// <summary>
-/// Integration tests for the <see cref="GetMyDeveloperProfileHandler"/>.
+/// Integration tests for the <see cref="GetProfileHandler"/>.
 /// </summary>
 [Trait(Layer.Application, Category.Handlers)]
-public sealed class GetMyDeveloperProfileHandlerTests(PostgresFixture fixture) : DeveloperProfileHandlerTestBase(fixture)
+public sealed class GetProfileHandlerTests(PostgresFixture fixture) : ProfileHandlerTestBase(fixture)
 {
     /// <summary>
     /// Purpose: Verify that the current user's profile can be retrieved.
@@ -20,8 +20,8 @@ public sealed class GetMyDeveloperProfileHandlerTests(PostgresFixture fixture) :
         var profile = DataGenerator.CreateDeveloperProfile(CurrentUserId);
         await SeedProfileAsync(profile, Cts.Token);
 
-        var query = new GetMyDeveloperProfileQuery();
-        var handler = new GetMyDeveloperProfileHandler(CreateRepository(), UserAccessorMock.Object);
+        var query = new GetProfileQuery();
+        var handler = new GetProfileHandler(CreateRepository(), UserAccessorMock.Object);
 
         // Act
         var result = await handler.HandleAsync(query, Cts.Token);
@@ -40,8 +40,8 @@ public sealed class GetMyDeveloperProfileHandlerTests(PostgresFixture fixture) :
     public async Task HandleAsync_ShouldFail_WhenProfileNotFound()
     {
         // Arrange
-        var query = new GetMyDeveloperProfileQuery();
-        var handler = new GetMyDeveloperProfileHandler(CreateRepository(), UserAccessorMock.Object);
+        var query = new GetProfileQuery();
+        var handler = new GetProfileHandler(CreateRepository(), UserAccessorMock.Object);
 
         // Act
         var result = await handler.HandleAsync(query, Cts.Token);

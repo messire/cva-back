@@ -6,10 +6,10 @@
 /// <param name="repository">The developer profile repository.</param>
 /// <param name="userAccessor">The current user accessor.</param>
 public sealed class ReplaceProfileHandler(IDeveloperProfileRepository repository, ICurrentUserAccessor userAccessor) 
-    : ICommandHandler<ReplaceProfileCommand, DeveloperProfileDto>
+    : ICommandHandler<ReplaceProfileCommand, ProfileDto>
 {
     /// <inheritdoc />
-    public async Task<Result<DeveloperProfileDto>> HandleAsync(ReplaceProfileCommand command, CancellationToken ct)
+    public async Task<Result<ProfileDto>> HandleAsync(ReplaceProfileCommand command, CancellationToken ct)
     {
         var request = command.Request;
         var now = DateTimeOffset.UtcNow;
@@ -50,6 +50,6 @@ public sealed class ReplaceProfileHandler(IDeveloperProfileRepository repository
         }
 
         var updatedProfile = await repository.UpdateAsync(profile, ct);
-        return updatedProfile?.ToDto() ?? Result<DeveloperProfileDto>.Fail("Failed to update profile.");
+        return updatedProfile?.ToDto() ?? Result<ProfileDto>.Fail("Failed to update profile.");
     }
 }

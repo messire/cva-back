@@ -9,7 +9,7 @@ namespace CVA.Tests.Integration.Tests.Application.DeveloperProfiles;
 /// Base class for Developer Profile handler integration tests.
 /// Provides database context and mocked user identity.
 /// </summary>
-public abstract class DeveloperProfileHandlerTestBase : PostgresTestBase
+public abstract class ProfileHandlerTestBase : PostgresTestBase
 {
     /// <summary>
     /// Mock implementation of the <see cref="ICurrentUserAccessor"/>.
@@ -23,10 +23,10 @@ public abstract class DeveloperProfileHandlerTestBase : PostgresTestBase
     protected Guid CurrentUserId = Guid.NewGuid();
 
     /// <summary>
-    /// Initializes a new instance of the <see cref="DeveloperProfileHandlerTestBase"/> class.
+    /// Initializes a new instance of the <see cref="ProfileHandlerTestBase"/> class.
     /// </summary>
     /// <param name="fixture">Shared Postgres fixture for integration tests.</param>
-    protected DeveloperProfileHandlerTestBase(PostgresFixture fixture) : base(fixture)
+    protected ProfileHandlerTestBase(PostgresFixture fixture) : base(fixture)
     {
         UserAccessorMock.Setup(accessor => accessor.UserId).Returns(() => CurrentUserId);
         UserAccessorMock.Setup(accessor => accessor.IsAuthenticated).Returns(true);

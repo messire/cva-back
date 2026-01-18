@@ -4,11 +4,11 @@
 /// Handles the query to get the catalog of developer profiles.
 /// </summary>
 /// <param name="repository">The developer profile repository.</param>
-public sealed class GetDeveloperProfilesCatalogHandler(IDeveloperProfileRepository repository) 
-    : IQueryHandler<GetDeveloperProfilesCatalogQuery, DeveloperProfileCardDto[]>
+public sealed class GetProfilesCatalogHandler(IDeveloperProfileRepository repository) 
+    : IQueryHandler<GetProfilesCatalogQuery, ProfileCardDto[]>
 {
     /// <inheritdoc />
-    public async Task<Result<DeveloperProfileCardDto[]>> HandleAsync(GetDeveloperProfilesCatalogQuery query, CancellationToken ct)
+    public async Task<Result<ProfileCardDto[]>> HandleAsync(GetProfilesCatalogQuery query, CancellationToken ct)
     {
         var profiles = await repository.GetAllAsync(ct);
         var filtered = profiles.AsEnumerable();

@@ -7,7 +7,7 @@ namespace CVA.Tests.Integration.Tests.Application.DeveloperProfiles;
 /// Integration tests for the <see cref="UpdateProfileContactsHandler"/>.
 /// </summary>
 [Trait(Layer.Application, Category.Handlers)]
-public sealed class UpdateProfileContactsHandlerTests(PostgresFixture fixture) : DeveloperProfileHandlerTestBase(fixture)
+public sealed class UpdateProfileContactsHandlerTests(PostgresFixture fixture) : ProfileHandlerTestBase(fixture)
 {
     /// <summary>
     /// Purpose: Verify that contact information can be updated.

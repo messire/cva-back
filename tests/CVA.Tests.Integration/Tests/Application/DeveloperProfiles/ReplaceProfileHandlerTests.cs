@@ -7,7 +7,7 @@ namespace CVA.Tests.Integration.Tests.Application.DeveloperProfiles;
 /// Integration tests for the <see cref="ReplaceProfileHandler"/>.
 /// </summary>
 [Trait(Layer.Application, Category.Handlers)]
-public sealed class ReplaceProfileHandlerTests(PostgresFixture fixture) : DeveloperProfileHandlerTestBase(fixture)
+public sealed class ReplaceProfileHandlerTests(PostgresFixture fixture) : ProfileHandlerTestBase(fixture)
 {
     /// <summary>
     /// Purpose: Verify that a profile can be fully replaced.

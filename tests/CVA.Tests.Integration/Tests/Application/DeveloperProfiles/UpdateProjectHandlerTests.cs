@@ -7,7 +7,7 @@ namespace CVA.Tests.Integration.Tests.Application.DeveloperProfiles;
 /// Integration tests for the <see cref="UpdateProjectHandler"/>.
 /// </summary>
 [Trait(Layer.Application, Category.Handlers)]
-public sealed class UpdateProjectHandlerTests(PostgresFixture fixture) : DeveloperProfileHandlerTestBase(fixture)
+public sealed class UpdateProjectHandlerTests(PostgresFixture fixture) : ProfileHandlerTestBase(fixture)
 {
     /// <summary>
     /// Purpose: Verify that an existing project can be updated.

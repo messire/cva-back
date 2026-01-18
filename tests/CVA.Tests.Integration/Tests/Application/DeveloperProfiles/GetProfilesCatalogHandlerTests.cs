@@ -3,10 +3,10 @@
 namespace CVA.Tests.Integration.Tests.Application.DeveloperProfiles;
 
 /// <summary>
-/// Integration tests for the <see cref="GetDeveloperProfilesCatalogHandler"/>.
+/// Integration tests for the <see cref="GetProfilesCatalogHandler"/>.
 /// </summary>
 [Trait(Layer.Application, Category.Handlers)]
-public sealed class GetDeveloperProfilesCatalogHandlerTests(PostgresFixture fixture) : DeveloperProfileHandlerTestBase(fixture)
+public sealed class GetProfilesCatalogHandlerTests(PostgresFixture fixture) : ProfileHandlerTestBase(fixture)
 {
     /// <summary>
     /// Purpose: Verify that developer profiles can be retrieved with filtering.
@@ -30,8 +30,8 @@ public sealed class GetDeveloperProfilesCatalogHandlerTests(PostgresFixture fixt
         await SeedProfileAsync(profile1, Cts.Token);
         await SeedProfileAsync(profile2, Cts.Token);
 
-        var query = new GetDeveloperProfilesCatalogQuery("John", ["C#"], null, null);
-        var handler = new GetDeveloperProfilesCatalogHandler(CreateRepository());
+        var query = new GetProfilesCatalogQuery("John", ["C#"], null, null);
+        var handler = new GetProfilesCatalogHandler(CreateRepository());
 
         // Act
         var result = await handler.HandleAsync(query, Cts.Token);
@@ -54,8 +54,8 @@ public sealed class GetDeveloperProfilesCatalogHandlerTests(PostgresFixture fixt
         var profile = DataGenerator.CreateDeveloperProfile();
         await SeedProfileAsync(profile, Cts.Token);
 
-        var query = new GetDeveloperProfilesCatalogQuery("NonExistingName", null!, null, null);
-        var handler = new GetDeveloperProfilesCatalogHandler(CreateRepository());
+        var query = new GetProfilesCatalogQuery("NonExistingName", null!, null, null);
+        var handler = new GetProfilesCatalogHandler(CreateRepository());
 
         // Act
         var result = await handler.HandleAsync(query, Cts.Token);

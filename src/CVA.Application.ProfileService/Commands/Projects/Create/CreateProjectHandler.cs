@@ -6,15 +6,15 @@
 /// <param name="repository">The developer profile repository.</param>
 /// <param name="userAccessor">The current user accessor.</param>
 public sealed class CreateProjectHandler(IDeveloperProfileRepository repository, ICurrentUserAccessor userAccessor)
-    : ICommandHandler<CreateProjectCommand, DeveloperProfileDto>
+    : ICommandHandler<CreateProjectCommand, ProfileDto>
 {
     /// <inheritdoc />
-    public async Task<Result<DeveloperProfileDto>> HandleAsync(CreateProjectCommand command, CancellationToken ct)
+    public async Task<Result<ProfileDto>> HandleAsync(CreateProjectCommand command, CancellationToken ct)
     {
         var profile = await repository.GetByIdAsync(userAccessor.UserId, ct);
         if (profile is null)
         {
-            return Result<DeveloperProfileDto>.Fail("Profile not found.");
+            return Result<ProfileDto>.Fail("Profile not found.");
         }
 
         var request = command.Request;
@@ -24,6 +24,6 @@ public sealed class CreateProjectHandler(IDeveloperProfileRepository repository,
         profile.AddProject(name, description, icon, link, techStack, now);
 
         var updatedProfile = await repository.UpdateAsync(profile, ct);
-        return updatedProfile?.ToDto() ?? Result<DeveloperProfileDto>.Fail("Failed to update profile.");
+        return updatedProfile?.ToDto() ?? Result<ProfileDto>.Fail("Failed to update profile.");
     }
 }

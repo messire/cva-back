@@ -7,7 +7,7 @@ namespace CVA.Tests.Integration.Tests.Application.DeveloperProfiles;
 /// Integration tests for the <see cref="CreateProjectHandler"/>.
 /// </summary>
 [Trait(Layer.Application, Category.Handlers)]
-public sealed class CreateProjectHandlerTests(PostgresFixture fixture) : DeveloperProfileHandlerTestBase(fixture)
+public sealed class CreateProjectHandlerTests(PostgresFixture fixture) : ProfileHandlerTestBase(fixture)
 {
     /// <summary>
     /// Purpose: Verify that a project can be successfully added to an existing profile.

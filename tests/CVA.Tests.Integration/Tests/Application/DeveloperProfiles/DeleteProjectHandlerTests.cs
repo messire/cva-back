@@ -6,7 +6,7 @@ namespace CVA.Tests.Integration.Tests.Application.DeveloperProfiles;
 /// Integration tests for the <see cref="DeleteProjectHandler"/>.
 /// </summary>
 [Trait(Layer.Application, Category.Handlers)]
-public sealed class DeleteProjectHandlerTests(PostgresFixture fixture) : DeveloperProfileHandlerTestBase(fixture)
+public sealed class DeleteProjectHandlerTests(PostgresFixture fixture) : ProfileHandlerTestBase(fixture)
 {
     /// <summary>
     /// Purpose: Verify that a project can be successfully deleted from a profile.

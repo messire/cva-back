@@ -7,5 +7,5 @@
 /// <param name="Skills">The set of skills to filter profiles.</param>
 /// <param name="OpenToWork">Filter profiles by their "open to work" status.</param>
 /// <param name="VerificationStatus">Filter profiles by their verification status.</param>
-public sealed record GetDeveloperProfilesCatalogQuery(string? Search, string[] Skills, bool? OpenToWork, string? VerificationStatus)
-    : IQuery<DeveloperProfileCardDto[]>;
+public sealed record GetProfilesCatalogQuery(string? Search, string[] Skills, bool? OpenToWork, string? VerificationStatus)
+    : IQuery<ProfileCardDto[]>;

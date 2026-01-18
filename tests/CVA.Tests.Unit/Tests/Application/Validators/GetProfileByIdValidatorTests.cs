@@ -3,12 +3,12 @@
 namespace CVA.Tests.Unit.Application.Validators;
 
 /// <summary>
-/// Unit tests for the <see cref="GetDeveloperProfileByIdValidator"/> class.
+/// Unit tests for the <see cref="GetProfileByIdValidator"/> class.
 /// </summary>
 [Trait(Layer.Application, Category.Validators)]
-public class GetDeveloperProfileByIdValidatorTests
+public class GetProfileByIdValidatorTests
 {
-    private readonly GetDeveloperProfileByIdValidator _validator = new();
+    private readonly GetProfileByIdValidator _validator = new();
 
     /// <summary>
     /// Purpose: Validate the Id property.
@@ -21,7 +21,7 @@ public class GetDeveloperProfileByIdValidatorTests
     public void Id_Validation(bool isEmpty)
     {
         // Arrange
-        var query = new GetDeveloperProfileByIdQuery(Id: isEmpty ? Guid.Empty : Guid.NewGuid());
+        var query = new GetProfileByIdQuery(Id: isEmpty ? Guid.Empty : Guid.NewGuid());
 
         // Act
         var result = _validator.TestValidate(query);

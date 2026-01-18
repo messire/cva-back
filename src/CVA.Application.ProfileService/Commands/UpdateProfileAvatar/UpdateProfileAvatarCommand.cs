@@ -10,4 +10,4 @@
 /// <param name="PublicBaseUrl">Absolute base URL of the API, used to build an absolute media URL.</param>
 /// <param name="MediaRequestPath">Public request path for media files.</param>
 public sealed record UpdateProfileAvatarCommand(Stream Content, long ContentLength, string ContentType, string PublicBaseUrl, string MediaRequestPath)
-    : ICommand<DeveloperProfileDto>;
+    : ICommand<ProfileDto>;

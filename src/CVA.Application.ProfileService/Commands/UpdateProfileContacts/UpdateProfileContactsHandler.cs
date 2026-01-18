@@ -6,15 +6,15 @@
 /// <param name="repository">The developer profile repository.</param>
 /// <param name="userAccessor">The current user accessor.</param>
 public sealed class UpdateProfileContactsHandler(IDeveloperProfileRepository repository, ICurrentUserAccessor userAccessor)
-    : ICommandHandler<UpdateProfileContactsCommand, DeveloperProfileDto>
+    : ICommandHandler<UpdateProfileContactsCommand, ProfileDto>
 {
     /// <inheritdoc />
-    public async Task<Result<DeveloperProfileDto>> HandleAsync(UpdateProfileContactsCommand command, CancellationToken ct)
+    public async Task<Result<ProfileDto>> HandleAsync(UpdateProfileContactsCommand command, CancellationToken ct)
     {
         var profile = await repository.GetByIdAsync(userAccessor.UserId, ct);
         if (profile is null)
         {
-            return Result<DeveloperProfileDto>.Fail("Profile not found.");
+            return Result<ProfileDto>.Fail("Profile not found.");
         }
 
         var request = command.Request;
@@ -22,6 +22,6 @@ public sealed class UpdateProfileContactsHandler(IDeveloperProfileRepository rep
         profile.ChangeContact(request.ToModel(profile.Contact), now);
         profile.ChangeSocialLinks(request.SocialLinks.ToModel(), now);
         var updatedProfile = await repository.UpdateAsync(profile, ct);
-        return updatedProfile?.ToDto() ?? Result<DeveloperProfileDto>.Fail("Failed to update profile.");
+        return updatedProfile?.ToDto() ?? Result<ProfileDto>.Fail("Failed to update profile.");
     }
 }
