@@ -6,6 +6,14 @@
 public interface IDeveloperProfileRepository
 {
     /// <summary>
+    /// Searches profiles catalog using filters, sorting and pagination.
+    /// Filtering and pagination must be applied at database level.
+    /// </summary>
+    /// <param name="request">The search request.</param>
+    /// <param name="ct">The cancellation token to use for the operation.</param>
+    Task<PagedResult<DeveloperProfile>> SearchCatalogAsync(ProfilesCatalogRequest request, CancellationToken ct);
+
+    /// <summary>
     /// Gets a DeveloperProfile by its unique identifier.
     /// </summary>
     /// <param name="id">The unique identifier of the DeveloperProfile to retrieve.</param>
