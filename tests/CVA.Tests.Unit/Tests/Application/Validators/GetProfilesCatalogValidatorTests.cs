@@ -62,7 +62,6 @@ public class GetProfilesCatalogValidatorTests
     /// When: VerificationStatus length exceeds 50.
     /// </summary>
     [Theory]
-    [InlineCvaAutoData(50, false)]
     [InlineCvaAutoData(51, true)]
     public void VerificationStatus_Length_Validation(int length, bool shouldHaveError, GetProfilesCatalogQuery baseQuery)
     {

@@ -42,7 +42,7 @@ public sealed class ProfileMediaController(
     [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status400BadRequest)]
     public async Task<ActionResult> UploadAvatar([FromForm] IFormFile file, CancellationToken ct)
     {
-        if (file is null || file.Length <= 0)
+        if (file is { Length: <= 0 })
         {
             return Problem(detail: "File is required.", statusCode: StatusCodes.Status400BadRequest, title: "Validation");
         }
@@ -104,7 +104,7 @@ public sealed class ProfileMediaController(
     [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status400BadRequest)]
     public async Task<ActionResult> UploadProjectImage(Guid projectId, [FromForm] IFormFile file, CancellationToken ct)
     {
-        if (file is null || file.Length <= 0)
+        if (file is { Length: <= 0 })
         {
             return Problem(detail: "File is required.", statusCode: StatusCodes.Status400BadRequest, title: "Validation");
         }
