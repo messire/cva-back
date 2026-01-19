@@ -15,8 +15,7 @@ internal static class Initializer
     public static IContainer Init(INetwork sharedNetwork)
     {
         var containerName = ContainerBaseName + Guid.CreateVersion7();
-        return new PostgreSqlBuilder()
-            .WithImage(Images.PostgresImage)
+        return new PostgreSqlBuilder(Images.PostgresImage)
             .WithUsername(UserName)
             .WithPassword(Password)
             .WithDatabase(Database)

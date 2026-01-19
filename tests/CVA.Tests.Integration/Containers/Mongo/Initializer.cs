@@ -15,8 +15,7 @@ internal static class Initializer
     public static IContainer Init(INetwork sharedNetwork)
     {
         var containerName = ContainerBaseName + Guid.CreateVersion7();
-        return new MongoDbBuilder()
-            .WithImage(Images.MongoImage)
+        return new MongoDbBuilder(Images.MongoImage)
             .WithUsername(UserName)
             .WithPassword(Password)
             .WithNetwork(sharedNetwork)

@@ -10,15 +10,15 @@ namespace CVA.Application.ProfileService.UpdateProjectImage;
 /// <param name="userAccessor">The current user accessor.</param>
 /// <param name="mediaStorage">Media storage used to persist project images.</param>
 public sealed class UpdateProjectImageHandler(IDeveloperProfileRepository repository, ICurrentUserAccessor userAccessor, IMediaStorage mediaStorage)
-    : ICommandHandler<UpdateProjectImageCommand, DeveloperProfileDto>
+    : ICommandHandler<UpdateProjectImageCommand, ProfileDto>
 {
     /// <inheritdoc />
-    public async Task<Result<DeveloperProfileDto>> HandleAsync(UpdateProjectImageCommand command, CancellationToken ct)
+    public async Task<Result<ProfileDto>> HandleAsync(UpdateProjectImageCommand command, CancellationToken ct)
     {
         var profile = await repository.GetByIdAsync(userAccessor.UserId, ct);
         if (profile is null)
         {
-            return Result<DeveloperProfileDto>.Fail("Profile not found.");
+            return Result<ProfileDto>.Fail("Profile not found.");
         }
 
         var now = DateTimeOffset.UtcNow;
@@ -26,7 +26,7 @@ public sealed class UpdateProjectImageHandler(IDeveloperProfileRepository reposi
         var project = profile.Projects.FirstOrDefault(item => item.Id.Equals(projectId));
         if (project is null)
         {
-            return Result<DeveloperProfileDto>.Fail("Project not found.");
+            return Result<ProfileDto>.Fail("Project not found.");
         }
 
         var oldRelativePath = TryGetRelativeMediaPath(project.Icon?.ImageUrl.Value, command.MediaRequestPath);
@@ -40,7 +40,7 @@ public sealed class UpdateProjectImageHandler(IDeveloperProfileRepository reposi
         var newIcon = ProjectIcon.From(newImageUrl);
         profile.UpdateProject(projectId, project.Name, project.Description, newIcon, project.Link, project.TechStack, now);
         var updatedProfile = await repository.UpdateAsync(profile, ct);
-        return updatedProfile?.ToDto() ?? Result<DeveloperProfileDto>.Fail("Failed to update profile.");
+        return updatedProfile?.ToDto() ?? Result<ProfileDto>.Fail("Failed to update profile.");
     }
 
     private static string BuildAbsoluteMediaUrl(string publicBaseUrl, string mediaRequestPath, string relativePath)

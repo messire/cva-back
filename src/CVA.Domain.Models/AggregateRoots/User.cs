@@ -1,12 +1,10 @@
-﻿using System.Diagnostics.CodeAnalysis;
-
-namespace CVA.Domain.Models;
+﻿namespace CVA.Domain.Models;
 
 /// <summary>
 /// Represents a user aggregate root.
 /// Purpose: enforce invariants and provide behavior for managing user profile and work experience.
 /// </summary>
-public sealed partial class User : AggregateRoot
+public sealed class User : AggregateRoot
 {
     /// <summary>
     /// Unique identifier of the user.
@@ -29,7 +27,7 @@ public sealed partial class User : AggregateRoot
     public string GoogleSubject { get; private set; } = string.Empty;
 
     /// <summary>
-    /// EF/Mongo constructor.
+    /// Initializes a new instance of the <see cref="User"/> class.
     /// </summary>
     private User()
     {

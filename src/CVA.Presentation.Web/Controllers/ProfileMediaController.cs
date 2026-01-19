@@ -38,11 +38,11 @@ public sealed class ProfileMediaController(
     [Consumes("multipart/form-data")]
     [RequestSizeLimit(AvatarMaxBytes)]
     [RequestFormLimits(MultipartBodyLengthLimit = AvatarMaxBytes)]
-    [ProducesResponseType(typeof(DeveloperProfileDto), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(ProfileDto), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status400BadRequest)]
     public async Task<ActionResult> UploadAvatar([FromForm] IFormFile file, CancellationToken ct)
     {
-        if (file is null || file.Length <= 0)
+        if (file is { Length: <= 0 })
         {
             return Problem(detail: "File is required.", statusCode: StatusCodes.Status400BadRequest, title: "Validation");
         }
@@ -85,7 +85,7 @@ public sealed class ProfileMediaController(
             PublicBaseUrl: publicBaseUrl,
             MediaRequestPath: mediaRequestPath);
 
-        var result = await commands.ExecuteAsync<UpdateProfileAvatarCommand, DeveloperProfileDto>(command, ct);
+        var result = await commands.ExecuteAsync<UpdateProfileAvatarCommand, ProfileDto>(command, ct);
         return this.ToActionResult(result);
     }
 
@@ -100,11 +100,11 @@ public sealed class ProfileMediaController(
     [Consumes("multipart/form-data")]
     [RequestSizeLimit(ProjectImageMaxBytes)]
     [RequestFormLimits(MultipartBodyLengthLimit = ProjectImageMaxBytes)]
-    [ProducesResponseType(typeof(DeveloperProfileDto), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(ProfileDto), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status400BadRequest)]
     public async Task<ActionResult> UploadProjectImage(Guid projectId, [FromForm] IFormFile file, CancellationToken ct)
     {
-        if (file is null || file.Length <= 0)
+        if (file is { Length: <= 0 })
         {
             return Problem(detail: "File is required.", statusCode: StatusCodes.Status400BadRequest, title: "Validation");
         }
@@ -148,7 +148,7 @@ public sealed class ProfileMediaController(
             PublicBaseUrl: publicBaseUrl,
             MediaRequestPath: mediaRequestPath);
 
-        var result = await commands.ExecuteAsync<UpdateProjectImageCommand, DeveloperProfileDto>(command, ct);
+        var result = await commands.ExecuteAsync<UpdateProjectImageCommand, ProfileDto>(command, ct);
         return this.ToActionResult(result);
     }
 

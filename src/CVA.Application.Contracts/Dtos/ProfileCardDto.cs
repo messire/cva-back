@@ -3,7 +3,7 @@
 /// <summary>
 /// Developer profile card DTO.
 /// </summary>
-public sealed record DeveloperProfileCardDto
+public sealed class ProfileCardDto
 {
     /// <summary>
     /// Unique identifier for the developer profile card.

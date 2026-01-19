@@ -3,10 +3,10 @@
 namespace CVA.Tests.Integration.Tests.Application.DeveloperProfiles;
 
 /// <summary>
-/// Integration tests for the <see cref="GetDeveloperProfileByIdHandler"/>.
+/// Integration tests for the <see cref="GetProfileByIdHandler"/>.
 /// </summary>
 [Trait(Layer.Application, Category.Handlers)]
-public sealed class GetDeveloperProfileByIdHandlerTests(PostgresFixture fixture) : DeveloperProfileHandlerTestBase(fixture)
+public sealed class GetProfileByIdHandlerTests(PostgresFixture fixture) : ProfileHandlerTestBase(fixture)
 {
     /// <summary>
     /// Purpose: Verify that a profile can be retrieved by its ID.
@@ -21,8 +21,8 @@ public sealed class GetDeveloperProfileByIdHandlerTests(PostgresFixture fixture)
         var profile = DataGenerator.CreateDeveloperProfile(profileId);
         await SeedProfileAsync(profile, Cts.Token);
 
-        var query = new GetDeveloperProfileByIdQuery(profileId);
-        var handler = new GetDeveloperProfileByIdHandler(CreateRepository());
+        var query = new GetProfileByIdQuery(profileId);
+        var handler = new GetProfileByIdHandler(CreateRepository());
 
         // Act
         var result = await handler.HandleAsync(query, Cts.Token);
@@ -41,8 +41,8 @@ public sealed class GetDeveloperProfileByIdHandlerTests(PostgresFixture fixture)
     public async Task HandleAsync_ShouldFail_WhenProfileNotFound()
     {
         // Arrange
-        var query = new GetDeveloperProfileByIdQuery(Guid.NewGuid());
-        var handler = new GetDeveloperProfileByIdHandler(CreateRepository());
+        var query = new GetProfileByIdQuery(Guid.NewGuid());
+        var handler = new GetProfileByIdHandler(CreateRepository());
 
         // Act
         var result = await handler.HandleAsync(query, Cts.Token);

@@ -23,7 +23,6 @@ public sealed class ResumePdfOptions
 
     /// <summary>
     /// CSS selector that must exist on the profile page before generating the PDF.
-    /// Prevents silently generating the wrong page (e.g. catalog/home).
     /// </summary>
     public string ProfileReadySelector { get; set; } = "[data-print-anchor=\"profile-page\"]";
 

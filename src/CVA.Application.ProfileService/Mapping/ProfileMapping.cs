@@ -3,12 +3,12 @@
 /// <summary>
 /// Provides extension methods for mapping domain models to DTOs.
 /// </summary>
-public static class DeveloperProfileMapping
+public static class ProfileMapping
 {
     /// <summary>
-    /// Maps a <see cref="DeveloperProfile"/> domain model to a <see cref="DeveloperProfileDto"/>.
+    /// Maps a <see cref="DeveloperProfile"/> domain model to a <see cref="ProfileDto"/>.
     /// </summary>
-    public static DeveloperProfileDto ToDto(this DeveloperProfile profile)
+    public static ProfileDto ToDto(this DeveloperProfile profile)
         => new()
         {
             Id = profile.Id.Value,
@@ -31,9 +31,9 @@ public static class DeveloperProfileMapping
         };
 
     /// <summary>
-    /// Maps a <see cref="DeveloperProfile"/> domain model to a <see cref="DeveloperProfileCardDto"/>.
+    /// Maps a <see cref="DeveloperProfile"/> domain model to a <see cref="ProfileCardDto"/>.
     /// </summary>
-    public static DeveloperProfileCardDto ToCardDto(this DeveloperProfile profile)
+    public static ProfileCardDto ToCardDto(this DeveloperProfile profile)
         => new()
         {
             Id = profile.Id.Value,

@@ -3,13 +3,11 @@
 /// <summary>
 /// Handles the retrieval of the current authenticated developer's profile.
 /// </summary>
-public sealed class GetMyDeveloperProfileHandler(IDeveloperProfileRepository repository, ICurrentUserAccessor currentUserAccessor)
-    : IQueryHandler<GetMyDeveloperProfileQuery, DeveloperProfileDto>
+public sealed class GetProfileHandler(IDeveloperProfileRepository repository, ICurrentUserAccessor currentUserAccessor)
+    : IQueryHandler<GetProfileQuery, ProfileDto>
 {
     /// <inheritdoc />
-    public async Task<Result<DeveloperProfileDto>> HandleAsync(
-        GetMyDeveloperProfileQuery query,
-        CancellationToken ct)
+    public async Task<Result<ProfileDto>> HandleAsync(GetProfileQuery query, CancellationToken ct)
     {
         if (!currentUserAccessor.IsAuthenticated)
         {

@@ -22,8 +22,8 @@ public sealed class ResumeController(QueryExecutor queries, ResumePdfService pdf
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<ActionResult> Download(Guid id, [FromQuery] bool download, CancellationToken ct)
     {
-        var query = new GetDeveloperProfileByIdQuery(id);
-        var result = await queries.ExecuteAsync<GetDeveloperProfileByIdQuery, DeveloperProfileDto>(query, ct);
+        var query = new GetProfileByIdQuery(id);
+        var result = await queries.ExecuteAsync<GetProfileByIdQuery, ProfileDto>(query, ct);
 
         if (!result.IsSuccess)
         {

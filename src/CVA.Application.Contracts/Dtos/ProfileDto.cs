@@ -1,11 +1,9 @@
-﻿using CVA.Domain.Models;
-
-namespace CVA.Application.Contracts;
+﻿namespace CVA.Application.Contracts;
 
 /// <summary>
 /// Extended developer profile DTO. Does not replace UserDto.
 /// </summary>
-public sealed record DeveloperProfileDto
+public sealed class ProfileDto
 {
     /// <summary>
     /// Profile identifier.

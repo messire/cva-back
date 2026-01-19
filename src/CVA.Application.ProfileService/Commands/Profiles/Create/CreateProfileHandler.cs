@@ -5,13 +5,11 @@
 /// </summary>
 /// <param name="repository">The developer profile repository.</param>
 /// <param name="userAccessor">The current user accessor.</param>
-public sealed class CreateProfileHandler(
-    IDeveloperProfileRepository repository,
-    ICurrentUserAccessor userAccessor)
-    : ICommandHandler<CreateProfileCommand, DeveloperProfileDto>
+public sealed class CreateProfileHandler(IDeveloperProfileRepository repository, ICurrentUserAccessor userAccessor)
+    : ICommandHandler<CreateProfileCommand, ProfileDto>
 {
     /// <inheritdoc />
-    public async Task<Result<DeveloperProfileDto>> HandleAsync(CreateProfileCommand command, CancellationToken ct)
+    public async Task<Result<ProfileDto>> HandleAsync(CreateProfileCommand command, CancellationToken ct)
     {
         if (!userAccessor.IsAuthenticated)
         {

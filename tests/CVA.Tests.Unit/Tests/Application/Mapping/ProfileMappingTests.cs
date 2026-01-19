@@ -8,14 +8,14 @@ namespace CVA.Tests.Unit.Application.Mapping;
 /// Unit tests for developer profile DTO mapping.
 /// </summary>
 [Trait(Layer.Application, Category.Mapping)]
-public sealed class DeveloperProfileMappingTests
+public sealed class ProfileMappingTests
 {
     private readonly IFixture _fixture;
 
     /// <summary>
-    /// Initializes a new instance of the <see cref="DeveloperProfileMappingTests"/> class.
+    /// Initializes a new instance of the <see cref="ProfileMappingTests"/> class.
     /// </summary>
-    public DeveloperProfileMappingTests()
+    public ProfileMappingTests()
     {
         _fixture = new Fixture().Customize(new ApplicationTestCustomization());
     }

@@ -5,6 +5,6 @@
 /// This model is NOT a public profile.
 /// </summary>
 /// <param name="UserId">Internal user identifier.</param>
-/// <param name="Role">User role (e.g. User, Admin).</param>
+/// <param name="Role">User role.</param>
 /// <param name="Email">User email, if available.</param>
 public sealed record IdentityMe(Guid UserId, string Role, string Email);

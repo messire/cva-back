@@ -10,15 +10,15 @@ namespace CVA.Application.ProfileService.UpdateProfileAvatar;
 /// <param name="userAccessor">The current user accessor.</param>
 /// <param name="mediaStorage">Media storage used to persist avatar images.</param>
 public sealed class UpdateProfileAvatarHandler(IDeveloperProfileRepository repository, ICurrentUserAccessor userAccessor, IMediaStorage mediaStorage)
-    : ICommandHandler<UpdateProfileAvatarCommand, DeveloperProfileDto>
+    : ICommandHandler<UpdateProfileAvatarCommand, ProfileDto>
 {
     /// <inheritdoc />
-    public async Task<Result<DeveloperProfileDto>> HandleAsync(UpdateProfileAvatarCommand command, CancellationToken ct)
+    public async Task<Result<ProfileDto>> HandleAsync(UpdateProfileAvatarCommand command, CancellationToken ct)
     {
         var profile = await repository.GetByIdAsync(userAccessor.UserId, ct);
         if (profile is null)
         {
-            return Result<DeveloperProfileDto>.Fail("Profile not found.");
+            return Result<ProfileDto>.Fail("Profile not found.");
         }
 
         var now = DateTimeOffset.UtcNow;
@@ -32,7 +32,7 @@ public sealed class UpdateProfileAvatarHandler(IDeveloperProfileRepository repos
         var newAvatarUrl = BuildAbsoluteMediaUrl(command.PublicBaseUrl, command.MediaRequestPath, newRelativePath);
         profile.ChangeAvatar(Avatar.From(newAvatarUrl), now);
         var updatedProfile = await repository.UpdateAsync(profile, ct);
-        return updatedProfile?.ToDto() ?? Result<DeveloperProfileDto>.Fail("Failed to update profile.");
+        return updatedProfile?.ToDto() ?? Result<ProfileDto>.Fail("Failed to update profile.");
     }
 
     private static string BuildAbsoluteMediaUrl(string publicBaseUrl, string mediaRequestPath, string relativePath)
