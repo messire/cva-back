@@ -9,8 +9,10 @@ builder.RegisterCors();
 builder.RegisterInnerServices();
 builder.RegisterDatabase();
 builder.RegisterValidation();
+builder.RegisterAuth();
 
 var app = builder.Build();
+app.UseForwardedHeaders();
 app.ConfigureDevEnv();
 app.ConfigureApi();
 app.Run();

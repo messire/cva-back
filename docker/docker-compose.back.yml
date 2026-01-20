@@ -18,7 +18,10 @@ services:
       ASPNETCORE_ENVIRONMENT: Production
       ASPNETCORE_URLS: http://+:8080
       EnableOpenApi: "true"
-
+      Media__RootPath: /data/media
+      Media__PublicRequestPath: /media
+    volumes:
+      - ../.data/media:/data/media
     networks:
       - docker-network
 

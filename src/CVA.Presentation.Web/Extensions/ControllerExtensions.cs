@@ -5,25 +5,39 @@
 /// </summary>
 public static class ControllerExtensions
 {
-    extension(ControllerBase controller)
-    {
-        /// <summary>
-        /// Maps a <see cref="Result{T}"/> to a standard HTTP response.
-        /// Success -> 200 OK.
-        /// Failure -> ProblemDetails (status from error.HttpStatus).
-        /// </summary>
-        public ActionResult<T> ToActionResult<T>(Result<T> result)
-            => result.IsSuccess
-                ? controller.Ok(result.Value)
-                : controller.StatusCode(StatusCodes.Status400BadRequest, result.Error);
+    /// <summary>
+    /// Maps a <see cref="Result{T}"/> to a standard HTTP response.
+    /// Success -> 200 OK.
+    /// Failure -> ProblemDetails (status from error.HttpStatus).
+    /// </summary>
+    public static ActionResult ToActionResult<T>(this ControllerBase controller, Result<T> result)
+        => result.IsSuccess
+            ? controller.Ok(result.Value)
+            : MapError(controller, result);
 
-        /// <summary>
-        /// Maps a <see cref="Result{T}"/> to a 201 Created response when successful.
-        /// Failure -> ProblemDetails.
-        /// </summary>
-        public ActionResult<T> ToCreatedAtActionResult<T>(Result<T> result, string actionName, object? routeValues)
-            => result.IsSuccess
-                ? controller.CreatedAtAction(actionName, routeValues, result.Value)
-                : controller.StatusCode(StatusCodes.Status400BadRequest, result.Error);
+    /// <summary>
+    /// Maps a <see cref="Result{T}"/> to a 201 Created response when successful.
+    /// Failure -> ProblemDetails.
+    /// </summary>
+    public static ActionResult ToCreatedAtActionResult<T>(this ControllerBase controller, Result<T> result, string actionName, object? routeValues)
+        => result.IsSuccess
+            ? controller.CreatedAtAction(actionName, routeValues, result.Value)
+            : MapError(controller, result);
+
+    private static ActionResult MapError<T>(ControllerBase controller, Result<T> result)
+    {
+        var error = result.Error!;
+        var statusCode = error.Code switch
+        {
+            "NotFound" => StatusCodes.Status404NotFound,
+            "Validation" => StatusCodes.Status400BadRequest,
+            "Conflict" => StatusCodes.Status409Conflict,
+            _ => StatusCodes.Status400BadRequest
+        };
+
+        return controller.Problem(
+            detail: error.Message,
+            statusCode: statusCode,
+            title: error.Code);
     }
 }

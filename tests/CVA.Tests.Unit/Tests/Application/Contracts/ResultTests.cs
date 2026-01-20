@@ -1,4 +1,6 @@
-﻿namespace CVA.Tests.Unit.Application.Contracts;
+﻿using CVA.Application.Abstractions;
+
+namespace CVA.Tests.Unit.Application.Contracts;
 
 /// <summary>
 /// Unit tests for the <see cref="Result{T}"/> class.
@@ -36,7 +38,8 @@ public class ResultTests
 
         // Assert
         Assert.False(result.IsSuccess);
-        Assert.Equal(errorMessage, result.Error);
+        Assert.Equal(errorMessage, result.Error?.Message);
+        Assert.Equal("Failure", result.Error?.Code);
         Assert.Equal(0, result.Value);
     }
 

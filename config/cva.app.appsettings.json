@@ -1,5 +1,11 @@
 {
   "AllowedHosts": "*",
+  "Auth": {
+    "Google": {
+      "ClientId": "$Auth__Google__ClientId",
+      "ClientSecret": "$Auth__Google__ClientSecret"
+    }
+  },
   "Database": {
     "Mongo": {
       "Connection": "$Database__Mongo__Connection",
@@ -25,5 +31,34 @@
       }
     },
     "Type": "$Database__Type"
+  },
+  "Jwt": {
+    "Issuer": "cva",
+    "Audience": "cva",
+    "SigningKey": "$Jwt__SigningKey",
+    "LifetimeMinutes": 60
+  },
+  "Media": {
+    "RootPath": "$Media__RootPath",
+    "PublicRequestPath": "/media"
+  },
+  "RefreshTokens": {
+    "LifetimeDays": 30,
+    "Pepper": "$RefreshTokens__Pepper"
+  },
+  "ResumePdf": {
+    "CachePrefix": "$ResumePdf__CachePrefix",
+    "FrontendBaseUrl": "$ResumePdf__FrontendBaseUrl",
+    "NavigationTimeoutSeconds": "$ResumePdf__NavigationTimeoutSeconds",
+    "PresignedUrlTtlMinutes": "$ResumePdf__PresignedUrlTtlMinutes",
+    "ProfilePathTemplate": "$ResumePdf__ProfilePathTemplate"
+  },
+  "S3": {
+    "AccessKeyId": "$S3__AccessKeyId",
+    "Bucket": "$S3__Bucket",
+    "Endpoint": "$S3__Endpoint",
+    "ForcePathStyle": "$S3__ForcePathStyle",
+    "Region": "$S3__Region",
+    "SecretAccessKey": "$S3__SecretAccessKey"
   }
 }

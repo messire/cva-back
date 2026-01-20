@@ -6,6 +6,7 @@
   </Folder>
   <Folder Name="/build/docker/">
     <File Path="docker/docker-compose.back.yml" />
+    <File Path="docker/docker-compose.minio.yml" />
     <File Path="docker/docker-compose.mongo.yml" />
     <File Path="docker/docker-compose.postgres.yml" />
   </Folder>
@@ -16,8 +17,10 @@
   </Folder>
   <Folder Name="/src/" />
   <Folder Name="/src/application/">
+    <Project Path="src/CVA.Application.Abstractions/CVA.Application.Abstractions.csproj" />
     <Project Path="src/CVA.Application.Contracts/CVA.Application.Contracts.csproj" />
-    <Project Path="src/CVA.Application.Services/CVA.Application.Services.csproj" />
+    <Project Path="src/CVA.Application.IdentityService/CVA.Application.IdentityService.csproj" />
+    <Project Path="src/CVA.Application.ProfileService/CVA.Application.ProfileService.csproj" />
     <Project Path="src/CVA.Application.Validators/CVA.Application.Validators.csproj" />
   </Folder>
   <Folder Name="/src/domain/">
@@ -25,11 +28,16 @@
     <Project Path="src/CVA.Domain.Models/CVA.Domain.Models.csproj" />
   </Folder>
   <Folder Name="/src/infrastructure/">
+    <Project Path="src/CVA.Infrastructure.Auth/CVA.Infrastructure.Auth.csproj" />
     <Project Path="src/CVA.Infrastructure.Common/CVA.Infrastructure.Common.csproj" />
+    <Project Path="src/CVA.Infrastructure.Media/CVA.Infrastructure.Media.csproj" />
     <Project Path="src/CVA.Infrastructure.Mongo/CVA.Infrastructure.Mongo.csproj" />
     <Project Path="src/CVA.Infrastructure.Postgres/CVA.Infrastructure.Postgres.csproj" />
+    <Project Path="src/CVA.Infrastructure.ResumePdf/CVA.Infrastructure.ResumePdf.csproj" />
+    <Project Path="src/CVA.Infrastructure.Storage.S3/CVA.Infrastructure.Storage.S3.csproj" />
   </Folder>
   <Folder Name="/src/presentation/">
+    <Project Path="src/CVA.Presentation.Auth/CVA.Presentation.Auth.csproj" />
     <Project Path="src/CVA.Presentation.Web/CVA.Presentation.Web.csproj" />
   </Folder>
   <Folder Name="/src/utility/">

@@ -3,10 +3,12 @@
 
 ---
 
-# CV Backend Service
+# Servicio Backend CV
 
-Servicio backend para una aplicación de CV (Curriculum Vitae) construido con ASP.NET Core.
-Diseñado para gestionar datos de usuarios, experiencia profesional y la generación de CV.
+Servicio backend para la aplicación CV (Curriculum Vitae) construido con ASP.NET Core.
+
+El proyecto se utiliza como la parte backend de una plataforma de portafolio y como demostración de decisiones arquitectónicas y de ingeniería.  
+Proporciona una API pública para el frontend, gestión de perfiles y generación de currículum en PDF.
 
 ---
 
@@ -15,73 +17,79 @@ Diseñado para gestionar datos de usuarios, experiencia profesional y la generac
 - **Plataforma:** .NET 10 (ASP.NET Core)
 - **Lenguaje:** C# 14
 - **Bases de datos:**
-  - **PostgreSQL**
-  - **MongoDB**
-- **Contenerización:** Docker (multi-stage builds, non-root user)
-- **Documentación de API:** Swagger / Scalar (OpenAPI)
-- **Validación:** FluentValidation
-- **Testing:** xUnit, Moq, Testcontainers (pruebas de integración)
+    - PostgreSQL — almacenamiento principal
+    - MongoDB — datos de perfil en formato documento
+- **Almacenamiento de archivos:** MinIO (compatible con S3)
+- **Autenticación:** JWT
+- **Login externo:** Google OAuth
+- **Generación de PDF:** Playwright (Chromium)
+- **Contenerización:** Docker / Docker Compose
+- **Logging:** Structured Logging (Serilog)
 
 ---
 
-## 🚀 Inicio Rápido
+## 🧱 Arquitectura
 
-El servicio puede ejecutarse en un entorno Docker de tipo production-like utilizando scripts auxiliares:
+El proyecto está construido con énfasis en:
+- principios de Clean Architecture
+- separación de responsabilidades
+- límites estrictos entre capas
 
-- `Makefile` — para Linux / macOS / WSL
-- `run.ps1` — para Windows PowerShell
+Capas principales:
+- **Domain** — modelo de negocio y reglas
+- **Application** — casos de uso, DTOs, validación
+- **Infrastructure** — bases de datos, almacenamiento de archivos, PDF, autenticación
+- **Presentation (Web API)** — API HTTP, middleware
 
-Los scripts inician automáticamente el backend y la base de datos seleccionada según la configuración en `.env`.
+---
 
-### 🗄 Selección de Base de Datos
+## 🚦 Estado Actual
 
-El tipo de base de datos se define mediante el parámetro `Database__Type` en el archivo `.env`:
-- `Database__Type=Postgres` — inicia contenedores de PostgreSQL y pgAdmin
-- `Database__Type=Mongo` — inicia contenedores de MongoDB y Mongo Express
+El backend está funcionalmente completo y es utilizado por el frontend.
 
-El servicio estará disponible en: `http://localhost:8080`
+- escenarios públicos y autenticados implementados
+- la generación de currículum en PDF funciona en producción
+- las decisiones arquitectónicas están fijadas
 
-La selección de la base de datos se realiza exclusivamente mediante configuración y no requiere cambios en el código.
+Los cambios futuros se esperan únicamente como mejoras puntuales si son necesarias.  
+El foco principal del desarrollo se ha desplazado al frontend.
 
 ---
 
 ## ⚙️ Configuración
 
-Todas las configuraciones se realizan a través de variables de entorno definidas en el archivo `.env`.
+La aplicación se configura mediante variables de entorno.
 
-Parámetros principales:
-- `Database__Type`: Tipo de base de datos seleccionada (Postgres/Mongo)
-- `Database__Postgres__Connection`: Cadena de conexión a PostgreSQL
-- `Database__Mongo__Connection`: Cadena de conexión a MongoDB
+Grupos principales de configuración:
+- conexiones a PostgreSQL y MongoDB
+- JWT (issuer, audience, claves, tiempo de vida del token)
+- Google OAuth (client id, secret, URLs de redirección)
+- MinIO / S3 (endpoint, credenciales, buckets)
+- Playwright / PDF (opciones de lanzamiento de Chromium)
+- parámetros de entorno y URLs públicas
+
+Un ejemplo de configuración se encuentra en `.env.example`.
 
 ---
 
-## 📈 Mejoras Potenciales (Backlog)
+## 📌 Mejoras Potenciales (Backlog)
 
-El proyecto se encuentra en desarrollo activo. Las posibles áreas de mejora incluyen:
+El proyecto no se encuentra en una fase de expansión activa, pero son posibles las siguientes líneas de desarrollo:
 
-### 1. Manejo de Errores y Estandarización de la API
-- **Problem Details (RFC 7807):** Respuestas de error estandarizadas
-- **Global Exception Middleware:** Manejo centralizado de excepciones con logging contextual
+### 1. Localización (i18n)
+- Ampliación del soporte de localización del contenido del perfil
+- Idiomas adicionales para los datos de usuario
 
-### 2. Localización (i18n)
-- Soporte multilenguaje para el contenido del CV
-- Localización de mensajes de validación
+### 2. Observabilidad
+- Health Checks
+- Uso ampliado de OpenTelemetry (tracing, métricas)
 
-### 3. Observabilidad
-- Health checks
-- OpenTelemetry (tracing, métricas)
-- Logging estructurado (Serilog)
+### 3. Seguridad
+- Rate limiting para endpoints públicos
+- Mecanismos adicionales de protección de la API bajo mayor carga
 
-### 4. Seguridad
-- Autenticación (JWT / IdentityServer)
-- Configuración de CORS
-- Rate limiting
+### 4. Rendimiento
+- Caché de datos públicos solicitados con frecuencia
+- Optimización adicional de consultas
 
-### 5. Rendimiento
-- Caché
-- Optimización de consultas
-- Compresión de respuestas
-
-### 6. Expansión de Soporte de Bases de Datos
-- **SQLite:** Añadir soporte para SQLite para simplificar el desarrollo y la ejecución local sin dependencias externas (PostgreSQL/MongoDB).
+---

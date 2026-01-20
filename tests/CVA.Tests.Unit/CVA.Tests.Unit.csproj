@@ -1,15 +1,15 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
         <IsTestProject>true</IsTestProject>
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="AutoFixture" />
-        <PackageReference Include="AutoFixture.Xunit2" />
+        <PackageReference Include="AutoFixture"/>
+        <PackageReference Include="AutoFixture.Xunit2"/>
         <PackageReference Include="coverlet.collector"/>
         <PackageReference Include="Microsoft.NET.Test.Sdk"/>
-        <PackageReference Include="Moq" />
+        <PackageReference Include="Moq"/>
         <PackageReference Include="xunit"/>
         <PackageReference Include="xunit.runner.visualstudio"/>
     </ItemGroup>
@@ -19,12 +19,17 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\..\src\CVA.Application.Services\CVA.Application.Services.csproj" />
-      <ProjectReference Include="..\..\src\CVA.Application.Validators\CVA.Application.Validators.csproj" />
-      <ProjectReference Include="..\..\src\CVA.Domain.Interfaces\CVA.Domain.Interfaces.csproj" />
-      <ProjectReference Include="..\..\src\CVA.Domain.Models\CVA.Domain.Models.csproj" />
-      <ProjectReference Include="..\..\src\CVA.Tools.Common\CVA.Tools.Common.csproj" />
-      <ProjectReference Include="..\CVA.Tests.Common\CVA.Tests.Common.csproj" />
+        <ProjectReference Include="..\..\src\CVA.Application.Validators\CVA.Application.Validators.csproj"/>
+        <ProjectReference Include="..\..\src\CVA.Domain.Interfaces\CVA.Domain.Interfaces.csproj"/>
+        <ProjectReference Include="..\..\src\CVA.Domain.Models\CVA.Domain.Models.csproj"/>
+        <ProjectReference Include="..\..\src\CVA.Tools.Common\CVA.Tools.Common.csproj"/>
+        <ProjectReference Include="..\..\src\CVA.Infrastructure.Common\CVA.Infrastructure.Common.csproj"/>
+        <ProjectReference Include="..\..\src\CVA.Infrastructure.Auth\CVA.Infrastructure.Auth.csproj"/>
+        <ProjectReference Include="..\..\src\CVA.Infrastructure.Mongo\CVA.Infrastructure.Mongo.csproj"/>
+        <ProjectReference Include="..\..\src\CVA.Infrastructure.Postgres\CVA.Infrastructure.Postgres.csproj"/>
+        <ProjectReference Include="..\..\src\CVA.Presentation.Auth\CVA.Presentation.Auth.csproj"/>
+        <ProjectReference Include="..\CVA.Tests.Common\CVA.Tests.Common.csproj"/>
+        <ProjectReference Include="..\..\src\CVA.Application.ProfileService\CVA.Application.ProfileService.csproj"/>
     </ItemGroup>
 
 </Project>

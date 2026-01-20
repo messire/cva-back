@@ -1,0 +1,21 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <ItemGroup>
+        <ProjectReference Include="..\CVA.Application.Abstractions\CVA.Application.Abstractions.csproj"/>
+        <ProjectReference Include="..\CVA.Application.Contracts\CVA.Application.Contracts.csproj"/>
+        <ProjectReference Include="..\CVA.Domain.Interfaces\CVA.Domain.Interfaces.csproj"/>
+        <ProjectReference Include="..\CVA.Domain.Models\CVA.Domain.Models.csproj"/>
+    </ItemGroup>
+
+    <ItemGroup>
+        <PackageReference Include="FluentValidation"/>
+        <PackageReference Include="Microsoft.AspNetCore.Http"/>
+        <PackageReference Include="Microsoft.AspNetCore.Http.Abstractions"/>
+        <PackageReference Include="Microsoft.Extensions.Options"/>
+    </ItemGroup>
+
+    <ItemGroup>
+        <Folder Include="Commands\Profiles\"/>
+    </ItemGroup>
+
+</Project>
